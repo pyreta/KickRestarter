@@ -3,3 +3,9 @@ node_modules
 /tmp
 sprockets
 bundle
+
+*node_modules
+*.DS_Store
+*tmp
+*sprockets
+*bundle
