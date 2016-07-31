@@ -19,34 +19,48 @@
 - `DELETE /api/session`
 - `GET /api/session`
 
-### Notes
+### Campaigns
 
-- `GET /api/notes`
-  - Notes index/search
-  - accepts `tag_name` query param to list notes by tag
+- `GET /api/campaigns`
+  - Campaigns index/search
+  - accepts `category` query param to list campaigns by category
   - accepts pagination params (if I get there)
-- `POST /api/notes`
-- `GET /api/notes/:id`
-- `PATCH /api/notes/:id`
-- `DELETE /api/notes/:id`
+- `POST /api/campaigns`
+- `GET /api/campaigns/:id`
+- `PATCH /api/campaigns/:id`
+- `DELETE /api/campaigns/:id`
 
-### Notebooks
+### Pledges
 
-- `GET /api/notebooks`
-- `POST /api/notebooks`
-- `GET /api/notebooks/:id`
-- `PATCH /api/notebooks/:id`
-- `DELETE /api/notebooks/:id`
-- `GET /api/notebooks/:id/notes`
-  - index of all notes for a notebook
+- `GET /api/pledges`
+- `POST /api/pledges`
+- `GET /api/pledges/:id`
+- `PATCH /api/pledges/:id`
+- `DELETE /api/pledges/:id`
+- `GET /api/users/:id/pledges`
+- `GET /api/campaigns/:id/pledges`
+  - index of all pledges for a campaign
   - accepts pagination params (if I get there)
 
-### Tags
+### Comments
 
-- A note's tags will be included in the note show template
-- `GET /api/tags`
+- `GET /api/comments`
+- `POST /api/comments`
+- `GET /api/comments/:id`
+- `PATCH /api/comments/:id`
+- `DELETE /api/comments/:id`
+- `GET /api/users/:id/comments`
+- `GET /api/campaigns/:id/comments`
+  - index of all comments for a campaign
+  - accepts pagination params (if I get there)
+
+### Category and Sub-Category
+
+- A campaign's category and sub-category will be included in the campaign show template
+- `GET /api/categories`
   - includes query param for typeahead suggestions
-- `POST /api/notes/:note_id/tags`: add tag to note by name
-  - if note doesn't already exist, it will be created
-- `DELETE /api/notes/:note_id/tags/:tag_name`: remove tag from note by
+- `GET /api/categories/:category_id/sub_categories`
+  - includes query param for typeahead suggestions
+- `POST /api/campaigns/:campaign_id/sub-category`: add sub-category to campaign by name
+- `DELETE /api/campaigns/:campaign_id/:sub_category_id`: remove sub-category from campaign by
   name

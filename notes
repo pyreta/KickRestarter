@@ -1,0 +1,64 @@
+ROUTES
+  ** "/" Homepage
+    -navbar
+      -login
+      -signup
+      -Search
+      -about us
+      -start a project
+      -discover
+      -logo homepage link
+    -Link/Pic slideshow
+    -Featured Project / category option
+    -Recommended for you (3 campaigns)
+    -Whats Popular (3 campaigns)
+    -Connect with Facebook (TBD/Deadlink)
+    -Curated pages (TBD)
+    -Where Projects Come From (start a project link)
+    ** "/" Homepage
+
+  /users
+
+
+TABLES
+
+  users
+    -has many campaigns;
+    -has many pledges to campaigns
+    -has many comments
+
+  pledges
+    -belongs to user
+    -belongs to campaign
+
+  rewards
+    -belongs to campaign
+
+  comments
+    -belongs to user
+    -belongs to campaign
+
+  campaign
+    -has many updates
+    -has many comments
+    -belongs to category
+
+  category
+    -has many campaigns
+
+PAGES
+
+  Homepage
+    -Navbar
+      -Discover
+      -Start a Project
+      -For you
+      -Logo Homepage
+      -Search icon
+      -Profile Icon Menu Dropdown
+    -Slideshow with Links
+    -Projects We love (display 1 project) with Categories
+    -Recommended for you (display 3 projects)
+    -What's Popular (display 3 projects)
+    -Where Projects Come From Link (Create a Project Page)
+    -Footer

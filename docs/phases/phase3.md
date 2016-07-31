@@ -1,13 +1,13 @@
-# Phase 3: Notebooks (2 day, W2 Tu 6pm)
+# Phase 3: Categorys (2 day, W2 Tu 6pm)
 
 ## Rails
 ### Models
-* Notebook
+* Category
 * Tag
 * Tagging
 
 ### Controllers
-* Api::NotebooksController (create, destroy, index, show, update)
+* Api::CategorysController (create, destroy, index, show, update)
 
 ### Views
 * notebooks/index.json.jbuilder
@@ -15,28 +15,28 @@
 
 ## Flux
 ### Views (React Components)
-* NotebooksIndex
-  - NotebookIndexItem
-* NotebookForm
+* CategorysIndex
+  - CategoryIndexItem
+* CategoryForm
 
 ### Stores
-* Notebook
+* Category
 
 ### Actions
-* `ApiActions.receiveAllNotebooks`
-* `ApiActions.receiveSingleNotebook`
-* `ApiActions.deleteNotebook`
-* `NotebookActions.fetchAllNotebooks`
-* `NotebookActions.fetchSingleNotebook`
-* `NotebookActions.createNotebook`
-* `NotebookActions.editNotebook`
-* `NotebookActions.destroyNotebook`
+* `ApiActions.receiveAllCategorys`
+* `ApiActions.receiveSingleCategory`
+* `ApiActions.deleteCategory`
+* `CategoryActions.fetchAllCategorys`
+* `CategoryActions.fetchSingleCategory`
+* `CategoryActions.createCategory`
+* `CategoryActions.editCategory`
+* `CategoryActions.destroyCategory`
 
 ### ApiUtil
-* `ApiUtil.fetchAllNotebooks`
-* `ApiUtil.fetchSingleNotebook`
-* `ApiUtil.createNotebook`
-* `ApiUtil.editNotebook`
-* `ApiUtil.destroyNotebook`
+* `ApiUtil.fetchAllCategorys`
+* `ApiUtil.fetchSingleCategory`
+* `ApiUtil.createCategory`
+* `ApiUtil.editCategory`
+* `ApiUtil.destroyCategory`
 
 ## Gems/Libraries

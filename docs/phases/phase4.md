@@ -3,20 +3,20 @@
 ## Rails
 
 ### Models
-* Tag
-* Taggings
+* Pledge
 
 ### Controllers
 
 ### Views
-* tags/show.json.jbuilder
+* pledges/show.json.jbuilder
 * SearchIndex
 
 ## Flux
 ### Views (React Components)
-* NoteTags
+* CampaignPledges
 
 ### Stores
+Pledge
 
 ### Actions
 

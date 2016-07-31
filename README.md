@@ -1,33 +1,34 @@
 # KickRestarter
 
-[Heroku link][heroku] **Note:** This should be a link to your production site
+[Heroku link][heroku]
 
-[heroku]: http://www.herokuapp.com
+[heroku]: https://kickrestarter.herokuapp.com/
 
 ## Minimum Viable Product
 
-FresherNote is a web application inspired by Evernote that will be build using Ruby on Rails and React.js.  By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
+KickRestarter is a web application inspired by Kickstarter that will focus on funding the return of beloved nostagics like Lou Diamond Phillips and slap bracelets. KickRestarter will be built using Ruby on Rails and React.js.  By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
+
 
 - [x] Hosting on Heroku
 - [ ] New account creation, login, and guest/demo login
 - [ ] A production README, replacing this README (**NB**: check out the [sample production README](docs/production_readme.md) -- you'll write this later)
-- [ ] Notes
-  - [ ] Smooth, bug-free navigation
+- [ ] Campaigns
+  - [ ] Elegant layout displaying campaign goals and details
+  - [ ] Displays current state of campaign funding
+  - [ ] Options for creating new campaign
+- [ ] Backing campaigns & rewards
+  - [ ] Ability to contribute to or withdraw from a campaign
+  - [ ] Funds updated instantaneously
+- [ ] Search
+  - [ ] Real time search displaying top results
+  - [ ] Load more option to show all results
+- [ ] Discover
+  - [ ] Infinite Scrolling
   - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Notebooks for organizing notes
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Tags for notes
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Rich Text Editing of notes
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Infinite Scroll for Notes
+  - [ ] Animated category menu
+  - [ ] Filtering option headers
+  - [ ] Campaign recommendations
+
 
 ## Design Docs
 * [View Wireframes][views]
@@ -60,76 +61,74 @@ FresherNote is a web application inspired by Evernote that will be build using R
 - [ ] style signin/signup components
 - [ ] seed users
 
-### Phase 2: Notes Model, API, and components (2 days, W1 F 6pm)
+### Phase 2: Campaign Model, API, and components (2 days, W1 F 6pm)
 
-**Objective:** Notes can be created, read, edited and destroyed through
+**Objective:** Campaigns can be created, read, edited and destroyed through
 the API.
 
-- [ ] create `Note` model
+- [ ] create `Campaign` model
 - [ ] seed the database with a small amount of test data
-- [ ] CRUD API for notes (`NotesController`)
-- [ ] jBuilder views for notes
+- [ ] CRUD API for notes (`CampaignController`)
+- [ ] jBuilder views for campaign
 - [ ] test out API interaction in the console.
-- implement each note component, building out the flux loop as needed.
-  - [ ] `NotesIndex`
-  - [ ] `NoteIndexItem`
-  - [ ] `NoteForm`
-- [ ] save Notes to the DB when the form loses focus or is left idle after editing.
-- [ ] style notes components
-- [ ] seed notes
+- implement each campaign component, building out the flux loop as needed.
+  - [ ] `CampaignIndex`
+  - [ ] `CampaignIndexItem`
+  - [ ] `CampaignForm`
+- [ ] style campaign components like Kickstarter
+- [ ] seed campaigns
 
-### Phase 3: Notebooks (2 day, W2 Tu 6pm)
+### Phase 3: Categories (2 day, W2 Tu 6pm)
 
-**Objective:** Notes belong to Notebooks, and can be viewed by notebook.
+**Objective:** Campaigns belong to Categories, and can be viewed by searching or choosing a category.
 
-- [ ] create `Notebook` model
+- [ ] create `Category` model
 - build out API, Flux loop, and components for:
-  - [ ] Notebook CRUD
-  - [ ] adding notes requires a notebook
-  - [ ] moving notes to a different notebook
-  - [ ] viewing notes by notebook
+  - [ ] Category CRUD
+  - [ ] adding campaigns requires a category
+  - [ ] moving campaigns to a different category
+  - [ ] viewing campaigns by category
 - [ ] Use CSS to style new components
-- [ ] Seed Notebooks
+- [ ] Seed categories with campaigns
 
-Phase 3 adds organization to the Notes. Notes belong to a Notebook,
+Phase 3 adds organization to the Campaigns. Campaigns belong to a Category,
 which has its own `Index` view.
 
-### Phase 4: Tags (1 days, W2 W 6pm)
+### Phase 4: Pledges (1 days, W2 W 6pm)
 
-**Objective:** Notes can be tagged with multiple tags, and tags are searchable.
+**Objective:** Campaigns can be contributd to with multiple pledges.
 
-- [ ] create `Tag` model and join table
+- [ ] create `Pledge` model and join table
 - build out API, Flux loop, and components for:
-  - [ ] fetching tags for notebook
-  - [ ] adding tags to notebook
-  - [ ] creating tags while adding to notebooks
-  - [ ] searching notebooks by tag
+  - [ ] fetching pledges for campaign
+  - [ ] adding pledges to campaign
 - [ ] Style new elements
-- [ ] Seed tags and tag the seeded Notebooks
+- [ ] Seed users and add pledges to the seeded Campaigns
 
-### Phase 5: Allow Complex Styling in Notes (1 days, W2 Th 6pm)
+### Phase 5: Comments (1 days, W2 Th 6pm)
 
-**objective:** Enable complex styling of notes.
+**Objective:** Users can create profiles and make comments.
 
-- [ ] Integrate `react-quill` (based on Quill.js).
-- [ ] Use Rails helpers to sanitize HTML before rendering.
-- [ ] Style the new Quill elements.
-- [ ] Add Quill styling to seeded notes
+- [ ] create `comment` model and join table
+- build out API, Flux loop, and components for:
+  - [ ] fetching comments for user and/or campaign
+  - [ ] adding comments to campaign and user profile
+- [ ] Style new elements
+- [ ] Seed comments and add comments to the seeded campaigns and users
+
 
 ### Phase 6: - Pagination / infinite scroll for Notes Index (1 day, W2 F 6pm)
 
-**objective:** Add infinite scroll to Notes Index
+**objective:** Add infinite scroll to Campaigns Index
 
-- [ ] Paginate Notes Index API to send 20 results at a time
+- [ ] Paginate Campaigns Index API to send 24 results at a time
 - [ ] Append next set of results when user scrolls and is near bottom
 - [ ] Make sure styling still looks good
 - [ ] Ensure we have enough seeded notes to demo infinite scroll
 
 ### Bonus Features (TBD)
-- [ ] Search through notes for blocks of text
-- [ ] Set reminders on notes
-- [ ] Changelogs for Notes
-- [ ] Multiple sessions
+- [ ] Likes
+- [ ] Credit Card Payments
 
 [phase-one]: docs/phases/phase1.md
 [phase-two]: docs/phases/phase2.md

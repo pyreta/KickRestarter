@@ -1,40 +1,40 @@
-# Phase 2: Flux Architecture and Note CRUD (2 days, W1 F 6pm)
+# Phase 2: Flux Architecture and Campaign CRUD (2 days, W1 F 6pm)
 
 ## Rails
 ### Models
-* Note
+* Campaign
 
 ### Controllers
-* Api::NotesController (create, destroy, index, show, update)
+* Api::CampaignsController (create, destroy, index, show, update)
 
 ### Views
-* notes/index.json.jbuilder
-* notes/show.json.jbuilder
+* campaigns/index.json.jbuilder
+* campaigns/show.json.jbuilder
 
 ## Flux
 ### Views (React Components)
-* NotesIndex
-  - NotesIndexItem
-* NoteForm
+* CampaignsIndex
+  - CampaignsIndexItem
+* CampaignForm
 
 ### Stores
-* Note
+* Campaign
 
 ### Actions
-* `ApiActions.receiveAllNotes`
-* `ApiActions.receiveSingleNote`
-* `ApiActions.deleteNote`
-* `NoteActions.fetchAllNotes`
-* `NoteActions.fetchSingleNote`
-* `NoteActions.createNote`
-* `NoteActions.editNote`
-* `NoteActions.destroyNote`
+* `ApiActions.receiveAllCampaigns`
+* `ApiActions.receiveSingleCampaign`
+* `ApiActions.deleteCampaign`
+* `CampaignActions.fetchAllCampaigns`
+* `CampaignActions.fetchSingleCampaign`
+* `CampaignActions.createCampaign`
+* `CampaignActions.editCampaign`
+* `CampaignActions.destroyCampaign`
 
 ### ApiUtil
-* `ApiUtil.fetchAllNotes`
-* `ApiUtil.fetchSingleNote`
-* `ApiUtil.createNote`
-* `ApiUtil.editNote`
-* `ApiUtil.destroyNote`
+* `ApiUtil.fetchAllCampaigns`
+* `ApiUtil.fetchSingleCampaign`
+* `ApiUtil.createCampaign`
+* `ApiUtil.editCampaign`
+* `ApiUtil.destroyCampaign`
 
 ## Gems/Libraries
