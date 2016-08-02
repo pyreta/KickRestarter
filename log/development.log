@@ -1,0 +1,48 @@
+  [1m[36m (22.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (2.2ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20160802143456)
+  [1m[35m (1.3ms)[0m  CREATE UNIQUE INDEX  "index_users_on_username" ON "users"  ("username")
+PG::UndefinedTable: ERROR:  relation "users" does not exist
+: CREATE UNIQUE INDEX  "index_users_on_username" ON "users"  ("username")
+  [1m[36m (0.5ms)[0m  [1mCREATE UNIQUE INDEX  "index_users_on_username" ON "users"  ("username")[0m
+PG::UndefinedTable: ERROR:  relation "users" does not exist
+: CREATE UNIQUE INDEX  "index_users_on_username" ON "users"  ("username")
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20160802143456)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (9.6ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying NOT NULL, "password_digest" character varying NOT NULL, "session_token" character varying NOT NULL, "profile_icon" character varying, "biography" text, "location_id" integer NOT NULL, "url" character varying, "email" character varying NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (1.2ms)[0m  CREATE UNIQUE INDEX  "index_users_on_username" ON "users"  ("username")
+  [1m[36m (1.1ms)[0m  [1mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (0.9ms)[0m  CREATE  INDEX  "index_users_on_location_id" ON "users"  ("location_id")
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20160802143456"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (5.2ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mUser Exists (6.8ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."username" = 'pyreta' LIMIT 1[0m
+  [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'pyreta@gmail.com' LIMIT 1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."session_token" = 'Cjy9euV-UTI4pIoAKRTnmA' LIMIT 1[0m
+  [1m[35mSQL (18.2ms)[0m  INSERT INTO "users" ("username", "password_digest", "profile_icon", "biography", "location_id", "url", "email", "session_token", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"  [["username", "pyreta"], ["password_digest", "$2a$10$YOJE7RZgVQLIsvhT.nC1/uPNqa2OTvhiQHtWe1yvmFobrM.ToORJy"], ["profile_icon", "pyreta_icon.jpg"], ["biography", "I was born on the top of a hill in the middle of Minneapolis.  It was here that I learned the true nature of potato chips and what it means to actually live on said potato chips.  Is it potato or potatoe?  Ask DanQuail, perhaps he shall have an answer for you.  Otherwise, just google it.  These days you don't need to ask questions, just look it up.  Facts are attainable by all (who have phones).  Goodbye brozef"], ["location_id", 1], ["url", "www.jollyband.com"], ["email", "pyreta@gmail.com"], ["session_token", "Cjy9euV-UTI4pIoAKRTnmA"], ["created_at", "2016-08-02 15:08:46.577630"], ["updated_at", "2016-08-02 15:08:46.577630"]]
+  [1m[36m (312.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mUser Exists (1.0ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."username" = 'babylouie' LIMIT 1[0m
+  [1m[35mUser Exists (0.8ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'louis@louisabramson.com' LIMIT 1
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."session_token" = 'JQWxKx5qMT5DQ_HOq1Ox_Q' LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "users" ("username", "password_digest", "profile_icon", "biography", "location_id", "url", "email", "session_token", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"  [["username", "babylouie"], ["password_digest", "$2a$10$7Jf3PAleMX0sqmM6Z2dlJevNxO69PowXRE07RMl/0aCA.wHbjTBsy"], ["profile_icon", "babylouie_icon.jpg"], ["biography", "I'm a baby, so there's not much to say."], ["location_id", 2], ["url", "www.louisabramson.com"], ["email", "louis@louisabramson.com"], ["session_token", "JQWxKx5qMT5DQ_HOq1Ox_Q"], ["created_at", "2016-08-02 15:08:47.005079"], ["updated_at", "2016-08-02 15:08:47.005079"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+  [1m[36mUser Load (1.6ms)[0m  [1mSELECT "users".* FROM "users"[0m
