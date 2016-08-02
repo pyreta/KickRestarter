@@ -60,7 +60,23 @@
 	
 	var App = React.createClass({
 	  displayName: 'App',
+	  sessionChanged: function sessionChanged() {
+	    var name = void 0;
+	    if (SessionStore.isUserLoggedIn()) {
+	      name = SessionStore.currentUser().username;
+	    } else {
+	      name = "Nobody";
+	    }
+	    this.setState({ currentUser: name });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    SessionStore.addListener(this.sessionChanged);
+	  },
+	  getInitialState: function getInitialState() {
+	    return { currentUser: "Nobody" };
+	  },
 	  render: function render() {
+	
 	    return React.createElement(
 	      'div',
 	      null,
@@ -77,7 +93,7 @@
 	        'h3',
 	        null,
 	        'Logged in?: ',
-	        SessionStore.isUserLoggedIn()
+	        this.state.currentUser
 	      ),
 	      this.props.children
 	    );
@@ -34068,10 +34084,27 @@
 	
 	var LoginForm = React.createClass({
 	  displayName: 'LoginForm',
+	  getInitialState: function getInitialState() {
+	    return { username: "", password: "" };
+	  },
+	  formSubmit: function formSubmit(e) {
+	    e.preventDefault();
+	    SessionActions.logIn(this.state);
+	    console.log("formSubmit");
+	  },
+	  changeUsername: function changeUsername(e) {
+	    this.setState({ username: e.target.value });
+	    console.log(this.state);
+	  },
+	  changePassword: function changePassword(e) {
+	    this.setState({ password: e.target.value });
+	    console.log(this.state);
+	  },
 	  render: function render() {
+	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'login-box group' },
 	      React.createElement(
 	        'div',
 	        null,
@@ -34080,30 +34113,20 @@
 	      React.createElement(
 	        'form',
 	        { onSubmit: this.formSubmit },
-	        React.createElement(
-	          'input',
-	          {
-	            type: 'text',
-	            onChange: this.changeUsername,
-	            value: this.state.username },
-	          'Username'
-	        ),
-	        React.createElement(
-	          'input',
-	          {
-	            type: 'password',
-	            onChange: this.changePassword,
-	            value: this.state.password },
-	          'Username'
-	        ),
-	        React.createElement(
-	          'input',
-	          {
-	            type: 'password',
-	            onChange: this.changePassword,
-	            value: this.state.password },
-	          'Username'
-	        )
+	        React.createElement('input', {
+	          type: 'text',
+	          className: 'input-text',
+	          onChange: this.changeUsername,
+	          value: this.state.username }),
+	        React.createElement('input', {
+	          type: 'password',
+	          className: 'input-text',
+	          onChange: this.changePassword,
+	          value: this.state.password }),
+	        React.createElement('input', {
+	          type: 'submit',
+	          className: 'button',
+	          value: 'Login' })
 	      )
 	    );
 	  }
