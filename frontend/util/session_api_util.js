@@ -7,7 +7,7 @@ const SessionApiUtil = {
 			success,
 			error(xhr) {
 				const errors = xhr.responseJSON;
-
+        console.log("LOGIN ERRROROR");
 				error("login", errors);
 			}
 		});
@@ -38,16 +38,19 @@ const SessionApiUtil = {
 		});
 	},
 
-	fetchCurrentUser(success, complete) {
+	fetchCurrentUser(success, error, complete) {
 		$.ajax({
 			url: '/api/session',
 			method: 'GET',
-			success,
-			error: function (xhr) {
+			success(resp) {
+        console.log("Successss");
+        console.log(resp);
+      },
+			error(xhr) {
 			  console.log("Error in SessionApiUtil#fetchCurrentUser");
 			},
-      complete: function(){
-				complete();
+      complete(){
+				console.log("Complete!");
 			}
 		});
 	}
