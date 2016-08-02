@@ -3,6 +3,8 @@ node_modules
 /tmp
 sprockets
 bundle
+.byebug_history
+sandBox.js
 
 *node_modules
 *.DS_Store

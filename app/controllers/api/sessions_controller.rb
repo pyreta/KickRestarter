@@ -1,6 +1,4 @@
 class Api::SessionsController < ApplicationController
-  def new
-  end
 
   def create
     @user = User.find_by_credentials(
@@ -9,10 +7,9 @@ class Api::SessionsController < ApplicationController
     )
     if @user
       login(@user)
-      render json: @user
+      render "api/users/show"
     else
-      flashit(["Invalid Username or Password"])
-      render json: {}
+      render json: ['Invalid credentials'], status: 401
     end
   end
 
@@ -21,9 +18,7 @@ class Api::SessionsController < ApplicationController
       logout
       render json: {}
     else
-      puts "LOGGGGDDDOUT ALREADY"
-      render test: "Not signed in"
-      # render status: 404
+      render json: ['Nobody Signed In'], status: 401
     end
   end
 end
