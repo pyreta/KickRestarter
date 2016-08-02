@@ -2531,3 +2531,15 @@ Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac
 
 
 Started GET "/assets/bundle.js.map" for ::1 at 2016-08-02 15:59:27 -0400
+
+
+Started GET "/" for ::1 at 2016-08-02 17:01:14 -0400
+Processing by StaticPagesController#root as HTML
+  Rendered static_pages/root.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 420ms (Views: 420.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/bundle.self-5f75836245aad34c2aa186be17e69967741e680baf3f9c0a06a83640e721f826.js?body=1" for ::1 at 2016-08-02 17:01:14 -0400
+
+
+Started GET "/assets/bundle.js.map" for ::1 at 2016-08-02 17:01:31 -0400
