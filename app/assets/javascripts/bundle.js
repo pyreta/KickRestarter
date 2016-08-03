@@ -53,7 +53,7 @@
 	var Route = ReactRouter.Route;
 	var IndexRoute = ReactRouter.IndexRoute;
 	var hashHistory = ReactRouter.hashHistory;
-	var LoginForm = __webpack_require__(265);
+	var LoginForm = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/LoginForm\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	
 	window.SessionActions = __webpack_require__(239);
 	var SessionStore = __webpack_require__(247);
@@ -34069,76 +34069,6 @@
 	
 	module.exports = FluxMixinLegacy;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 265 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var SessionStore = __webpack_require__(247);
-	var ErrorStore = __webpack_require__(266);
-	
-	var LoginForm = React.createClass({
-	  displayName: 'LoginForm',
-	  getInitialState: function getInitialState() {
-	    return { username: "", password: "" };
-	  },
-	  formSubmit: function formSubmit(e) {
-	    e.preventDefault();
-	    SessionActions.logIn(this.state);
-	    console.log("formSubmit");
-	  },
-	  changeUsername: function changeUsername(e) {
-	    this.setState({ username: e.target.value });
-	    console.log(this.state);
-	  },
-	  changePassword: function changePassword(e) {
-	    this.setState({ password: e.target.value });
-	    console.log(this.state);
-	  },
-	  render: function render() {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'login-box group' },
-	      React.createElement(
-	        'div',
-	        null,
-	        'I am a Login Form, bra..'
-	      ),
-	      React.createElement(
-	        'form',
-	        { onSubmit: this.formSubmit },
-	        React.createElement('input', {
-	          type: 'text',
-	          className: 'input-text',
-	          onChange: this.changeUsername,
-	          value: this.state.username }),
-	        React.createElement('input', {
-	          type: 'password',
-	          className: 'input-text',
-	          onChange: this.changePassword,
-	          value: this.state.password }),
-	        React.createElement('input', {
-	          type: 'submit',
-	          className: 'button',
-	          value: 'Login' })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = LoginForm;
-
-/***/ },
-/* 266 */
-/***/ function(module, exports) {
-
-	"use strict";
 
 /***/ }
 /******/ ]);

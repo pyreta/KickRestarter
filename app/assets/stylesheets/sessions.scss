@@ -1,14 +1,97 @@
-.login-box{
-  display: table;
+/* line 1, /Users/Abramson/Desktop/KickRestarter/app/assets/stylesheets/sessions.scss */
+.login-box {
   margin: auto;
-  border: 5px solid black;
-  width:400px;
+  border: 1px solid #f1eeea;
+  width: 362px;
   height: 600px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: white;
 }
 
-.input-text, .button{
-  background-color: yellow;
-  width: 300px;
-  margin: auto;
-  display: inline;
+/* line 19, /Users/Abramson/Desktop/KickRestarter/app/assets/stylesheets/sessions.scss */
+.input > input{
+  display: block;
+  border: 1px solid #dad7d4;
+  padding: 10px;
+  width: 286px;
+  border-radius: 6px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 342px;
+  font-size: 14px;
+}
+
+
+
+.submit > input {
+  background-color: #2bde73;
+  border: none;
+  color: white;
+
+  display: block;
+  padding: 10px;
+  width: 286px;
+  border-radius: 6px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 363px;
+  font-size: 14px;
+}
+
+.forgot {
+  font-size: 13px;
+}
+/* line 30, /Users/Abramson/Desktop/KickRestarter/app/assets/stylesheets/sessions.scss */
+.input > input:focus {
+  border-color: #9c0;
+}
+.no-input {
+  color: #a9a9a9;
+}
+
+#remember-label{
+  padding: 5px;
+  color: #3D3D66;
+  font-size: 14px;
+}
+
+#facebook-button{
+  background-color: #3b5998;
+}
+
+.line {
+    height: 1px;
+    background-color: #F1EEEA;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+
+.login-label {
+  font-size: 32px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;
+  margin-bottom: 37px
+}
+
+.never-post{
+  color: #3D3D66;
+  text-align: center;
+  font-size: 12px;
+}
+
+.login-footer{
+  border-top: 1px solid #F1EEEA;
+  padding: 20px;
+  font-size: 14px;
+  margin: 30px;
+  text-align: center;
+  color: #3D3D66;
+}
+
+.signup-link{
+  font-weight: bold;
+  padding: 5px;
 }

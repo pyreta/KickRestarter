@@ -14,7 +14,7 @@
  *= require_self
  */
 
- html, body, section, article, h1, h2, p {
+ html, body, section, article, h1, h2, p, a {
    margin: 0;
    border: 0;
    padding: 0;
@@ -24,6 +24,35 @@
    color: inherit;
    background: transparent;
  }
+
+ body{
+   background-color: #f7f5f2;
+   padding: 19.2px;
+   font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;
+ }
+
+/*input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="submit"] {
+  -webkit-appearance: none;
+  display: inline-block;
+  box-sizing: content-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  width: auto;
+  font: inherit;
+  vertical-align: baseline;
+  background: transparent;
+  color: inherit;
+}*/
+
+input[type="submit"] {
+  display: inline;
+  cursor: pointer;
+}
 
  .group:after {
   content: "";
