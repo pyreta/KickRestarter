@@ -1,12 +1,70 @@
 /* line 1, /Users/Abramson/Desktop/KickRestarter/app/assets/stylesheets/sessions.scss */
-.login-box {
+h3 {
+  margin: 0;
+}
+
+.input-box {
   margin: auto;
+  margin-top: 23px;
   border: 1px solid #f1eeea;
-  width: 362px;
-  height: 600px;
-  padding: 20px;
+  width: 402px;
+
   border-radius: 3px;
   background-color: white;
+}
+
+
+.login-box {
+  height: 551px;
+}
+
+.signup-box{
+  height: 722px;
+  margin-bottom: 40px;
+}
+
+
+
+
+.login-padding{
+  padding: 20px;
+
+}
+
+
+.flag {
+  display: table;
+  width: 100%;
+}
+
+.flag .flag-img {
+    padding-right: 10px;
+}
+
+.flag .flag-img, .flag .flag-body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.flag .flag-body {
+    width: 100%;
+}
+
+.nav-bar{
+  display: block;
+  background-color: white;
+  height: 60px;
+  box-shadow: 0 9px 22px -9px #d2d2d2;
+}
+
+.footer {
+  display: block;
+  background-color: #020621;
+  height: 300px;
+  border-top: dashed 1px #2BDE73;
+  color: #80809E;
+  font-size: 14px;
+  margin-top: 62px;
 }
 
 /* line 19, /Users/Abramson/Desktop/KickRestarter/app/assets/stylesheets/sessions.scss */
@@ -20,6 +78,7 @@
   margin-bottom: 15px;
   width: 342px;
   font-size: 14px;
+  outline: 0;
 }
 
 
@@ -37,6 +96,7 @@
   margin-bottom: 15px;
   width: 363px;
   font-size: 14px;
+  transition: background-color 0.5s;
 }
 
 .forgot {
@@ -56,6 +116,11 @@
   font-size: 14px;
 }
 
+#newsletter-label{
+  color: #3D3D66;
+  font-size: 14px;
+}
+
 #facebook-button{
   background-color: #3b5998;
 }
@@ -69,10 +134,15 @@
     margin-bottom: 5%;
   }
 
+#login-button:hover {
+  background-color: #1db95c;
+  transition: background-color 0.5s;
+}
+
 
 .login-label {
   font-size: 32px;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;
+  // font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;
   margin-bottom: 37px
 }
 
@@ -86,8 +156,8 @@
   border-top: 1px solid #F1EEEA;
   padding: 20px;
   font-size: 14px;
-  margin: 30px;
   text-align: center;
+  margin-top: 30px;
   color: #3D3D66;
 }
 

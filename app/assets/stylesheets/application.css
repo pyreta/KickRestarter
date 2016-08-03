@@ -14,7 +14,7 @@
  *= require_self
  */
 
- html, body, section, article, h1, h2, p, a {
+ html, body, section, article, h1, h2, p, a, input {
    margin: 0;
    border: 0;
    padding: 0;
@@ -27,8 +27,9 @@
 
  body{
    background-color: #f7f5f2;
-   padding: 19.2px;
-   font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;
+   padding-top: 0;
+   /*padding: 19.2px;*/
+   font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;
  }
 
 /*input[type="text"],
@@ -52,6 +53,7 @@ input[type="submit"] {
 input[type="submit"] {
   display: inline;
   cursor: pointer;
+  text-align: center;
 }
 
  .group:after {

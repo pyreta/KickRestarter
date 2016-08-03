@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto">
   <title>KickRestarter</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
+
+  <script type="text/javascript">
+    window.logoNavbar = '<%= image_url('logo-navbar.png') %>'
+  </script>
+
 </head>
 <body>
-<% if @current_user %>
-  <h2><% @current_user.username %></h2>
-<% else %>
-  <h2>LOGIN</h2>
-<% end %>
+
 <%= yield %>
 
 </body>

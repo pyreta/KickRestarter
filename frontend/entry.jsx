@@ -6,6 +6,10 @@ const Route = ReactRouter.Route;
 const IndexRoute = ReactRouter.IndexRoute;
 const hashHistory = ReactRouter.hashHistory;
 const LoginForm = require("./components/LoginForm");
+const SignUpForm = require("./components/SignUpForm");
+const NavBar = require("./components/NavBar");
+const Footer = require("./components/Footer");
+const HomePage = require("./components/HomePage");
 
 window.SessionActions = require("./actions/session_actions");
 const SessionStore = require("./stores/session_store");
@@ -34,9 +38,11 @@ const App = React.createClass({
 
     return (
         <div>
+          <NavBar />
           <header><h1>KickRestarter</h1></header>
           <h3>Logged in?: {this.state.currentUser}</h3>
           { this.props.children }
+          <Footer />
         </div>
     );
   }
@@ -45,7 +51,9 @@ const App = React.createClass({
 const appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
+      <IndexRoute component={HomePage} />
       <Route path="/login" component={LoginForm} />
+      <Route path="/signup" component={SignUpForm} />
     </Route>
   </Router>
 );
