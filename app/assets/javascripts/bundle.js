@@ -64,41 +64,15 @@
 	
 	var App = React.createClass({
 	  displayName: 'App',
-	  sessionChanged: function sessionChanged() {
-	    var name = void 0;
-	    if (SessionStore.isUserLoggedIn()) {
-	      name = SessionStore.currentUser().username;
-	    } else {
-	      name = "Nobody";
-	    }
-	    this.setState({ currentUser: name });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    SessionStore.addListener(this.sessionChanged);
-	  },
-	  getInitialState: function getInitialState() {
-	    return { currentUser: "Nobody" };
-	  },
 	  render: function render() {
 	
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement(NavBar, null),
 	      React.createElement(
 	        'header',
 	        null,
-	        React.createElement(
-	          'h1',
-	          null,
-	          'KickRestarter'
-	        )
-	      ),
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Logged in?: ',
-	        this.state.currentUser
+	        React.createElement(NavBar, null)
 	      ),
 	      this.props.children,
 	      React.createElement(Footer, null)
@@ -27125,7 +27099,7 @@
 	'use strict';
 	
 	var SessionApiUtil = {
-		logIn: function logIn(user, success, _error) {
+		logIn: function logIn(user, success, errorCallback) {
 			$.ajax({
 				url: '/api/session',
 				type: 'POST',
@@ -27134,34 +27108,35 @@
 				error: function error(xhr) {
 					var errors = xhr.responseJSON;
 					console.log("LOGIN ERRROROR");
-					_error("login", errors);
+					errorCallback("login", errors);
 				}
 			});
 		},
-		logOut: function logOut(success) {
+		logOut: function logOut(success, errorCallback) {
 			$.ajax({
 				url: '/api/session',
 				method: 'delete',
 				success: success,
-				error: function error() {
-					console.log("Logout error in SessionApiUtil#logout");
+				error: function error(xhr) {
+					var errors = xhr.responseJSON;
+					errorCallback("logout", errors);
 				}
 			});
 		},
-		signUp: function signUp(user, success, _error2) {
+		signUp: function signUp(user, success, _error) {
 			$.ajax({
-				url: '/api/user',
+				url: '/api/users',
 				type: 'POST',
 				dataType: 'json',
 				data: { user: user },
 				success: success,
 				error: function error(xhr) {
 					var errors = xhr.responseJSON;
-					_error2("signup", errors);
+					_error("signup", errors);
 				}
 			});
 		},
-		fetchCurrentUser: function fetchCurrentUser(success, error, complete) {
+		fetchCurrentUser: function fetchCurrentUser(success, _error2) {
 			$.ajax({
 				url: '/api/session',
 				method: 'GET',
@@ -27170,10 +27145,8 @@
 					console.log(resp);
 				},
 				error: function error(xhr) {
-					console.log("Error in SessionApiUtil#fetchCurrentUser");
-				},
-				complete: function complete() {
-					console.log("Complete!");
+					var errors = xhr.responseJSON;
+					_error2("fetchUsers", errors);
 				}
 			});
 		}
@@ -27195,16 +27168,33 @@
 	
 	var SessionActions = {
 	  signUp: function signUp(formData) {
-	    SessionApiUtil.signUp(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
+	    var newData = void 0;
+	    if (formData.email !== formData.email2) {
+	      console.log("Confirm Email!!!");
+	      ErrorActions.setErrors("signup", ["Confirm Email"]);
+	      return;
+	    } else if (formData.password !== formData.password2) {
+	      console.log("Confirm Password!!!");
+	      ErrorActions.setErrors("signup", ["Confirm Password"]);
+	      return;
+	    } else {
+	      newData = {
+	        username: formData.name,
+	        email: formData.email,
+	        password: formData.password
+	      };
+	    }
+	
+	    SessionApiUtil.signUp(newData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
 	  },
 	  logIn: function logIn(formData) {
 	    SessionApiUtil.logIn(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
 	  },
 	  logOut: function logOut() {
-	    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
+	    SessionApiUtil.logOut(SessionActions.removeCurrentUser, ErrorActions.setErrors);
 	  },
 	  fetchCurrentUser: function fetchCurrentUser(complete) {
-	    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser, complete);
+	    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser, ErrorActions.setErrors, complete);
 	  },
 	  receiveCurrentUser: function receiveCurrentUser(currentUser) {
 	    AppDispatcher.dispatch({
@@ -27275,7 +27265,10 @@
 
 	"use strict";
 	
-	module.exports = {};
+	module.exports = {
+	  SET_ERRORS: "SET_ERRORS",
+	  CLEAR_ERRORS: "CLEAR_ERRORS"
+	};
 
 /***/ },
 /* 244 */
@@ -34099,11 +34092,15 @@
 	    }
 	  },
 	  componentDidMount: function componentDidMount() {
-	    // this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
 	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	  },
 	  getInitialState: function getInitialState() {
-	    return { username: "Email", password: "Password" };
+	    return { username: "", password: "" };
 	  },
 	  formSubmit: function formSubmit(e) {
 	    e.preventDefault();
@@ -34115,11 +34112,27 @@
 	  changePassword: function changePassword(e) {
 	    this.setState({ password: e.target.value });
 	  },
-	  render: function render() {
+	  errors: function errors() {
+	    var errors = ErrorStore.errors("login");
+	    var messages = errors.map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i },
+	        errorMsg
+	      );
+	    });
 	
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      { className: 'login-box group input-box' },
+	      this.errors(),
 	      React.createElement(
 	        'div',
 	        { className: 'login-padding group' },
@@ -34138,15 +34151,17 @@
 	              type: 'text',
 	              className: 'no-input',
 	              onChange: this.changeUsername,
+	              placeholder: 'Email',
 	              value: this.state.username })
 	          ),
 	          React.createElement(
 	            'div',
 	            { className: 'input' },
 	            React.createElement('input', {
-	              type: 'text',
+	              type: 'password',
 	              className: 'no-input',
 	              onChange: this.changePassword,
+	              placeholder: 'Password',
 	              value: this.state.password })
 	          ),
 	          React.createElement(
@@ -34212,9 +34227,55 @@
 
 /***/ },
 /* 266 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+	
+	var Store = __webpack_require__(248).Store;
+	var AppDispatcher = __webpack_require__(240);
+	var ErrorConstants = __webpack_require__(243);
+	
+	var ErrorStore = new Store(AppDispatcher);
+	
+	var _errors = [];
+	var _form = "";
+	
+	function _setErrors(payload) {
+	  _errors = payload.errors;
+	  _form = payload.form;
+	  ErrorStore.__emitChange();
+	}
+	
+	function _clearErrors() {
+	  _errors = [];
+	  _form = "";
+	  ErrorStore.__emitChange();
+	}
+	
+	ErrorStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ErrorConstants.SET_ERRORS:
+	      _setErrors(payload);
+	      break;
+	    case ErrorConstants.CLEAR_ERRORS:
+	      _clearErrors();
+	      break;
+	  }
+	};
+	
+	ErrorStore.errors = function (form) {
+	  if (form !== _form) {
+	    return [];
+	  }
+	
+	  return _errors.slice();
+	};
+	
+	ErrorStore.form = function () {
+	  return _form;
+	};
+	
+	module.exports = ErrorStore;
 
 /***/ },
 /* 267 */
@@ -34230,12 +34291,56 @@
 	
 	var NavBar = React.createClass({
 	  displayName: 'NavBar',
+	  sessionChanged: function sessionChanged() {
+	    var name = void 0;
+	    if (SessionStore.isUserLoggedIn()) {
+	      this.setState({ currentUser: SessionStore.currentUser().username });
+	    } else {
+	      this.setState({ currentUser: false });
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    SessionStore.addListener(this.sessionChanged);
+	  },
 	  getInitialState: function getInitialState() {
-	    return null;
+	    return { currentUser: false };
+	  },
+	  logOutClick: function logOutClick(e) {
+	    e.preventDefault();
+	    SessionActions.logOut();
+	    this.setState({ currentUser: false });
 	  },
 	  render: function render() {
+	    var greeting = void 0;
+	    if (this.state.currentUser) {
+	      greeting = React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'div',
+	          null,
+	          'Welcome, ',
+	          this.state.currentUser
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.logOutClick },
+	          'Log Out'
+	        )
+	      );
+	    } else {
+	      greeting = React.createElement(
+	        'a',
+	        { href: '#/login' },
+	        'Log In'
+	      );
+	    }
 	
-	    return React.createElement('div', { className: 'nav-bar' });
+	    return React.createElement(
+	      'div',
+	      { className: 'nav-bar' },
+	      greeting
+	    );
 	  }
 	});
 	
@@ -34295,21 +34400,41 @@
 	    }
 	  },
 	  componentDidMount: function componentDidMount() {
-	    // this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      name: "Email",
-	      email: "Email",
-	      email2: "Re-enter email",
-	      password: "Password",
-	      password2: "Re-enter password"
+	      name: "",
+	      email: "",
+	      email2: "",
+	      password: "",
+	      password2: ""
 	    };
+	  },
+	  errors: function errors() {
+	    var errors = ErrorStore.errors("signup");
+	    var messages = errors.map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i },
+	        errorMsg
+	      );
+	    });
+	
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
 	  },
 	  formSubmit: function formSubmit(e) {
 	    e.preventDefault();
-	    SessionActions.logIn(this.state);
+	    SessionActions.signUp(this.state);
 	  },
 	  changeName: function changeName(e) {
 	    this.setState({ name: e.target.value });
@@ -34331,6 +34456,7 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'signup-box group input-box' },
+	      this.errors(),
 	      React.createElement(
 	        'div',
 	        { className: 'login-padding group' },
@@ -34349,6 +34475,7 @@
 	              type: 'text',
 	              className: 'no-input',
 	              onChange: this.changeName,
+	              placeholder: 'Name',
 	              value: this.state.name })
 	          ),
 	          React.createElement(
@@ -34357,6 +34484,7 @@
 	            React.createElement('input', {
 	              type: 'text',
 	              className: 'no-input',
+	              placeholder: 'Email',
 	              onChange: this.changeEmail,
 	              value: this.state.email })
 	          ),
@@ -34366,6 +34494,7 @@
 	            React.createElement('input', {
 	              type: 'text',
 	              className: 'no-input',
+	              placeholder: 'Re-enter email',
 	              onChange: this.changeEmail2,
 	              value: this.state.email2 })
 	          ),
@@ -34375,6 +34504,7 @@
 	            React.createElement('input', {
 	              type: 'text',
 	              className: 'no-input',
+	              placeholder: 'Password',
 	              onChange: this.changePassword,
 	              value: this.state.password })
 	          ),
@@ -34384,6 +34514,7 @@
 	            React.createElement('input', {
 	              type: 'text',
 	              className: 'no-input',
+	              placeholder: 'Re-enter Password',
 	              onChange: this.changePassword2,
 	              value: this.state.password2 })
 	          ),

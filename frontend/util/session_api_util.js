@@ -1,5 +1,5 @@
 const SessionApiUtil = {
-	logIn(user, success, error) {
+	logIn(user, success, errorCallback) {
 		$.ajax({
 			url: '/api/session',
 			type: 'POST',
@@ -8,25 +8,26 @@ const SessionApiUtil = {
 			error(xhr) {
 				const errors = xhr.responseJSON;
         console.log("LOGIN ERRROROR");
-				error("login", errors);
+				errorCallback("login", errors);
 			}
 		});
 	},
 
-	logOut(success) {
+	logOut(success, errorCallback) {
 		$.ajax({
 			url: '/api/session',
 			method: 'delete',
 			success,
-			error: function () {
-			  console.log("Logout error in SessionApiUtil#logout");
+			error(xhr) {
+				const errors = xhr.responseJSON;
+				errorCallback("logout", errors);
 			}
 		});
 	},
 
 	signUp(user, success, error) {
 		$.ajax({
-			url: '/api/user',
+			url: '/api/users',
 			type: 'POST',
 			dataType: 'json',
 			data: { user },
@@ -38,7 +39,7 @@ const SessionApiUtil = {
 		});
 	},
 
-	fetchCurrentUser(success, error, complete) {
+	fetchCurrentUser(success, error) {
 		$.ajax({
 			url: '/api/session',
 			method: 'GET',
@@ -47,10 +48,8 @@ const SessionApiUtil = {
         console.log(resp);
       },
 			error(xhr) {
-			  console.log("Error in SessionApiUtil#fetchCurrentUser");
-			},
-      complete(){
-				console.log("Complete!");
+				const errors = xhr.responseJSON;
+				error("fetchUsers", errors);
 			}
 		});
 	}

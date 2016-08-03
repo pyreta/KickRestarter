@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     @user.is_password?(password) ? @user : nil
   end
 
-  has_many :links 
+  has_many :links
 
   attr_reader :password
   after_initialize :ensure_session_token

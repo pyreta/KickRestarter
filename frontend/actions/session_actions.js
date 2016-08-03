@@ -6,9 +6,27 @@ const hashHistory = require('react-router').hashHistory;
 
 const SessionActions = {
 
+
   signUp(formData){
+    let newData;
+    if (formData.email !== formData.email2) {
+      console.log("Confirm Email!!!");
+      ErrorActions.setErrors("signup", ["Confirm Email"]);
+      return;
+    } else if (formData.password !== formData.password2) {
+      console.log("Confirm Password!!!");
+      ErrorActions.setErrors("signup", ["Confirm Password"]);
+      return;
+    } else {
+      newData = {
+        username: formData.name,
+        email: formData.email,
+        password: formData.password,
+      };
+    }
+
     SessionApiUtil.signUp(
-      formData,
+      newData,
       SessionActions.receiveCurrentUser,
       ErrorActions.setErrors);
   },
@@ -21,13 +39,13 @@ const SessionActions = {
   },
 
   logOut() {
-    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
+    SessionApiUtil.logOut(SessionActions.removeCurrentUser, ErrorActions.setErrors);
 
   },
 
   fetchCurrentUser(complete){
     SessionApiUtil.fetchCurrentUser(
-      SessionActions.receiveCurrentUser, complete);
+      SessionActions.receiveCurrentUser, ErrorActions.setErrors, complete);
   },
 
   receiveCurrentUser(currentUser) {

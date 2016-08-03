@@ -14,12 +14,17 @@ const LoginForm = React.createClass({
   },
 
   componentDidMount() {
-    // this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
   },
 
+  componentWillUnmount() {
+    this.errorListener.remove();
+    this.sessionListener.remove();
+  },
+
   getInitialState() {
-    return {username: "Email", password: "Password"};
+    return {username: "", password: ""};
   },
 
   formSubmit(e) {
@@ -35,10 +40,19 @@ const LoginForm = React.createClass({
     this.setState({password: e.target.value});
   },
 
-  render() {
+  errors() {
+    const errors = ErrorStore.errors("login");
+    const messages = errors.map( (errorMsg, i) => {
+      return <li key={ i }>{ errorMsg }</li>;
+    });
 
+    return <ul>{ messages }</ul>;
+  },
+
+  render() {
     return (
       <div className="login-box group input-box">
+        { this.errors() }
         <div className="login-padding group">
 
           <div className="login-label">Log In</div>
@@ -49,14 +63,16 @@ const LoginForm = React.createClass({
                   type="text"
                   className="no-input"
                   onChange={this.changeUsername}
+                  placeholder="Email"
                   value={this.state.username} />
               </div>
 
               <div className="input">
                 <input
-                  type="text"
+                  type="password"
                   className="no-input"
                   onChange={this.changePassword}
+                  placeholder="Password"
                   value={this.state.password} />
               </div>
 

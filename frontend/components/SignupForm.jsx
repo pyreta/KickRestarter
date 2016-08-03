@@ -14,23 +14,37 @@ const SignUpForm = React.createClass({
   },
 
   componentDidMount() {
-    // this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+  },
+
+  componentWillUnmount() {
+    this.errorListener.remove();
+    this.sessionListener.remove();
   },
 
   getInitialState() {
     return {
-      name: "Email",
-      email: "Email",
-      email2: "Re-enter email",
-      password: "Password",
-      password2: "Re-enter password",
+      name: "",
+      email: "",
+      email2: "",
+      password: "",
+      password2: "",
     };
+  },
+
+  errors() {
+    const errors = ErrorStore.errors("signup");
+    const messages = errors.map( (errorMsg, i) => {
+      return <li key={ i }>{ errorMsg }</li>;
+    });
+
+    return <ul>{ messages }</ul>;
   },
 
   formSubmit(e) {
     e.preventDefault();
-    SessionActions.logIn(this.state);
+    SessionActions.signUp(this.state);
   },
 
   changeName(e) {
@@ -57,6 +71,7 @@ const SignUpForm = React.createClass({
 
     return (
       <div className="signup-box group input-box">
+        { this.errors() }
         <div className="login-padding group">
 
           <div className="login-label">Sign Up</div>
@@ -67,6 +82,7 @@ const SignUpForm = React.createClass({
                   type="text"
                   className="no-input"
                   onChange={this.changeName}
+                  placeholder="Name"
                   value={this.state.name} />
               </div>
 
@@ -74,6 +90,7 @@ const SignUpForm = React.createClass({
                 <input
                   type="text"
                   className="no-input"
+                  placeholder="Email"
                   onChange={this.changeEmail}
                   value={this.state.email} />
               </div>
@@ -82,6 +99,7 @@ const SignUpForm = React.createClass({
                 <input
                   type="text"
                   className="no-input"
+                  placeholder="Re-enter email"
                   onChange={this.changeEmail2}
                   value={this.state.email2} />
               </div>
@@ -90,6 +108,7 @@ const SignUpForm = React.createClass({
                 <input
                   type="text"
                   className="no-input"
+                  placeholder="Password"
                   onChange={this.changePassword}
                   value={this.state.password} />
               </div>
@@ -98,6 +117,7 @@ const SignUpForm = React.createClass({
                 <input
                   type="text"
                   className="no-input"
+                  placeholder="Re-enter Password"
                   onChange={this.changePassword2}
                   value={this.state.password2} />
               </div>
