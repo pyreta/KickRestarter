@@ -10,7 +10,7 @@ KickRestarter is a web application inspired by Kickstarter that will focus on fu
 
 
 - [x] Hosting on Heroku
-- [ ] New account creation, login, and guest/demo login
+- [x] New account creation, login, and guest/demo login
 - [ ] A production README, replacing this README (**NB**: check out the [sample production README](docs/production_readme.md) -- you'll write this later)
 - [ ] Campaigns
   - [ ] Elegant layout displaying campaign goals and details
@@ -49,17 +49,17 @@ KickRestarter is a web application inspired by Kickstarter that will focus on fu
 
 **Objective:** Functioning rails project with front-end Authentication
 
-- [ ] create new project
-- [ ] create `User` model
-- [ ] authentication backend setup
-- [ ] create `StaticPages` controller and root view
-- [ ] set up webpack & flux scaffold with skeleton files
-- [ ] setup `APIUtil` to interact with the API
-- [ ] set up flux cycle for frontend auth
-- [ ] user signup/signin components
-- [ ] blank landing component after signin
-- [ ] style signin/signup components
-- [ ] seed users
+- [x] create new project
+- [x] create `User` model
+- [x] authentication backend setup
+- [x] create `StaticPages` controller and root view
+- [x] set up webpack & flux scaffold with skeleton files
+- [x] setup `APIUtil` to interact with the API
+- [x] set up flux cycle for frontend auth
+- [x] user signup/signin components
+- [x] blank landing component after signin
+- [x] style signin/signup components
+- [x] seed users
 
 ### Phase 2: Campaign Model, API, and components (2 days, W1 F 6pm)
 
