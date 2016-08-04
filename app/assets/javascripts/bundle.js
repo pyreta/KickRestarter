@@ -59,7 +59,7 @@
 	var Footer = __webpack_require__(270);
 	var HomePage = __webpack_require__(268);
 	
-	window.SessionActions = __webpack_require__(239);
+	var SessionActions = __webpack_require__(239);
 	var SessionStore = __webpack_require__(247);
 	
 	var App = React.createClass({
@@ -93,6 +93,11 @@
 	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
+	  if (window.currentUser) {
+	    SessionActions.receiveCurrentUser(window.currentUser);
+	  } else {
+	    SessionActions.receiveCurrentUser({});
+	  }
 	  ReactDOM.render(appRouter, document.querySelector("#content"));
 	});
 
@@ -27618,7 +27623,7 @@
 	      SessionStore.__emitChange();
 	      break;
 	
-	    case SessionConstants.LOGIN:
+	    case SessionConstants.LOGOUT:
 	      _logOut();
 	      SessionStore.__emitChange();
 	      break;
@@ -34103,8 +34108,12 @@
 	    return { username: "", password: "" };
 	  },
 	  formSubmit: function formSubmit(e) {
+	    console.log(e.target.class);
 	    e.preventDefault();
 	    SessionActions.logIn(this.state);
+	  },
+	  guestClick: function guestClick() {
+	    this.setState({ username: "pyreta", password: "password" });
 	  },
 	  changeUsername: function changeUsername(e) {
 	    this.setState({ username: e.target.value });
@@ -34194,11 +34203,11 @@
 	          React.createElement('div', { className: 'line' }),
 	          React.createElement(
 	            'div',
-	            { className: 'submit' },
+	            { className: 'submit', onClick: this.guestClick },
 	            React.createElement('input', {
 	              type: 'submit',
 	              id: 'facebook-button',
-	              value: 'Log in with Facebook' })
+	              value: 'Log in as a Guest' })
 	          ),
 	          React.createElement(
 	            'p',
@@ -34311,15 +34320,16 @@
 	    this.setState({ currentUser: false });
 	  },
 	  render: function render() {
+	
 	    var greeting = void 0;
-	    if (this.state.currentUser) {
+	    if (SessionStore.isUserLoggedIn()) {
 	      greeting = React.createElement(
 	        'div',
 	        null,
 	        React.createElement(
 	          'div',
 	          null,
-	          this.state.currentUser
+	          SessionStore.currentUser().username
 	        ),
 	        React.createElement(
 	          'button',
@@ -34400,7 +34410,7 @@
 	                null,
 	                React.createElement(
 	                  'a',
-	                  { href: '#' },
+	                  { href: '#/signup' },
 	                  'Sign up'
 	                )
 	              ),
@@ -34532,6 +34542,7 @@
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
+	
 	var SignUpForm = React.createClass({
 	  displayName: 'SignUpForm',
 	  redirectIfLoggedIn: function redirectIfLoggedIn() {
@@ -34574,7 +34585,10 @@
 	  },
 	  formSubmit: function formSubmit(e) {
 	    e.preventDefault();
-	    SessionActions.signUp(this.state);
+	    if (this.submit) {
+	      SessionActions.signUp(this.state);
+	    }
+	    this.submit = true;
 	  },
 	  changeName: function changeName(e) {
 	    this.setState({ name: e.target.value });
@@ -34591,8 +34605,11 @@
 	  changePassword2: function changePassword2(e) {
 	    this.setState({ password2: e.target.value });
 	  },
+	  guestClick: function guestClick() {
+	    this.submit = false;
+	  },
 	  render: function render() {
-	
+	    this.submit = true;
 	    return React.createElement(
 	      'div',
 	      { className: 'signup-form input-form' },
@@ -34696,7 +34713,7 @@
 	          React.createElement('div', { className: 'line' }),
 	          React.createElement(
 	            'div',
-	            { className: 'submit' },
+	            { className: 'submit', onClick: this.guestClick },
 	            React.createElement('input', {
 	              type: 'submit',
 	              id: 'facebook-button',

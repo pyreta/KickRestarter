@@ -11,7 +11,7 @@ const NavBar = require("./components/NavBar");
 const Footer = require("./components/Footer");
 const HomePage = require("./components/HomePage");
 
-window.SessionActions = require("./actions/session_actions");
+const SessionActions = require("./actions/session_actions");
 const SessionStore = require("./stores/session_store");
 
 const App = React.createClass({
@@ -20,7 +20,6 @@ const App = React.createClass({
 
     return (
         <div>
-
           <header><NavBar /></header>
           { this.props.children }
           <Footer />
@@ -40,5 +39,10 @@ const appRouter = (
 );
 
 document.addEventListener("DOMContentLoaded", function () {
+  if (window.currentUser){
+    SessionActions.receiveCurrentUser(window.currentUser);
+  } else {
+    SessionActions.receiveCurrentUser({});
+  }
   ReactDOM.render(appRouter, document.querySelector("#content"));
 });

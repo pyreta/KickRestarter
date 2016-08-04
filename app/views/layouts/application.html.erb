@@ -12,6 +12,13 @@
     window.logoNavbar = '<%= image_url('logo-navbar-small.png') %>'
   </script>
 
+  <script type="text/javascript">
+    <% if logged_in? %>
+      window.currentUser = <%= render("api/users/user.json.jbuilder",
+        user: current_user).html_safe %>
+    <% end %>
+  </script>
+
 </head>
 <body>
 

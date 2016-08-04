@@ -28,8 +28,13 @@ const LoginForm = React.createClass({
   },
 
   formSubmit(e) {
+    console.log(e.target.class);
     e.preventDefault();
     SessionActions.logIn(this.state);
+  },
+
+  guestClick() {
+    this.setState({username: "pyreta", password: "password"});
   },
 
   changeUsername(e) {
@@ -95,11 +100,11 @@ const LoginForm = React.createClass({
               </div>
               <div className="line"></div>
 
-              <div className="submit">
+              <div className="submit" onClick={this.guestClick}>
                 <input
                   type="submit"
                   id = "facebook-button"
-                  value="Log in with Facebook"/>
+                  value="Log in as a Guest"/>
               </div>
 
               <p className="never-post">

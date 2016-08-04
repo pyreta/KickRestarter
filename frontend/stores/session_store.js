@@ -32,7 +32,7 @@ SessionStore.__onDispatch = function(payload) {
         SessionStore.__emitChange();
       break;
 
-    case SessionConstants.LOGIN:
+    case SessionConstants.LOGOUT:
         _logOut();
         SessionStore.__emitChange();
       break;

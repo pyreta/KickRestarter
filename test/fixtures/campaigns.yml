@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  blurb: MyText
+  description: MyText
+  risks: MyText
+  body: MyText
+  author_id: 1
+  category_id: 1
+  sub_category_id: 1
+  location_id: 1
+  end_date: 2016-08-04 09:52:41
+  live: false
+  approved: false
+  goal: 1
+  video_url: MyString
+
+two:
+  title: MyString
+  blurb: MyText
+  description: MyText
+  risks: MyText
+  body: MyText
+  author_id: 1
+  category_id: 1
+  sub_category_id: 1
+  location_id: 1
+  end_date: 2016-08-04 09:52:41
+  live: false
+  approved: false
+  goal: 1
+  video_url: MyString

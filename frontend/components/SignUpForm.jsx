@@ -5,6 +5,10 @@ const SessionStore = require('../stores/session_store');
 const ErrorStore = require('../stores/error_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
+
+
+
+
 const SignUpForm = React.createClass({
 
   redirectIfLoggedIn() {
@@ -44,7 +48,10 @@ const SignUpForm = React.createClass({
 
   formSubmit(e) {
     e.preventDefault();
-    SessionActions.signUp(this.state);
+    if (this.submit){
+      SessionActions.signUp(this.state);
+    }
+    this.submit = true;
   },
 
   changeName(e) {
@@ -67,8 +74,14 @@ const SignUpForm = React.createClass({
     this.setState({password2: e.target.value});
   },
 
-  render() {
+  guestClick() {
+    this.submit = false;
 
+
+  },
+
+  render() {
+    this.submit = true;
     return (
       <div className="signup-form input-form">
         { this.errors() }
@@ -148,7 +161,7 @@ const SignUpForm = React.createClass({
 
               <div className="line"></div>
 
-              <div className="submit">
+              <div className="submit" onClick={this.guestClick}>
                 <input
                   type="submit"
                   id = "facebook-button"

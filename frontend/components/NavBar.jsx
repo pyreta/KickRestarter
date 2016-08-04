@@ -31,18 +31,20 @@ const NavBar = React.createClass({
   },
 
   render() {
+
     let greeting;
-    if (this.state.currentUser) {
+    if (SessionStore.isUserLoggedIn()) {
       greeting = (
         <div>
           <div>
-            {this.state.currentUser}
+            {SessionStore.currentUser().username}
           </div>
           <button onClick={this.logOutClick}>Log Out</button>
         </div>);
     } else {
       greeting = (<a href="#/login">Log In</a>);
     }
+
 
     return (
       <div className="nav-bar">
@@ -60,7 +62,7 @@ const NavBar = React.createClass({
                     <Link to="/"><img src={window.logoNavbar}></img></Link>
                 </li>
                 <li><a href="#">search</a></li>
-                <li><a href="#">Sign up</a></li>
+                <li><a href="#/signup">Sign up</a></li>
                 <li>{ greeting }</li>
                <li>
                  <a href="#">Profile</a>
