@@ -9,6 +9,6 @@ root to: "static_pages#root"
     resources :categories, only:[:show, :index] do
       resources :subcategories, only:[:index]
     end
-    resources :campaigns, only:[:index, :show]
+    resources :campaigns, only:[:index, :show, :create, :destroy]
   end
 end

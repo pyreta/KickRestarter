@@ -1,50 +1,50 @@
 module.exports = {
-  fetchCampaigns (cb) {
+  fetchCampaigns (callback) {
     $.ajax({
-      url: "api/posts",
-      success (posts) {
-        cb(posts);
+      url: "api/campaigns",
+      success (campaigns) {
+        callback(campaigns);
       }
     });
   },
 
-  getCampaign (id, cb) {
+  getCampaign (id, callback) {
     $.ajax({
-      url: `api/posts/${id}`,
-      success (post) {
-        cb(post);
+      url: `api/campaigns/${id}`,
+      success (campaign) {
+        callback(campaign);
       }
     });
   },
 
-  createCampaign (data, cb) {
+  createCampaign (data, callback) {
     $.ajax({
-      url: "api/posts",
+      url: "api/campaigns",
       type: "POST",
-      data: { post: data },
-      success (post) {
-        cb(post);
+      data: { campaign: data },
+      success (campaign) {
+        callback(campaign);
       }
     });
   },
 
-  updateCampaign (data, cb) {
+  updateCampaign (data, callback) {
     $.ajax({
-      url: `api/posts/${data.id}`,
+      url: `api/campaigns/${data.id}`,
       type: "PATCH",
-      data: { post: { title: data.title, body: data.body } },
-      success (post) {
-        cb(post);
+      data: { campaign: { title: data.title, body: data.body } },
+      success (campaign) {
+        callback(campaign);
       }
     });
   },
 
-  deleteCampaign (id, cb) {
+  deleteCampaign (id, callback) {
     $.ajax({
-      url: `api/posts/${id}`,
+      url: `api/campaigns/${id}`,
       type: "DELETE",
-      success (post) {
-        cb(post);
+      success (campaign) {
+        callback(campaign);
       }
     });
   }

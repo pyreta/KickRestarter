@@ -1,3 +1,31 @@
+Campaign flux cycle
+
+create:
+  -fill out form (info, file upload)
+  -CampaignActions.createCampaign
+  -CampaignApiUtil.createCampaign
+  -CampaignsCOntroller create if @campaign...
+  -respond through jbuilder (maybe add calculations like time left, percent of goal, etc.)
+  -Apiutil recieveCampaign
+  -dispatches to CampaignStore
+  -emits change to components
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ROUTES
   ** "/" Homepage
     -navbar

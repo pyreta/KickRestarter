@@ -7,6 +7,7 @@ const IndexRoute = ReactRouter.IndexRoute;
 const hashHistory = ReactRouter.hashHistory;
 const LoginForm = require("./components/LoginForm");
 const SignUpForm = require("./components/SignUpForm");
+const CampaignsIndex = require("./components/campaign_components/CampaignsIndex");
 const NavBar = require("./components/NavBar");
 const Footer = require("./components/Footer");
 const HomePage = require("./components/HomePage");
@@ -34,6 +35,8 @@ const appRouter = (
       <IndexRoute component={HomePage} />
       <Route path="/login" component={LoginForm} />
       <Route path="/signup" component={SignUpForm} />
+      <Route path="/discover" component={CampaignsIndex} />
+
     </Route>
   </Router>
 );

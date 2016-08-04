@@ -55,8 +55,8 @@ const NavBar = React.createClass({
 
            <nav className="header-nav">
              <ul className="group">
-               <li><a href="#">Discover</a></li>
-               <li><a href="#">Start a project</a></li>
+               <li><a href="#/discover">Discover</a></li>
+               <li><a href="#/login">Start a project</a></li>
                <li><a href="#">About us</a></li>
                <li>
                     <Link to="/"><img src={window.logoNavbar}></img></Link>
@@ -67,7 +67,7 @@ const NavBar = React.createClass({
                <li>
                  <a href="#">Profile</a>
                  <ul className="header-nav-drop-down">
-                   <li><a href="#">Discover</a></li>
+                   <li><a href="#/discover">Discover</a></li>
                    <li><a href="#">Start a project</a></li>
                    <li><a href="#">About us</a></li>
                    <li><a href="#">Search</a></li>

@@ -15,7 +15,14 @@ const HomePage = React.createClass({
 
     return (
       <div className="homepage">
-        <h1>THIS IS THE HOMEPAGE BRAAAAA</h1>
+
+
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/Tw0B1DbPIic"
+        frameBorder="0" allowFullScreen></iframe>
+
       </div>
     );
   }

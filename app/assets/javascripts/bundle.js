@@ -55,6 +55,7 @@
 	var hashHistory = ReactRouter.hashHistory;
 	var LoginForm = __webpack_require__(265);
 	var SignUpForm = __webpack_require__(269);
+	var CampaignsIndex = __webpack_require__(273);
 	var NavBar = __webpack_require__(267);
 	var Footer = __webpack_require__(270);
 	var HomePage = __webpack_require__(268);
@@ -88,7 +89,8 @@
 	    { path: '/', component: App },
 	    React.createElement(IndexRoute, { component: HomePage }),
 	    React.createElement(Route, { path: '/login', component: LoginForm }),
-	    React.createElement(Route, { path: '/signup', component: SignUpForm })
+	    React.createElement(Route, { path: '/signup', component: SignUpForm }),
+	    React.createElement(Route, { path: '/discover', component: CampaignsIndex })
 	  )
 	);
 	
@@ -34365,7 +34367,7 @@
 	                null,
 	                React.createElement(
 	                  'a',
-	                  { href: '#' },
+	                  { href: '#/discover' },
 	                  'Discover'
 	                )
 	              ),
@@ -34374,7 +34376,7 @@
 	                null,
 	                React.createElement(
 	                  'a',
-	                  { href: '#' },
+	                  { href: '#/login' },
 	                  'Start a project'
 	                )
 	              ),
@@ -34435,7 +34437,7 @@
 	                    null,
 	                    React.createElement(
 	                      'a',
-	                      { href: '#' },
+	                      { href: '#/discover' },
 	                      'Discover'
 	                    )
 	                  ),
@@ -34518,11 +34520,11 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'homepage' },
-	      React.createElement(
-	        'h1',
-	        null,
-	        'THIS IS THE HOMEPAGE BRAAAAA'
-	      )
+	      React.createElement('iframe', {
+	        width: '560',
+	        height: '315',
+	        src: 'https://www.youtube.com/embed/Tw0B1DbPIic',
+	        frameBorder: '0', allowFullScreen: true })
 	    );
 	  }
 	});
@@ -34607,6 +34609,7 @@
 	  },
 	  guestClick: function guestClick() {
 	    this.submit = false;
+	    SessionActions.logIn({ username: "pyreta", password: "password" });
 	  },
 	  render: function render() {
 	    this.submit = true;
@@ -34717,7 +34720,7 @@
 	            React.createElement('input', {
 	              type: 'submit',
 	              id: 'facebook-button',
-	              value: 'Log in with Facebook' })
+	              value: 'Log in as a Guest' })
 	          ),
 	          React.createElement(
 	            'p',
@@ -34768,6 +34771,286 @@
 	});
 	
 	module.exports = Footer;
+
+/***/ },
+/* 271 */,
+/* 272 */,
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var CampaignActions = __webpack_require__(277);
+	var SessionStore = __webpack_require__(247);
+	var CampaignStore = __webpack_require__(275);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var CampaignIndexItem = __webpack_require__(274);
+	
+	var CampaignsIndex = React.createClass({
+	  displayName: 'CampaignsIndex',
+	  getInitialState: function getInitialState() {
+	    return { campaigns: CampaignStore.all() };
+	  },
+	
+	
+	  // errors() {
+	  //   const errors = ErrorStore.errors("campaigns-index");
+	  //   const messages = errors.map( (errorMsg, i) => {
+	  //     return <li key={ i }>{ errorMsg }</li>;
+	  //   });
+	  //
+	  //   return <ul>{ messages }</ul>;
+	  // },
+	  onChange: function onChange() {
+	    this.setState({ campaigns: CampaignStore.all() });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    CampaignStore.addListener(this.onChange);
+	    CampaignActions.fetchCampaigns();
+	  },
+	  render: function render() {
+	
+	    var campaignList = this.state.campaigns.map(function (el, i) {
+	      return React.createElement(
+	        Link,
+	        { key: i, to: '#/login' },
+	        React.createElement(CampaignIndexItem, { campaign: el })
+	      );
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        null,
+	        'CAMPAIGN INDEX'
+	      ),
+	      campaignList
+	    );
+	  }
+	});
+	
+	module.exports = CampaignsIndex;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var SessionStore = __webpack_require__(247);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	
+	var CampaignsIndexItem = React.createClass({
+	  displayName: 'CampaignsIndexItem',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'small-campaign-item' },
+	        React.createElement('img', {
+	          alt: 'Project image',
+	          className: 'project-thumbnail-img',
+	          src: 'https://ksr-ugc.imgix.net/assets/012/451/510/83cd0754c00ce53da20cf35f554eb42a_original.jpg?w=338&h=190&fit=fill&bg=000000&v=1468672720&auto=format&q=92&s=2882e4ecc816145340c84e263521a37d',
+	          width: '100%',
+	          height: 'auto' }),
+	        React.createElement(
+	          'div',
+	          { className: 'small-campaign-title' },
+	          this.props.campaign.title
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CampaignsIndexItem;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(248).Store;
+	var CampaignConstants = __webpack_require__(276);
+	var AppDispatcher = __webpack_require__(240);
+	
+	var CampaignStore = new Store(AppDispatcher);
+	
+	var _campaigns = {};
+	
+	var resetCampaigns = function resetCampaigns(campaigns) {
+	  _campaigns = {};
+	
+	  campaigns.forEach(function (campaign) {
+	    _campaigns[campaign.id] = campaign;
+	  });
+	};
+	
+	var setCampaign = function setCampaign(campaign) {
+	  _campaigns[campaign.id] = campaign;
+	};
+	
+	var removeCampaign = function removeCampaign(campaign) {
+	  delete _campaigns[campaign.id];
+	};
+	
+	CampaignStore.all = function () {
+	
+	  return Object.keys(_campaigns).map(function (campaignId) {
+	    return _campaigns[campaignId];
+	  });
+	};
+	
+	CampaignStore.find = function (id) {
+	  return _campaigns[id];
+	};
+	
+	CampaignStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case CampaignConstants.CAMPAIGNS_RECEIVED:
+	      resetCampaigns(payload.campaigns);
+	      CampaignStore.__emitChange();
+	      break;
+	    case CampaignConstants.CAMPAIGN_RECEIVED:
+	      setCampaign(payload.campaign);
+	      CampaignStore.__emitChange();
+	      break;
+	    case CampaignConstants.CAMPAIGN_REMOVED:
+	      removeCampaign(payload.campaign);
+	      CampaignStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = CampaignStore;
+
+/***/ },
+/* 276 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  CAMPAIGNS_RECEIVED: "CAMPAIGNS_RECEIVED",
+	  CAMPAIGN_RECEIVED: "CAMPAIGN_RECEIVED",
+	  CAMPAIGN_REMOVED: "CAMPAIGN_REMOVED"
+	};
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var CampaignCampaignApiUtil = __webpack_require__(278);
+	var AppDispatcher = __webpack_require__(240);
+	var CampaignConstants = __webpack_require__(276);
+	var ErrorActions = __webpack_require__(242);
+	
+	module.exports = {
+	  fetchCampaigns: function fetchCampaigns() {
+	    CampaignCampaignApiUtil.fetchCampaigns(this.receiveAll);
+	  },
+	  getCampaign: function getCampaign(id) {
+	    CampaignApiUtil.getCampaign(id, this.receiveCampaign, ErrorActions.setErrors);
+	  },
+	  createCampaign: function createCampaign(data) {
+	    CampaignApiUtil.createCampaign(data, this.receiveCampaign, ErrorActions.setErrors);
+	  },
+	  editCampaign: function editCampaign(data) {
+	    CampaignApiUtil.updateCampaign(data, this.receiveCampaign, ErrorActions.setErrors);
+	  },
+	  deleteCampaign: function deleteCampaign(id) {
+	    CampaignApiUtil.deleteCampaign(id, this.removeCampaign);
+	  },
+	  receiveAll: function receiveAll(campaigns) {
+	    AppDispatcher.dispatch({
+	      actionType: CampaignConstants.CAMPAIGNS_RECEIVED,
+	      campaigns: campaigns
+	    });
+	  },
+	  receiveCampaign: function receiveCampaign(campaign) {
+	    AppDispatcher.dispatch({
+	      actionType: CampaignConstants.CAMPAIGN_RECEIVED,
+	      campaign: campaign
+	    });
+	  },
+	  removeCampaign: function removeCampaign(campaign) {
+	    AppDispatcher.dispatch({
+	      actionType: CampaignConstants.CAMPAIGN_REMOVED,
+	      campaign: campaign
+	    });
+	  }
+	};
+
+/***/ },
+/* 278 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  fetchCampaigns: function fetchCampaigns(callback) {
+	    $.ajax({
+	      url: "api/campaigns",
+	      success: function success(campaigns) {
+	        callback(campaigns);
+	      }
+	    });
+	  },
+	  getCampaign: function getCampaign(id, callback) {
+	    $.ajax({
+	      url: "api/campaigns/" + id,
+	      success: function success(campaign) {
+	        callback(campaign);
+	      }
+	    });
+	  },
+	  createCampaign: function createCampaign(data, callback) {
+	    $.ajax({
+	      url: "api/campaigns",
+	      type: "POST",
+	      data: { campaign: data },
+	      success: function success(campaign) {
+	        callback(campaign);
+	      }
+	    });
+	  },
+	  updateCampaign: function updateCampaign(data, callback) {
+	    $.ajax({
+	      url: "api/campaigns/" + data.id,
+	      type: "PATCH",
+	      data: { campaign: { title: data.title, body: data.body } },
+	      success: function success(campaign) {
+	        callback(campaign);
+	      }
+	    });
+	  },
+	  deleteCampaign: function deleteCampaign(id, callback) {
+	    $.ajax({
+	      url: "api/campaigns/" + id,
+	      type: "DELETE",
+	      success: function success(campaign) {
+	        callback(campaign);
+	      }
+	    });
+	  }
+	};
 
 /***/ }
 /******/ ]);

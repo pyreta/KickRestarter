@@ -76,8 +76,7 @@ const SignUpForm = React.createClass({
 
   guestClick() {
     this.submit = false;
-
-
+    SessionActions.logIn({username: "pyreta", password: "password"});
   },
 
   render() {
@@ -165,7 +164,7 @@ const SignUpForm = React.createClass({
                 <input
                   type="submit"
                   id = "facebook-button"
-                  value="Log in with Facebook"/>
+                  value="Log in as a Guest"/>
               </div>
 
               <p className="never-post">
