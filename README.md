@@ -66,17 +66,17 @@ KickRestarter is a web application inspired by Kickstarter that will focus on fu
 **Objective:** Campaigns can be created, read, edited and destroyed through
 the API.
 
-- [ ] create `Campaign` model
-- [ ] seed the database with a small amount of test data
-- [ ] CRUD API for notes (`CampaignController`)
+- [x] create `Campaign` model
+- [x] seed the database with a small amount of test data
+- [x] CRUD API for notes (`CampaignController`)
 - [ ] jBuilder views for campaign
-- [ ] test out API interaction in the console.
+- [x] test out API interaction in the console.
 - implement each campaign component, building out the flux loop as needed.
-  - [ ] `CampaignIndex`
-  - [ ] `CampaignIndexItem`
+  - [x] `CampaignIndex`
+  - [x] `CampaignIndexItem`
   - [ ] `CampaignForm`
 - [ ] style campaign components like Kickstarter
-- [ ] seed campaigns
+- [x] seed campaigns
 
 ### Phase 3: Categories (2 day, W2 Tu 6pm)
 
