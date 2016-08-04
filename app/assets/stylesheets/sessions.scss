@@ -1,9 +1,6 @@
-/* line 1, /Users/Abramson/Desktop/KickRestarter/app/assets/stylesheets/sessions.scss */
-h3 {
-  margin: 0;
-}
 
-.input-box {
+
+.input-form {
   margin: auto;
   margin-top: 57px;
   border: 1px solid #f1eeea;
@@ -13,40 +10,45 @@ h3 {
   background-color: white;
 }
 
-
-.login-box {
+.login-form {
   height: 564px;
 }
 
-.signup-box{
+.signup-form{
   height: 739px;
   margin-bottom: 40px;
 }
 
+.nav-logo {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  transform: perspective(1px) translate(-50%, -50%);
+
+}
 
 
-
-.login-padding{
+.form-padding{
   padding: 20px;
 
 }
 
 
-.flag {
+.check {
   display: table;
   width: 100%;
 }
 
-.flag .flag-img {
+.check .check-box {
     padding-right: 10px;
 }
 
-.flag .flag-img, .flag .flag-body {
+.check .check-box, .check .check-body {
     display: table-cell;
     vertical-align: middle;
 }
 
-.flag .flag-body {
+.check .check-body {
     width: 100%;
 }
 
@@ -94,7 +96,7 @@ h3 {
   border-radius: 6px;
   margin-top: 15px;
   margin-bottom: 15px;
-  width: 363px;
+  width: 344px;
   font-size: 14px;
   transition: background-color 0.5s;
 }
@@ -138,7 +140,7 @@ h3 {
 }
 
 
-.login-label {
+.form-label {
   font-size: 32px;
   // font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;
   margin-bottom: 37px

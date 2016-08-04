@@ -51,11 +51,11 @@ const LoginForm = React.createClass({
 
   render() {
     return (
-      <div className="login-box group input-box">
+      <div className="login-form input-form">
         { this.errors() }
-        <div className="login-padding group">
+        <div className="form-padding">
 
-          <div className="login-label">Log In</div>
+          <div className="form-label">Log In</div>
             <form onSubmit={this.formSubmit}>
 
               <div className="input">

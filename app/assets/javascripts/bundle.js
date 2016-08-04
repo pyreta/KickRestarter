@@ -34131,14 +34131,14 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'login-box group input-box' },
+	      { className: 'login-form input-form' },
 	      this.errors(),
 	      React.createElement(
 	        'div',
-	        { className: 'login-padding group' },
+	        { className: 'form-padding' },
 	        React.createElement(
 	          'div',
-	          { className: 'login-label' },
+	          { className: 'form-label' },
 	          'Log In'
 	        ),
 	        React.createElement(
@@ -34339,6 +34339,15 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'nav-bar' },
+	      React.createElement(
+	        'div',
+	        { className: 'nav-logo' },
+	        React.createElement(
+	          Link,
+	          { to: '/' },
+	          React.createElement('img', { src: window.logoNavbar })
+	        )
+	      ),
 	      greeting
 	    );
 	  }
@@ -34455,14 +34464,14 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'signup-box group input-box' },
+	      { className: 'signup-form input-form' },
 	      this.errors(),
 	      React.createElement(
 	        'div',
-	        { className: 'login-padding group' },
+	        { className: 'form-padding' },
 	        React.createElement(
 	          'div',
-	          { className: 'login-label' },
+	          { className: 'form-label' },
 	          'Sign Up'
 	        ),
 	        React.createElement(
@@ -34534,10 +34543,10 @@
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'flag' },
+	            { className: 'check' },
 	            React.createElement(
 	              'div',
-	              { className: 'flag-img' },
+	              { className: 'check-box' },
 	              React.createElement('input', {
 	                type: 'checkbox',
 	                id: 'remember',
@@ -34545,7 +34554,7 @@
 	            ),
 	            React.createElement(
 	              'div',
-	              { className: 'flag-body' },
+	              { className: 'check-body' },
 	              React.createElement(
 	                'label',
 	                { id: 'newsletter-label', htmlFor: 'remember' },

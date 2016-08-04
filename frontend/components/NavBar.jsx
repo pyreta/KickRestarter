@@ -46,6 +46,9 @@ const NavBar = React.createClass({
 
     return (
       <div className="nav-bar">
+      <div className="nav-logo">
+        <Link to="/"><img src={window.logoNavbar}></img></Link>
+      </div>
         { greeting }
       </div>
     );

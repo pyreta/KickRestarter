@@ -70,11 +70,11 @@ const SignUpForm = React.createClass({
   render() {
 
     return (
-      <div className="signup-box group input-box">
+      <div className="signup-form input-form">
         { this.errors() }
-        <div className="login-padding group">
+        <div className="form-padding">
 
-          <div className="login-label">Sign Up</div>
+          <div className="form-label">Sign Up</div>
             <form onSubmit={this.formSubmit}>
 
               <div className="input">
@@ -132,15 +132,15 @@ const SignUpForm = React.createClass({
                   value="Sign me up!"/>
               </div>
 
-              <div className="flag">
+              <div className="check">
 
-                  <div className="flag-img">
+                  <div className="check-box">
                     <input
                       type="checkbox"
                       id="remember"
                       value="Receive our weekly newsletter and other occasional updates"/>
                   </div>
-                  <div className="flag-body">
+                  <div className="check-body">
                     <label id="newsletter-label" htmlFor="remember">Receive our weekly newsletter and other occasional updates</label>
                   </div>
 
