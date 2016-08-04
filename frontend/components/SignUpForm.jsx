@@ -74,7 +74,7 @@ const SignUpForm = React.createClass({
         { this.errors() }
         <div className="form-padding">
 
-          <div className="form-label">Sign Up</div>
+          <div className="form-label">Sign up</div>
             <form onSubmit={this.formSubmit}>
 
               <div className="input">

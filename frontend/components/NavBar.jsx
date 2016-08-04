@@ -36,7 +36,7 @@ const NavBar = React.createClass({
       greeting = (
         <div>
           <div>
-            Welcome, {this.state.currentUser}
+            {this.state.currentUser}
           </div>
           <button onClick={this.logOutClick}>Log Out</button>
         </div>);
@@ -46,10 +46,38 @@ const NavBar = React.createClass({
 
     return (
       <div className="nav-bar">
-      <div className="nav-logo">
-        <Link to="/"><img src={window.logoNavbar}></img></Link>
-      </div>
-        { greeting }
+      <header className="header">
+         <div className="header-wrap group">
+
+
+
+           <nav className="header-nav">
+             <ul className="group">
+               <li><a href="#">Discover</a></li>
+               <li><a href="#">Start a project</a></li>
+               <li><a href="#">About us</a></li>
+               <li>
+                    <Link to="/"><img src={window.logoNavbar}></img></Link>
+                </li>
+                <li><a href="#">search</a></li>
+                <li><a href="#">Sign up</a></li>
+                <li>{ greeting }</li>
+               <li>
+                 <a href="#">Profile</a>
+                 <ul className="header-nav-drop-down">
+                   <li><a href="#">Discover</a></li>
+                   <li><a href="#">Start a project</a></li>
+                   <li><a href="#">About us</a></li>
+                   <li><a href="#">Search</a></li>
+                   <li><a href="#/login">Log in</a></li>
+                   <li><a href="#/signup">Sign up</a></li>
+                 </ul>
+               </li>
+             </ul>
+           </nav>
+
+         </div>
+       </header>
       </div>
     );
   }

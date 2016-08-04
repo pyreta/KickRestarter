@@ -34319,7 +34319,6 @@
 	        React.createElement(
 	          'div',
 	          null,
-	          'Welcome, ',
 	          this.state.currentUser
 	        ),
 	        React.createElement(
@@ -34340,15 +34339,147 @@
 	      'div',
 	      { className: 'nav-bar' },
 	      React.createElement(
-	        'div',
-	        { className: 'nav-logo' },
+	        'header',
+	        { className: 'header' },
 	        React.createElement(
-	          Link,
-	          { to: '/' },
-	          React.createElement('img', { src: window.logoNavbar })
+	          'div',
+	          { className: 'header-wrap group' },
+	          React.createElement(
+	            'nav',
+	            { className: 'header-nav' },
+	            React.createElement(
+	              'ul',
+	              { className: 'group' },
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#' },
+	                  'Discover'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#' },
+	                  'Start a project'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#' },
+	                  'About us'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  Link,
+	                  { to: '/' },
+	                  React.createElement('img', { src: window.logoNavbar })
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#' },
+	                  'search'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#' },
+	                  'Sign up'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                greeting
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#' },
+	                  'Profile'
+	                ),
+	                React.createElement(
+	                  'ul',
+	                  { className: 'header-nav-drop-down' },
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#' },
+	                      'Discover'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#' },
+	                      'Start a project'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#' },
+	                      'About us'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#' },
+	                      'Search'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#/login' },
+	                      'Log in'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#/signup' },
+	                      'Sign up'
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          )
 	        )
-	      ),
-	      greeting
+	      )
 	    );
 	  }
 	});
@@ -34472,7 +34603,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'form-label' },
-	          'Sign Up'
+	          'Sign up'
 	        ),
 	        React.createElement(
 	          'form',
