@@ -10,7 +10,6 @@ miami_city = City.new(name:"Miami", state_id: florida_state.id)
 louis = User.create(
   username: "pyreta",
   password: "password",
-  profile_icon: "pyreta_icon.jpg",
   biography: "I was born on the top of a hill in the middle of Minneapolis.  It was here that I learned the true nature of potato chips and what it means to actually live on said potato chips.  Is it potato or potatoe?  Ask DanQuail, perhaps he shall have an answer for you.  Otherwise, just google it.  These days you don't need to ask questions, just look it up.  Facts are attainable by all (who have phones).  Goodbye brozef",
   location_id: new_york_city.id,
   url: "www.jollyband.com",
@@ -20,7 +19,6 @@ louis = User.create(
 louie = User.create(
   username: "babylouie",
   password: "password",
-  profile_icon: "babylouie_icon.jpg",
   biography: "I'm a baby, so there's not much to say.",
   location_id: new_york_city.id,
   url: "www.louisabramson.com",
@@ -299,4 +297,15 @@ lou_diamond_phillips = Campaign.create(
   category_id: film_and_video_category.id,
   goal: 1000000,
   end_date: "2032-08-04 15:42:49.94213"
+)
+
+slap_bracelets = Campaign.create(
+video_url: "https://www.google.org",
+  title: "Bring Back Slap Bracelets",
+  blurb: "They're worth cutting your wrists over.",
+  description: "It's all fun and games until the cheap cloth comes off and you have little kids taking turns ramming sharp pieces of metal into their flesh.",
+  author_id: louie.id,
+  category_id: fashion_category.id,
+  goal: 450,
+  end_date: "2018-01-31 00:00:00.0000"
 )

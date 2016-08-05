@@ -2,7 +2,7 @@ class Api::CampaignsController < ApplicationController
 
   def index
     @campaigns = Campaign.all
-    render json: @campaigns
+    # render json: @campaigns
   end
 
 	def create
@@ -20,7 +20,7 @@ class Api::CampaignsController < ApplicationController
 
 	def campaign_params
 		params.require(:campaign).permit( :video_url, :title, :blurb, :description,
-      :author_id, :category_id, :goal, :end_date)
+      :author_id, :category_id, :goal, :end_date, :image)
 	end
 
 end

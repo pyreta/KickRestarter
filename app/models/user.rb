@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6, allow_nil: true }
   before_validation :ensure_session_token
 
+  has_attached_file :image, default_url: "shame.jpg"
+  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+
   def self.generate_session_token
     SecureRandom.urlsafe_base64(16)
   end

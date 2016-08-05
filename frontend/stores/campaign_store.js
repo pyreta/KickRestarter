@@ -8,7 +8,6 @@ let _campaigns = {};
 
 const resetCampaigns = function (campaigns) {
   _campaigns = {};
-
   campaigns.forEach(function (campaign) {
     _campaigns[campaign.id] = campaign;
   });
@@ -23,7 +22,6 @@ const removeCampaign = function (campaign) {
 };
 
 CampaignStore.all = function () {
-
   return Object.keys(_campaigns).map(function (campaignId) {
     return _campaigns[campaignId];
   });

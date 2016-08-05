@@ -11,28 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804140427) do
+ActiveRecord::Schema.define(version: 20160805151629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "campaigns", force: :cascade do |t|
-    t.string   "title",                           null: false
-    t.text     "blurb",                           null: false
+    t.string   "title",                              null: false
+    t.text     "blurb",                              null: false
     t.text     "description"
     t.text     "risks"
     t.text     "body"
-    t.integer  "author_id",                       null: false
-    t.integer  "category_id",                     null: false
+    t.integer  "author_id",                          null: false
+    t.integer  "category_id",                        null: false
     t.integer  "sub_category_id"
     t.integer  "location_id"
-    t.datetime "end_date",                        null: false
-    t.boolean  "live",            default: false
-    t.boolean  "approved",        default: false
-    t.integer  "goal",                            null: false
+    t.datetime "end_date",                           null: false
+    t.boolean  "live",               default: false
+    t.boolean  "approved",           default: false
+    t.integer  "goal",                               null: false
     t.string   "video_url"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -62,16 +66,19 @@ ActiveRecord::Schema.define(version: 20160804140427) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",        null: false
-    t.string   "password_digest", null: false
-    t.string   "session_token",   null: false
-    t.string   "profile_icon"
+    t.string   "username",           null: false
+    t.string   "password_digest",    null: false
+    t.string   "session_token",      null: false
     t.text     "biography"
     t.integer  "location_id"
     t.string   "url"
-    t.string   "email",           null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "email",              null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

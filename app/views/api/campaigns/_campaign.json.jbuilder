@@ -1,0 +1,10 @@
+json.video_url campaign.video_url
+json.id campaign.id
+json.title campaign.title
+json.blurb campaign.blurb
+json.description campaign.description
+json.author_id campaign.author_id
+json.category_id campaign.category_id
+json.goal campaign.goal
+json.end_date campaign.end_date
+json.image_url asset_path(campaign.image.url)
