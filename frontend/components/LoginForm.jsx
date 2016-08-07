@@ -46,7 +46,7 @@ const LoginForm = React.createClass({
   },
 
   errors() {
-    const errors = ErrorStore.errors("login");
+    const errors = ErrorStore.errors("campaign-form");
     const messages = errors.map( (errorMsg, i) => {
       return <li key={ i }>{ errorMsg }</li>;
     });

@@ -12,7 +12,7 @@ html, body, header, nav, h1, a,
 ul, li, strong, main, button, i,
 section, img, div, h2, p, form,
 fieldset, label, input, textarea,
-span, article, footer, time, small {
+span, article, footer, time, small, select {
  margin: 0;
  padding: 0;
  border: 0;
@@ -37,18 +37,21 @@ ul {
 img {
  display: block;
  width: 100%;
- height: auto;
+ /*height: auto;*/
 }
 
 input[type="password"],
 input[type="email"],
 input[type="text"],
 input[type="submit"],
+input[type="select"],
 textarea,
 button {
  -webkit-appearance: none;
  -moz-appearance: none;
 }
+
+
 
 /*button,
 input[type="submit"] {
@@ -59,7 +62,8 @@ body{
   background-color: #f7f5f2;
   padding-top: 0;
   /*padding: 19.2px;*/
-  font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;
+  /*font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;*/
+  font-family: "Helvetica Neue", Helvetica, 'Roboto', Arial, "Liberation Sans", FreeSans, sans-serif;
 }
 
 

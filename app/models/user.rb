@@ -18,7 +18,25 @@ class User < ActiveRecord::Base
     @user.is_password?(password) ? @user : nil
   end
 
-  has_many :links
+  has_many(
+    :campaigns,
+    class_name: "Campaign",
+    foreign_key: :author_id,
+    primary_key: :id
+  )
+
+  belongs_to(
+    :city,
+    class_name: "City",
+    foreign_key: :location_id,
+    primary_key: :id
+  )
+
+  has_one(
+    :state,
+    through: :city,
+    source: :state 
+  )
 
   attr_reader :password
   after_initialize :ensure_session_token

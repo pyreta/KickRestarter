@@ -56,6 +56,8 @@
 	var LoginForm = __webpack_require__(238);
 	var SignUpForm = __webpack_require__(267);
 	var CampaignsIndex = __webpack_require__(268);
+	var CampaignForm = __webpack_require__(277);
+	var CampaignEdit = __webpack_require__(280);
 	var NavBar = __webpack_require__(274);
 	var Footer = __webpack_require__(275);
 	var HomePage = __webpack_require__(276);
@@ -81,6 +83,13 @@
 	  }
 	});
 	
+	var _ensureLoggedIn = function _ensureLoggedIn(nextState, replace) {
+	  console.log("ENSURE LOGGED IN FUNC IN ENTRY FILE TO BE FILLED OUT");
+	  if (!SessionStore.isUserLoggedIn()) {
+	    replace('/login');
+	  }
+	};
+	
 	var appRouter = React.createElement(
 	  Router,
 	  { history: hashHistory },
@@ -90,7 +99,9 @@
 	    React.createElement(IndexRoute, { component: HomePage }),
 	    React.createElement(Route, { path: '/login', component: LoginForm }),
 	    React.createElement(Route, { path: '/signup', component: SignUpForm }),
-	    React.createElement(Route, { path: '/discover', component: CampaignsIndex })
+	    React.createElement(Route, { path: '/discover', component: CampaignsIndex }),
+	    React.createElement(Route, { path: '/start', component: CampaignForm, onEnter: _ensureLoggedIn }),
+	    React.createElement(Route, { path: '/campaigns/:campaignId', component: CampaignEdit, onEnter: _ensureLoggedIn })
 	  )
 	);
 	
@@ -27145,7 +27156,7 @@
 	    this.setState({ password: e.target.value });
 	  },
 	  errors: function errors() {
-	    var errors = ErrorStore.errors("login");
+	    var errors = ErrorStore.errors("campaign-form");
 	    var messages = errors.map(function (errorMsg, i) {
 	      return React.createElement(
 	        'li',
@@ -34540,8 +34551,11 @@
 	    this.setState({ campaigns: CampaignStore.all() });
 	  },
 	  componentDidMount: function componentDidMount() {
-	    CampaignStore.addListener(this.onChange);
+	    this.listener = CampaignStore.addListener(this.onChange);
 	    CampaignActions.fetchCampaigns();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.listener.remove();
 	  },
 	  render: function render() {
 	
@@ -34574,14 +34588,14 @@
 
 	'use strict';
 	
-	var CampaignCampaignApiUtil = __webpack_require__(270);
+	var CampaignApiUtil = __webpack_require__(270);
 	var AppDispatcher = __webpack_require__(240);
 	var CampaignConstants = __webpack_require__(271);
 	var ErrorActions = __webpack_require__(246);
 	
 	module.exports = {
 	  fetchCampaigns: function fetchCampaigns() {
-	    CampaignCampaignApiUtil.fetchCampaigns(this.receiveAll);
+	    CampaignApiUtil.fetchCampaigns(this.receiveAll);
 	  },
 	  getCampaign: function getCampaign(id) {
 	    CampaignApiUtil.getCampaign(id, this.receiveCampaign, ErrorActions.setErrors);
@@ -34589,8 +34603,8 @@
 	  createCampaign: function createCampaign(data) {
 	    CampaignApiUtil.createCampaign(data, this.receiveCampaign, ErrorActions.setErrors);
 	  },
-	  editCampaign: function editCampaign(data) {
-	    CampaignApiUtil.updateCampaign(data, this.receiveCampaign, ErrorActions.setErrors);
+	  editCampaign: function editCampaign(data, id) {
+	    CampaignApiUtil.updateCampaign(data, id, this.receiveCampaign, ErrorActions.setErrors);
 	  },
 	  deleteCampaign: function deleteCampaign(id) {
 	    CampaignApiUtil.deleteCampaign(id, this.removeCampaign);
@@ -34638,24 +34652,30 @@
 	      }
 	    });
 	  },
-	  createCampaign: function createCampaign(data, callback) {
+	  createCampaign: function createCampaign(formData, callback) {
 	    $.ajax({
 	      url: "api/campaigns",
 	      type: "POST",
-	      data: { campaign: data },
+	      contentType: false,
+	      processData: false,
+	      data: formData,
 	      success: function success(campaign) {
 	        callback(campaign);
 	      }
 	    });
 	  },
-	  updateCampaign: function updateCampaign(data, callback) {
+	  updateCampaign: function updateCampaign(data, id, callback, error) {
 	    $.ajax({
-	      url: "api/campaigns/" + data.id,
+	      url: "api/campaigns/" + id,
 	      type: "PATCH",
+	      contentType: false,
+	      processData: false,
 	      data: { campaign: { title: data.title, body: data.body } },
 	      success: function success(campaign) {
 	        callback(campaign);
-	      }
+	      },
+	
+	      error: error
 	    });
 	  },
 	  deleteCampaign: function deleteCampaign(id, callback) {
@@ -34755,7 +34775,18 @@
 	
 	var CampaignsIndexItem = React.createClass({
 	  displayName: 'CampaignsIndexItem',
+	  percentPledged: function percentPledged() {
+	    return '20%';
+	  },
+	  totalPledged: function totalPledged() {
+	    return '$3,745';
+	  },
+	  daysToGo: function daysToGo() {
+	    return this.props.campaign.days_to_go;
+	  },
 	  render: function render() {
+	
+	    var location = this.props.campaign.city + ", " + this.props.campaign.state;
 	    return React.createElement(
 	      'div',
 	      null,
@@ -34767,11 +34798,102 @@
 	          className: 'project-thumbnail-img',
 	          src: this.props.campaign.image_url,
 	          width: '100%',
-	          height: 'auto' }),
+	          height: '179.72 px' }),
 	        React.createElement(
 	          'div',
-	          { className: 'small-campaign-title' },
-	          this.props.campaign.title
+	          { className: 'campaign-info-container-small' },
+	          React.createElement(
+	            'div',
+	            { className: 'small-campaign-title' },
+	            this.props.campaign.title
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'small-campaign-name' },
+	            this.props.campaign.author
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'small-blurb' },
+	            React.createElement(
+	              'div',
+	              { className: 'small-campaign-name' },
+	              this.props.campaign.description
+	            )
+	          ),
+	          React.createElement(
+	            'ul',
+	            { className: 'location' },
+	            React.createElement(
+	              'li',
+	              { className: 'small-campaign-name project-stats-item' },
+	              React.createElement(
+	                'div',
+	                { className: 'marker' },
+	                React.createElement('img', { src: window.mapMarker })
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'small-campaign-name project-stats-item' },
+	              location
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'project-progress-bar' },
+	            React.createElement(
+	              'div',
+	              { style: { width: this.percentPledged() }, className: 'project-percent-pledged' },
+	              ' '
+	            )
+	          ),
+	          React.createElement(
+	            'ul',
+	            { className: 'project-stats' },
+	            React.createElement(
+	              'li',
+	              { className: 'project-stats-item' },
+	              React.createElement(
+	                'div',
+	                { className: 'project-stats-value' },
+	                this.percentPledged()
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'project-stats-label' },
+	                'funded'
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'project-stats-item' },
+	              React.createElement(
+	                'div',
+	                { className: 'project-stats-value' },
+	                this.totalPledged()
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'project-stats-label' },
+	                'pledged'
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              { className: 'project-stats-item' },
+	              React.createElement(
+	                'div',
+	                { className: 'project-stats-value' },
+	                this.daysToGo()
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'project-stats-label' },
+	                'days to go'
+	              )
+	            )
+	          )
 	        )
 	      )
 	    );
@@ -34868,7 +34990,7 @@
 	                null,
 	                React.createElement(
 	                  'a',
-	                  { href: '#/login' },
+	                  { href: '#/start' },
 	                  'Start a project'
 	                )
 	              ),
@@ -35037,16 +35159,710 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'homepage' },
-	      React.createElement('iframe', {
-	        width: '560',
-	        height: '315',
-	        src: 'https://www.youtube.com/embed/Tw0B1DbPIic',
-	        frameBorder: '0', allowFullScreen: true })
+	      React.createElement('img', { style: { marginBottom: 600 }, src: window.placeholder })
 	    );
 	  }
 	});
 	
 	module.exports = HomePage;
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var CampaignActions = __webpack_require__(269);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var CampaignFormConstants = __webpack_require__(279);
+	
+	var CampaignForm = React.createClass({
+	  displayName: 'CampaignForm',
+	  redirectIfLoggedIn: function redirectIfLoggedIn() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      hashHistory.push("/");
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      title: "Thundercats are Loose!",
+	      blurb: "thundercats, thundercats, thundercats are loose!",
+	      categoryId: 11,
+	      url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
+	      goal: 1000,
+	      description: "I already told you thundercats are loose!",
+	      days: 362,
+	      imageFile: null,
+	      imageUrl: null,
+	      embedUrl: null
+	    };
+	  },
+	  formSubmit: function formSubmit(e) {
+	    var formData = new FormData();
+	    formData.append("campaign[image]", this.state.imageFile);
+	    formData.append("campaign[title]", this.state.title);
+	    formData.append("campaign[blurb]", this.state.blurb);
+	    formData.append("campaign[categoryId]", this.state.categoryId);
+	    formData.append("campaign[video_url]", this.state.url);
+	    formData.append("campaign[goal]", this.state.goal);
+	    formData.append("campaign[description]", this.state.description);
+	    formData.append("campaign[days]", this.state.days);
+	
+	    console.log(e.target.class);
+	    e.preventDefault();
+	    CampaignActions.createCampaign(formData);
+	  },
+	  changeTitle: function changeTitle(e) {
+	    console.log("changeTitle");
+	
+	    this.setState({ title: e.target.value });
+	  },
+	  parseUrl: function parseUrl(url) {
+	    var urlSplit = url.split("watch?v=");
+	    if (urlSplit.length == 2) {
+	      this.setState({ embedUrl: urlSplit.join("embed/") });
+	    } else {
+	      this.setState({ embedUrl: null });
+	    }
+	  },
+	  changeURL: function changeURL(e) {
+	    console.log("changeURL");
+	
+	    this.setState({ url: e.target.value });
+	    this.parseUrl(e.target.value);
+	  },
+	  changeBlurb: function changeBlurb(e) {
+	    console.log("changeBlurb");
+	    this.setState({ blurb: e.target.value });
+	  },
+	  changeDescription: function changeDescription(e) {
+	    console.log("changeDescription");
+	    this.setState({ description: e.target.value });
+	  },
+	  changeGoal: function changeGoal(e) {
+	    console.log("changeGoal");
+	    this.setState({ goal: e.target.value });
+	  },
+	  changeDays: function changeDays(e) {
+	    console.log("changeDays");
+	    this.setState({ days: e.target.value });
+	  },
+	  changeDate: function changeDate(e) {
+	    console.log("changeDate");
+	  },
+	  changeCategory: function changeCategory(e) {
+	    console.log("changeCategory");
+	    this.setState({ categoryId: e.target.value });
+	  },
+	  changeFile: function changeFile(e) {
+	    console.log("changeFile");
+	    var file = e.currentTarget.files[0];
+	    var fileReader = new FileReader();
+	    fileReader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: fileReader.result });
+	    }.bind(this);
+	    if (file) {
+	      fileReader.readAsDataURL(file);
+	    }
+	  },
+	  errors: function errors() {
+	    var errors = ErrorStore.errors("campaign");
+	    var messages = errors.map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i },
+	        errorMsg
+	      );
+	    });
+	
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	  categorySelections: function categorySelections() {
+	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
+	      return React.createElement(
+	        'option',
+	        { key: i, value: category_id },
+	        CampaignFormConstants.CATEGORIES[category_id]
+	      );
+	    });
+	    return categorySelections;
+	  },
+	  render: function render() {
+	    var previewImage = void 0;
+	    if (this.state.imageUrl) {
+	      previewImage = React.createElement(
+	        'div',
+	        { className: 'preview-image' },
+	        React.createElement('img', {
+	          alt: 'Project image',
+	          src: this.state.imageUrl,
+	          width: '100 px',
+	          height: 'auto' })
+	      );
+	    } else {
+	      previewImage = React.createElement('div', null);
+	    }
+	
+	    var previewVideo = void 0;
+	
+	    if (this.state.embedUrl) {
+	      previewVideo = React.createElement(
+	        'div',
+	        { className: 'preview-video' },
+	        React.createElement('iframe', {
+	          width: '449',
+	          height: '252.5625',
+	          src: this.state.embedUrl,
+	          frameBorder: '0', allowFullScreen: true })
+	      );
+	    } else {
+	      previewVideo = React.createElement('div', null);
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'campaign-form input-form' },
+	      this.errors(),
+	      React.createElement(
+	        'div',
+	        { className: 'form-padding' },
+	        React.createElement(
+	          'div',
+	          { className: 'form-label' },
+	          'Start a Campaign'
+	        ),
+	        React.createElement(
+	          'form',
+	          { onSubmit: this.formSubmit },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeTitle,
+	              placeholder: 'Project Title',
+	              value: this.state.title })
+	          ),
+	          previewImage,
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'file',
+	              className: 'no-input',
+	              onChange: this.changeFile,
+	              placeholder: 'Upload an image' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input' },
+	            React.createElement('textarea', {
+	              maxLength: '135',
+	              className: 'no-input required textarea',
+	              onChange: this.changeBlurb,
+	              placeholder: 'Short Blurb',
+	              value: this.state.blurb })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input' },
+	            React.createElement(
+	              'select',
+	              { value: this.state.categoryId, className: 'category-select', onChange: this.changeCategory },
+	              React.createElement(
+	                'option',
+	                { value: '0', disabled: true },
+	                'Choose category'
+	              ),
+	              this.categorySelections()
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeGoal,
+	              placeholder: 'Goal',
+	              value: this.state.goal })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeDays,
+	              placeholder: 'Number of Days',
+	              value: this.state.days })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'date',
+	              className: 'no-input',
+	              onChange: this.changeDate,
+	              placeholder: 'Upload an image' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input description' },
+	            React.createElement('textarea', {
+	              className: 'no-input required textarea',
+	              onChange: this.changeDescription,
+	              placeholder: 'Description',
+	              value: this.state.description })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeURL,
+	              placeholder: 'Video URL',
+	              value: this.state.url })
+	          ),
+	          previewVideo,
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'forgot' },
+	            'Forgot your password?'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'submit' },
+	            React.createElement('input', {
+	              type: 'submit',
+	              className: 'button',
+	              id: 'login-button',
+	              value: 'Create Campaign!' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'checkbox' },
+	            React.createElement('input', {
+	              type: 'checkbox',
+	              id: 'remember',
+	              value: 'Remember me' }),
+	            React.createElement(
+	              'label',
+	              { id: 'remember-label', htmlFor: 'remember' },
+	              'Remember me'
+	            )
+	          ),
+	          React.createElement('div', { className: 'line' }),
+	          React.createElement(
+	            'div',
+	            { className: 'submit', onClick: this.guestClick },
+	            React.createElement('input', {
+	              type: 'submit',
+	              id: 'facebook-button',
+	              value: 'Create demo campaign' })
+	          ),
+	          React.createElement(
+	            'p',
+	            { className: 'never-post' },
+	            'We are totally going to post on Facebook',
+	            React.createElement('br', null),
+	            'without your permission.'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'login-footer' },
+	        'New to Kickrestarter?',
+	        React.createElement(
+	          'a',
+	          { className: 'signup-link', href: '#/signup' },
+	          'Sign Up'
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CampaignForm;
+
+/***/ },
+/* 278 */,
+/* 279 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  CATEGORIES: {
+	    1: "Art",
+	    2: "Comics",
+	    3: "Crafts",
+	    4: "Dance",
+	    5: "Design",
+	    6: "Fashion",
+	    7: "Film & Video",
+	    8: "Food",
+	    9: "Games",
+	    10: "Journalism",
+	    11: "Music",
+	    12: "Photography",
+	    13: "Publishing",
+	    14: "Technology",
+	    15: "Theater"
+	  }
+	
+	};
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var CampaignActions = __webpack_require__(269);
+	var SessionStore = __webpack_require__(248);
+	var CampaignStore = __webpack_require__(272);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var CampaignFormConstants = __webpack_require__(279);
+	
+	var CampaignForm = React.createClass({
+	  displayName: 'CampaignForm',
+	  redirectIfLoggedIn: function redirectIfLoggedIn() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      hashHistory.push("/");
+	    }
+	  },
+	  onChange: function onChange() {
+	    this.campaign = CampaignStore.find(this.id);
+	
+	    this.setState({
+	      id: 0,
+	      title: this.campaign.title,
+	      blurb: this.campaign.blurb,
+	      categoryId: this.campaign.categoryId,
+	      url: this.campaign.video_url,
+	      goal: this.campaign.goal,
+	      description: this.campaign.description,
+	      days: this.campaign.days_to_go,
+	      imageUrl: this.campaign.image_url
+	    });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	    this.campaignListener = CampaignStore.addListener(this.onChange);
+	    this.id = parseInt(this.props.params.campaignId);
+	    CampaignActions.getCampaign(this.id);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	    this.campaignListener.remove();
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      id: 0,
+	      title: "",
+	      blurb: "",
+	      categoryId: "",
+	      url: "",
+	      goal: "",
+	      description: "",
+	      days: "",
+	      imageUrl: null
+	    };
+	  },
+	  formSubmit: function formSubmit(e) {
+	    var formData = new FormData();
+	    if (this.state.imageFile) {
+	      formData.append("campaign[image]", this.state.imageFile);
+	    }
+	    formData.append("campaign[title]", this.state.title);
+	    formData.append("campaign[blurb]", this.state.blurb);
+	    formData.append("campaign[categoryId]", this.state.categoryId);
+	    formData.append("campaign[video_url]", this.state.url);
+	    formData.append("campaign[goal]", this.state.goal);
+	    formData.append("campaign[description]", this.state.description);
+	    formData.append("campaign[days]", this.state.days);
+	
+	    console.log(e.target.class);
+	    e.preventDefault();
+	    CampaignActions.editCampaign(formData, this.id);
+	  },
+	  changeTitle: function changeTitle(e) {
+	    console.log("changeTitle");
+	
+	    this.setState({ title: e.target.value });
+	  },
+	  changeURL: function changeURL(e) {
+	    console.log("changeURL");
+	
+	    this.setState({ url: e.target.value });
+	  },
+	  changeBlurb: function changeBlurb(e) {
+	    console.log("changeBlurb");
+	    this.setState({ blurb: e.target.value });
+	  },
+	  changeDescription: function changeDescription(e) {
+	    console.log("changeDescription");
+	    this.setState({ description: e.target.value });
+	  },
+	  changeGoal: function changeGoal(e) {
+	    console.log("changeGoal");
+	    this.setState({ goal: e.target.value });
+	  },
+	  changeDays: function changeDays(e) {
+	    console.log("changeDays");
+	    this.setState({ days: e.target.value });
+	  },
+	  changeDate: function changeDate(e) {
+	    console.log("changeDate");
+	    console.log(e.target.value);
+	  },
+	  changeCategory: function changeCategory(e) {
+	    console.log("changeCategory");
+	    this.setState({ categoryId: e.target.value });
+	  },
+	  changeFile: function changeFile(e) {
+	    console.log("changeFile");
+	    var file = e.currentTarget.files[0];
+	    var fileReader = new FileReader();
+	    fileReader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: fileReader.result });
+	    }.bind(this);
+	    if (file) {
+	      fileReader.readAsDataURL(file);
+	    }
+	  },
+	  errors: function errors() {
+	    var errors = ErrorStore.errors("campaign");
+	    var messages = errors.map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i },
+	        errorMsg
+	      );
+	    });
+	
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	  categorySelections: function categorySelections() {
+	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
+	      return React.createElement(
+	        'option',
+	        { key: i, value: category_id },
+	        CampaignFormConstants.CATEGORIES[category_id]
+	      );
+	    });
+	    return categorySelections;
+	  },
+	  render: function render() {
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'campaign-form input-form' },
+	      this.errors(),
+	      React.createElement(
+	        'div',
+	        { className: 'form-padding' },
+	        React.createElement(
+	          'div',
+	          { className: 'form-label' },
+	          'Edit your Campaign'
+	        ),
+	        React.createElement(
+	          'form',
+	          { onSubmit: this.formSubmit },
+	          React.createElement(
+	            'div',
+	            { className: 'preview-image' },
+	            React.createElement('img', {
+	              alt: 'Project image',
+	              src: this.state.imageUrl,
+	              width: '100 px',
+	              height: 'auto' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'file',
+	              className: 'no-input',
+	              onChange: this.changeFile,
+	              placeholder: 'Upload an image' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeTitle,
+	              placeholder: 'Project Title',
+	              value: this.state.title })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input' },
+	            React.createElement('textarea', {
+	              maxLength: '135',
+	              className: 'no-input required textarea',
+	              onChange: this.changeBlurb,
+	              placeholder: 'Short Blurb',
+	              value: this.state.blurb })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input' },
+	            React.createElement(
+	              'select',
+	              { value: this.state.categoryId, className: 'category-select', onChange: this.changeCategory },
+	              React.createElement(
+	                'option',
+	                { value: '0', disabled: true },
+	                'Choose category'
+	              ),
+	              this.categorySelections()
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeGoal,
+	              placeholder: 'Goal',
+	              value: this.state.goal })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeDays,
+	              placeholder: 'Number of Days',
+	              value: this.state.days })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'date',
+	              className: 'no-input',
+	              onChange: this.changeDate,
+	              placeholder: 'Upload an image' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input description' },
+	            React.createElement('textarea', {
+	              className: 'no-input required textarea',
+	              onChange: this.changeDescription,
+	              placeholder: 'Description',
+	              value: this.state.description })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeURL,
+	              placeholder: 'Video URL',
+	              value: this.state.url })
+	          ),
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'forgot' },
+	            'Forgot your password?'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'submit' },
+	            React.createElement('input', {
+	              type: 'submit',
+	              className: 'button',
+	              id: 'login-button',
+	              value: 'Update Campaign!' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'checkbox' },
+	            React.createElement('input', {
+	              type: 'checkbox',
+	              id: 'remember',
+	              value: 'Remember me' }),
+	            React.createElement(
+	              'label',
+	              { id: 'remember-label', htmlFor: 'remember' },
+	              'Remember me'
+	            )
+	          ),
+	          React.createElement('div', { className: 'line' }),
+	          React.createElement(
+	            'div',
+	            { className: 'submit', onClick: this.guestClick },
+	            React.createElement('input', {
+	              type: 'submit',
+	              id: 'facebook-button',
+	              value: 'Create demo campaign' })
+	          ),
+	          React.createElement(
+	            'p',
+	            { className: 'never-post' },
+	            'We are totally going to post on Facebook',
+	            React.createElement('br', null),
+	            'without your permission.'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'login-footer' },
+	        'New to Kickrestarter?',
+	        React.createElement(
+	          'a',
+	          { className: 'signup-link', href: '#/signup' },
+	          'Sign Up'
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CampaignForm;
 
 /***/ }
 /******/ ]);

@@ -56,7 +56,7 @@ const NavBar = React.createClass({
            <nav className="header-nav">
              <ul className="group">
                <li><a href="#/discover">Discover</a></li>
-               <li><a href="#/login">Start a project</a></li>
+               <li><a href="#/start">Start a project</a></li>
                <li><a href="#">About us</a></li>
                <li>
                     <Link to="/"><img src={window.logoNavbar}></img></Link>

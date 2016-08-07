@@ -32,8 +32,12 @@ const CampaignsIndex = React.createClass({
   },
 
   componentDidMount() {
-    CampaignStore.addListener(this.onChange);
+    this.listener = CampaignStore.addListener(this.onChange);
     CampaignActions.fetchCampaigns();
+  },
+
+  componentWillUnmount() {
+    this.listener.remove();
   },
 
   render() {

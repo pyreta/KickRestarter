@@ -17,25 +17,30 @@ module.exports = {
     });
   },
 
-  createCampaign (data, callback) {
+  createCampaign (formData, callback) {
     $.ajax({
       url: "api/campaigns",
       type: "POST",
-      data: { campaign: data },
+      contentType: false,
+      processData: false,
+      data: formData,
       success (campaign) {
         callback(campaign);
       }
     });
   },
 
-  updateCampaign (data, callback) {
+  updateCampaign (data, id, callback, error) {
     $.ajax({
-      url: `api/campaigns/${data.id}`,
+      url: `api/campaigns/${id}`,
       type: "PATCH",
+      contentType: false,
+      processData: false,
       data: { campaign: { title: data.title, body: data.body } },
       success (campaign) {
         callback(campaign);
-      }
+      },
+      error,
     });
   },
 

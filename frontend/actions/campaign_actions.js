@@ -1,11 +1,11 @@
-const CampaignCampaignApiUtil = require('../util/campaign_api_util.js');
+const CampaignApiUtil = require('../util/campaign_api_util.js');
 const AppDispatcher = require('../dispatcher/dispatcher.js');
 const CampaignConstants = require('../constants/campaign_constants.js');
 const ErrorActions = require('./error_actions');
 
 module.exports = {
   fetchCampaigns () {
-    CampaignCampaignApiUtil.fetchCampaigns(this.receiveAll);
+    CampaignApiUtil.fetchCampaigns(this.receiveAll);
   },
 
   getCampaign (id) {
@@ -16,8 +16,8 @@ module.exports = {
     CampaignApiUtil.createCampaign(data, this.receiveCampaign, ErrorActions.setErrors);
   },
 
-  editCampaign (data) {
-    CampaignApiUtil.updateCampaign(data, this.receiveCampaign, ErrorActions.setErrors);
+  editCampaign (data, id) {
+    CampaignApiUtil.updateCampaign(data, id, this.receiveCampaign, ErrorActions.setErrors);
   },
 
   deleteCampaign (id) {

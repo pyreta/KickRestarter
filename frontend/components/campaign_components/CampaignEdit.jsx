@@ -3,6 +3,7 @@ const Link = require('react-router').Link;
 const SessionActions = require('../../actions/session_actions');
 const CampaignActions = require('../../actions/campaign_actions');
 const SessionStore = require('../../stores/session_store');
+const CampaignStore = require('../../stores/campaign_store');
 const ErrorStore = require('../../stores/error_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
@@ -21,34 +22,56 @@ const CampaignForm = React.createClass({
     }
   },
 
+  onChange() {
+    this.campaign = CampaignStore.find(this.id);
+
+    this.setState({
+      id: 0,
+      title: this.campaign.title,
+      blurb: this.campaign.blurb,
+      categoryId: this.campaign.categoryId,
+      url: this.campaign.video_url,
+      goal: this.campaign.goal,
+      description: this.campaign.description,
+      days: this.campaign.days_to_go,
+      imageUrl: this.campaign.image_url
+    });
+  },
+
   componentDidMount() {
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+    this.campaignListener = CampaignStore.addListener(this.onChange);
+    this.id = parseInt(this.props.params.campaignId);
+    CampaignActions.getCampaign(this.id);
+
   },
 
   componentWillUnmount() {
     this.errorListener.remove();
     this.sessionListener.remove();
+    this.campaignListener.remove();
   },
 
   getInitialState() {
     return {
-      title: "Thundercats are Loose!",
-      blurb: "thundercats, thundercats, thundercats are loose!",
-      categoryId: 11,
-      url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
-      goal: 1000,
-      description: "I already told you thundercats are loose!",
-      days: 362,
-      imageFile: null,
-      imageUrl: null,
-      embedUrl: null
+      id: 0,
+      title: "",
+      blurb: "",
+      categoryId: "",
+      url: "",
+      goal: "",
+      description: "",
+      days: "",
+      imageUrl: null
     };
   },
 
   formSubmit(e) {
     let formData = new FormData();
-    formData.append("campaign[image]", this.state.imageFile);
+    if (this.state.imageFile) {
+      formData.append("campaign[image]", this.state.imageFile);
+    }
     formData.append("campaign[title]", this.state.title);
     formData.append("campaign[blurb]", this.state.blurb);
     formData.append("campaign[categoryId]", this.state.categoryId);
@@ -57,10 +80,9 @@ const CampaignForm = React.createClass({
     formData.append("campaign[description]", this.state.description);
     formData.append("campaign[days]", this.state.days);
 
-
     console.log(e.target.class);
     e.preventDefault();
-    CampaignActions.createCampaign(formData);
+    CampaignActions.editCampaign(formData, this.id);
   },
 
   changeTitle(e) {
@@ -69,21 +91,10 @@ const CampaignForm = React.createClass({
     this.setState({title: e.target.value});
   },
 
-  parseUrl(url) {
-    let urlSplit = url.split("watch?v=");
-    if (urlSplit.length == 2){
-      this.setState({embedUrl: urlSplit.join("embed/")});
-    } else {
-      this.setState({embedUrl: null});
-    }
-  },
-
   changeURL(e) {
     console.log("changeURL");
 
-
     this.setState({url: e.target.value});
-    this.parseUrl(e.target.value);
   },
 
   changeBlurb(e){
@@ -108,6 +119,7 @@ const CampaignForm = React.createClass({
 
   changeDate(e){
     console.log("changeDate");
+    console.log(e.target.value);
   },
 
   changeCategory(e){
@@ -147,47 +159,30 @@ const CampaignForm = React.createClass({
   },
 
   render() {
-    let previewImage;
-    if (this.state.imageUrl) {
-      previewImage = (
-        <div className="preview-image">
-          <img
-            alt="Project image"
-            src={this.state.imageUrl}
-            width="100 px"
-            height="auto"/>
-        </div>
-      );
-    } else {
-      previewImage = (<div></div>);
-    }
-
-    let previewVideo;
-
-    if (this.state.embedUrl) {
-      previewVideo = (
-        <div className="preview-video">
-          <iframe
-            width="449"
-            height="252.5625"
-            src={this.state.embedUrl}
-            frameBorder="0" allowFullScreen>
-          </iframe>
-        </div>
-      );
-    } else {
-      previewVideo = (<div></div>);
-    }
-
-
 
     return (
       <div className="campaign-form input-form">
         { this.errors() }
         <div className="form-padding">
 
-          <div className="form-label">Start a Campaign</div>
+          <div className="form-label">Edit your Campaign</div>
             <form onSubmit={this.formSubmit}>
+
+            <div className="preview-image">
+              <img
+                alt="Project image"
+                src={this.state.imageUrl}
+                width="100 px"
+                height="auto"/>
+            </div>
+
+            <div className="input campaign-input">
+              <input
+                type="file"
+                className="no-input"
+                onChange={this.changeFile}
+                placeholder="Upload an image" />
+            </div>
 
               <div className="input campaign-input">
                 <input
@@ -198,15 +193,6 @@ const CampaignForm = React.createClass({
                   value={this.state.title} />
               </div>
 
-              { previewImage }
-
-              <div className="input campaign-input">
-                <input
-                  type="file"
-                  className="no-input"
-                  onChange={this.changeFile}
-                  placeholder="Upload an image" />
-              </div>
 
               <div className="input">
                 <textarea
@@ -244,7 +230,6 @@ const CampaignForm = React.createClass({
                   value={this.state.days} />
               </div>
 
-
               <div className="input campaign-input">
                 <input
                 type="date"
@@ -263,14 +248,12 @@ const CampaignForm = React.createClass({
 
               <div className="input campaign-input">
               <input
-                type="text"
-                className="no-input"
-                onChange={this.changeURL}
-                placeholder="Video URL"
-                value={this.state.url} />
+              type="text"
+              className="no-input"
+              onChange={this.changeURL}
+              placeholder="Video URL"
+              value={this.state.url} />
               </div>
-
-              { previewVideo }
 
               <a href="#" className="forgot">Forgot your password?</a>
 
@@ -279,7 +262,7 @@ const CampaignForm = React.createClass({
                   type="submit"
                   className="button"
                   id="login-button"
-                  value="Create Campaign!"/>
+                  value="Update Campaign!"/>
               </div>
 
 

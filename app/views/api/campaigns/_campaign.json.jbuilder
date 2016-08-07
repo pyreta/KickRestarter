@@ -1,6 +1,13 @@
 json.video_url campaign.video_url
+json.video_embed_url campaign.video_embed_url
 json.id campaign.id
+json.funded campaign.funded
+json.pledged campaign.pledged
+json.days_to_go campaign.days_to_go
+json.author campaign.author.username
 json.title campaign.title
+json.city campaign.city.name
+json.state campaign.state.name
 json.blurb campaign.blurb
 json.description campaign.description
 json.author_id campaign.author_id

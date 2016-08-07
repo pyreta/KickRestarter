@@ -1,10 +1,10 @@
 # States
-new_york_state = State.new(name:"NY")
-florida_state = State.new(name:"FL")
+new_york_state = State.create(name:"NY")
+florida_state = State.create(name:"FL")
 
 # Cities
-new_york_city = City.new(name:"New York", state_id: new_york_state.id)
-miami_city = City.new(name:"Miami", state_id: florida_state.id)
+new_york_city = City.create(name:"New York", state_id: new_york_state.id)
+miami_city = City.create(name:"Miami", state_id: florida_state.id)
 
 # Users
 louis = User.create(
@@ -27,7 +27,7 @@ louie = User.create(
 
 # Categories
 created_categories = [
-  art_category = Category.create(title: "Music"),
+  art_category = Category.create(title: "Art"),
   comics_category = Category.create(title: "Comics"),
   crafts_category = Category.create(title: "Crafts"),
   dance_category = Category.create(title: "Dance"),
@@ -307,5 +307,6 @@ video_url: "https://www.google.org",
   author_id: louie.id,
   category_id: fashion_category.id,
   goal: 450,
-  end_date: "2018-01-31 00:00:00.0000"
+  end_date: "2018-01-31 00:00:00.0000",
+  image: File.open('app/assets/images/peewee.jpg')
 )

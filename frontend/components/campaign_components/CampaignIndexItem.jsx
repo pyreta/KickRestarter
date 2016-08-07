@@ -11,8 +11,21 @@ const hashHistory = ReactRouter.hashHistory;
 
 const CampaignsIndexItem = React.createClass({
 
+  percentPledged() {
+    return '20%';
+  },
+
+  totalPledged() {
+    return '$3,745';
+  },
+
+  daysToGo() {
+    return this.props.campaign.days_to_go;
+  },
 
   render() {
+
+    let location = this.props.campaign.city + ", " + this.props.campaign.state;
     return (
       <div>
         <div className="small-campaign-item">
@@ -21,8 +34,51 @@ const CampaignsIndexItem = React.createClass({
             className="project-thumbnail-img"
             src={this.props.campaign.image_url}
             width="100%"
-            height="auto"/>
-            <div className="small-campaign-title">{ this.props.campaign.title }</div>
+            height="179.72 px"/>
+
+            <div className="campaign-info-container-small">
+              <div className="small-campaign-title">{ this.props.campaign.title }</div>
+              <div className="small-campaign-name">{ this.props.campaign.author }</div>
+
+              <div className="small-blurb">
+                <div className="small-campaign-name">{ this.props.campaign.description }</div>
+              </div>
+
+              <ul className="location">
+                <li className="small-campaign-name project-stats-item">
+                  <div className="marker"><img src={window.mapMarker}/></div>
+                </li>
+                <li className="small-campaign-name project-stats-item">{ location }</li>
+              </ul>
+
+              <div className="project-progress-bar">
+                <div style={{width: this.percentPledged()}} className="project-percent-pledged"> </div>
+              </div>
+              <ul className="project-stats">
+                <li className="project-stats-item">
+                  <div className="project-stats-value">{this.percentPledged()}</div>
+                  <div className="project-stats-label">funded</div>
+                </li>
+                <li className="project-stats-item">
+                  <div className="project-stats-value">{this.totalPledged()}</div>
+                  <div className="project-stats-label">pledged</div>
+                </li>
+                <li className="project-stats-item">
+                  <div className="project-stats-value">{this.daysToGo()}</div>
+                  <div className="project-stats-label">days to go</div>
+                </li>
+              </ul>
+            </div>
+
+            {
+
+              // <div className="small-campaign-name">{ this.props.campaign.funded }</div>
+              // <div className="small-campaign-name">{ this.props.campaign.pledged }</div>
+              // <div className="small-campaign-name">{ this.props.campaign.days_to_go }</div>
+              // <div className="small-campaign-name">{ this.props.campaign.city }</div>
+              // <div className="small-campaign-name">{ this.props.campaign.state }</div>
+
+            }
         </div>
       </div>
     );

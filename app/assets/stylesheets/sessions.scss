@@ -19,6 +19,12 @@
   margin-bottom: 40px;
 }
 
+.campaign-form{
+  height: 1714px;
+  margin-bottom: 40px;
+  width: 800px;
+}
+
 .nav-logo {
   position: absolute;
   left: 50%;
@@ -83,6 +89,10 @@
   outline: 0;
 }
 
+.campaign-input > input {
+  width: 427px;
+}
+
 
 
 .submit > input {
@@ -98,6 +108,7 @@
   margin-bottom: 15px;
   width: 344px;
   font-size: 14px;
+  font-weight: bold;
   transition: background-color 0.5s;
 }
 

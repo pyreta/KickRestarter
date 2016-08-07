@@ -8,6 +8,8 @@ const hashHistory = ReactRouter.hashHistory;
 const LoginForm = require("./components/LoginForm");
 const SignUpForm = require("./components/SignUpForm");
 const CampaignsIndex = require("./components/campaign_components/CampaignsIndex");
+const CampaignForm = require("./components/campaign_components/CampaignForm");
+const CampaignEdit = require("./components/campaign_components/CampaignEdit");
 const NavBar = require("./components/NavBar");
 const Footer = require("./components/Footer");
 const HomePage = require("./components/HomePage");
@@ -29,6 +31,13 @@ const App = React.createClass({
   }
 });
 
+let _ensureLoggedIn = function (nextState, replace) {
+  console.log("ENSURE LOGGED IN FUNC IN ENTRY FILE TO BE FILLED OUT");
+  if (!SessionStore.isUserLoggedIn()) {
+    replace('/login');
+  }
+};
+
 const appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
@@ -36,7 +45,8 @@ const appRouter = (
       <Route path="/login" component={LoginForm} />
       <Route path="/signup" component={SignUpForm} />
       <Route path="/discover" component={CampaignsIndex} />
-
+      <Route path="/start" component={CampaignForm} onEnter={ _ensureLoggedIn }/>
+      <Route path="/campaigns/:campaignId" component={CampaignEdit} onEnter={ _ensureLoggedIn }/>
     </Route>
   </Router>
 );
