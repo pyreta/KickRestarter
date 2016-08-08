@@ -8,6 +8,7 @@ const hashHistory = ReactRouter.hashHistory;
 const LoginForm = require("./components/LoginForm");
 const SignUpForm = require("./components/SignUpForm");
 const CampaignsIndex = require("./components/campaign_components/CampaignsIndex");
+const CampaignShow = require("./components/campaign_components/CampaignShow");
 const CampaignForm = require("./components/campaign_components/CampaignForm");
 const CampaignEdit = require("./components/campaign_components/CampaignEdit");
 const NavBar = require("./components/NavBar");
@@ -46,7 +47,8 @@ const appRouter = (
       <Route path="/signup" component={SignUpForm} />
       <Route path="/discover" component={CampaignsIndex} />
       <Route path="/start" component={CampaignForm} onEnter={ _ensureLoggedIn }/>
-      <Route path="/campaigns/:campaignId" component={CampaignEdit} onEnter={ _ensureLoggedIn }/>
+      <Route path="/campaigns/:campaignId" component={CampaignShow} />
+      <Route path="/campaigns/:campaignId/edit" component={CampaignEdit} onEnter={ _ensureLoggedIn }/>
     </Route>
   </Router>
 );

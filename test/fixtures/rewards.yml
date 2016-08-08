@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  campaign_id: 1
+  delivery_date: 2016-08-07 21:07:36
+  min_amount: 1
+
+two:
+  title: MyString
+  description: MyText
+  campaign_id: 1
+  delivery_date: 2016-08-07 21:07:36
+  min_amount: 1

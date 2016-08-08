@@ -10,6 +10,25 @@ class Campaign < ActiveRecord::Base
     primary_key: :id
   )
 
+  has_many(
+    :rewards,
+    class_name: "Reward",
+    foreign_key: :campaign_id,
+    primary_key: :id
+  )
+
+  has_many(
+    :pledges,
+    through: :rewards,
+    source: :pledges
+  )
+
+  has_many(
+    :pledgers,
+    through: :pledges,
+    source: :pledger
+  )
+
   has_one(
     :city,
     through: :author,

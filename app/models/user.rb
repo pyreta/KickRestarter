@@ -25,6 +25,25 @@ class User < ActiveRecord::Base
     primary_key: :id
   )
 
+  has_many(
+    :pledges,
+    class_name: "Pledge",
+    foreign_key: :pledger_id,
+    primary_key: :id
+  )
+
+  has_many(
+    :rewards,
+    through: :pledges,
+    source: :reward
+  )
+
+  has_many(
+    :pledged_campaigns,
+    through: :rewards,
+    source: :campaign
+  )
+
   belongs_to(
     :city,
     class_name: "City",
@@ -35,7 +54,7 @@ class User < ActiveRecord::Base
   has_one(
     :state,
     through: :city,
-    source: :state 
+    source: :state
   )
 
   attr_reader :password

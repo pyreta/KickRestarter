@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
 root to: "static_pages#root"
 
   namespace :api, defaults: {format: :json} do
@@ -10,5 +11,7 @@ root to: "static_pages#root"
       resources :subcategories, only:[:index]
     end
     resources :campaigns, only:[:index, :show, :create, :destroy, :update]
+    resources :pledges
+    resources :rewards
   end
 end

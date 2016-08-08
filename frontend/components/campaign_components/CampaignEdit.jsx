@@ -63,6 +63,7 @@ const CampaignForm = React.createClass({
       goal: "",
       description: "",
       days: "",
+      imageFile: null,
       imageUrl: null
     };
   },

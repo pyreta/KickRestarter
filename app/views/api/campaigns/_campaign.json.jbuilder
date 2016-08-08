@@ -15,3 +15,5 @@ json.category_id campaign.category_id
 json.goal campaign.goal
 json.end_date campaign.end_date
 json.image_url asset_path(campaign.image.url)
+json.backers campaign.pledgers.count
+json.amount_pledged campaign.pledges.sum(:amount)

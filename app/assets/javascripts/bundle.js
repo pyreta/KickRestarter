@@ -56,6 +56,7 @@
 	var LoginForm = __webpack_require__(238);
 	var SignUpForm = __webpack_require__(267);
 	var CampaignsIndex = __webpack_require__(268);
+	var CampaignShow = __webpack_require__(281);
 	var CampaignForm = __webpack_require__(277);
 	var CampaignEdit = __webpack_require__(280);
 	var NavBar = __webpack_require__(274);
@@ -101,7 +102,8 @@
 	    React.createElement(Route, { path: '/signup', component: SignUpForm }),
 	    React.createElement(Route, { path: '/discover', component: CampaignsIndex }),
 	    React.createElement(Route, { path: '/start', component: CampaignForm, onEnter: _ensureLoggedIn }),
-	    React.createElement(Route, { path: '/campaigns/:campaignId', component: CampaignEdit, onEnter: _ensureLoggedIn })
+	    React.createElement(Route, { path: '/campaigns/:campaignId', component: CampaignShow }),
+	    React.createElement(Route, { path: '/campaigns/:campaignId/edit', component: CampaignEdit, onEnter: _ensureLoggedIn })
 	  )
 	);
 	
@@ -35595,6 +35597,7 @@
 	      goal: "",
 	      description: "",
 	      days: "",
+	      imageFile: null,
 	      imageUrl: null
 	    };
 	  },
@@ -35863,6 +35866,146 @@
 	});
 	
 	module.exports = CampaignForm;
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var CampaignStore = __webpack_require__(272);
+	var CampaignActions = __webpack_require__(269);
+	
+	Number.prototype.formatMoney = function (c, d, t) {
+	  var n = this;
+	  c = isNaN(c = Math.abs(c)) ? 2 : c;
+	  d = d === undefined ? "." : d;
+	  t = t === undefined ? "," : t;
+	  var s = n < 0 ? "-" : "";
+	  var i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "";
+	  var j = (j = i.length) > 3 ? j % 3 : 0;
+	  return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+	};
+	
+	var CampaignShow = React.createClass({
+	  displayName: 'CampaignShow',
+	  percentPledged: function percentPledged() {
+	    return '20%';
+	  },
+	  totalPledged: function totalPledged() {
+	    return '$3,745';
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.campaignListener = CampaignStore.addListener(this.onChange);
+	    this.id = parseInt(this.props.params.campaignId);
+	    CampaignActions.getCampaign(this.id);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	    this.campaignListener.remove();
+	  },
+	  onChange: function onChange() {
+	    this.setState({
+	      campaign: CampaignStore.find(this.id)
+	    });
+	  },
+	  daysToGo: function daysToGo() {
+	    return this.state.campaign.days_to_go;
+	  },
+	
+	
+	  // parseUrl(url) {
+	  //   let urlSplit = url.split("watch?v=");
+	  //   if (urlSplit.length == 2){
+	  //     this.setState({embedUrl: urlSplit.join("embed/")});
+	  //   } else {
+	  //     this.setState({embedUrl: null});
+	  //   }
+	  // },
+	
+	  getInitialState: function getInitialState() {
+	    var potentialCampaign = CampaignStore.find(this.props.params.campaignId);
+	    return { campaign: potentialCampaign ? potentialCampaign : {} };
+	  },
+	  parseGoal: function parseGoal() {
+	    if (!this.state.campaign.goal) return "";
+	
+	    return "$" + this.state.campaign.goal.formatMoney(0);
+	  },
+	  parseDollarAmount: function parseDollarAmount(amount) {
+	    if (!amount) return "$0";
+	
+	    return "$" + amount.formatMoney(0);
+	  },
+	  render: function render() {
+	
+	    var location = this.state.campaign.city + ", " + this.state.campaign.state;
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        null,
+	        JSON.stringify(this.state.campaign)
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        this.state.campaign.title
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        'by ',
+	        React.createElement(
+	          'span',
+	          null,
+	          this.state.campaign.author
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'preview-video' },
+	        React.createElement('iframe', {
+	          width: '680',
+	          height: '382.5',
+	          src: this.state.campaign.video_embed_url,
+	          frameBorder: '0', allowFullScreen: true })
+	      ),
+	      location,
+	      this.parseDollarAmount(this.state.campaign.amount_pledged) + " of " + this.parseGoal() + " goal",
+	      React.createElement(
+	        'div',
+	        null,
+	        this.state.campaign.description
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        this.state.campaign.days_to_go,
+	        ' days to go'
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        this.state.campaign.backers,
+	        ' Backers'
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CampaignShow;
 
 /***/ }
 /******/ ]);
