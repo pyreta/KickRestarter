@@ -12,7 +12,7 @@ KickRestarter is a web application inspired by Kickstarter that will focus on fu
 - [x] Hosting on Heroku
 - [x] New account creation, login, and guest/demo login
 - [ ] A production README, replacing this README (**NB**: check out the [sample production README](docs/production_readme.md) -- you'll write this later)
-- [ ] Campaigns
+- [x] Campaigns
   - [ ] Elegant layout displaying campaign goals and details
   - [ ] Displays current state of campaign funding
   - [ ] Options for creating new campaign
@@ -69,12 +69,12 @@ the API.
 - [x] create `Campaign` model
 - [x] seed the database with a small amount of test data
 - [x] CRUD API for notes (`CampaignController`)
-- [ ] jBuilder views for campaign
+- [x] jBuilder views for campaign
 - [x] test out API interaction in the console.
 - implement each campaign component, building out the flux loop as needed.
   - [x] `CampaignIndex`
   - [x] `CampaignIndexItem`
-  - [ ] `CampaignForm`
+  - [x] `CampaignForm`
 - [ ] style campaign components like Kickstarter
 - [x] seed campaigns
 
@@ -82,10 +82,9 @@ the API.
 
 **Objective:** Campaigns belong to Categories, and can be viewed by searching or choosing a category.
 
-- [ ] create `Category` model
+- [x] create `Category` model
 - build out API, Flux loop, and components for:
-  - [ ] Category CRUD
-  - [ ] adding campaigns requires a category
+  - [x] adding campaigns requires a category
   - [ ] moving campaigns to a different category
   - [ ] viewing campaigns by category
 - [ ] Use CSS to style new components
@@ -98,7 +97,7 @@ which has its own `Index` view.
 
 **Objective:** Campaigns can be contributd to with multiple pledges.
 
-- [ ] create `Pledge` model and join table
+- [x] create `Pledge` model and join table
 - build out API, Flux loop, and components for:
   - [ ] fetching pledges for campaign
   - [ ] adding pledges to campaign
