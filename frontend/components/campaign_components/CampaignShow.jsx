@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 const React = require('react');
 const Link = require('react-router').Link;
 const SessionActions = require('../../actions/session_actions');
@@ -16,7 +8,7 @@ const hashHistory = ReactRouter.hashHistory;
 const CampaignStore = require('../../stores/campaign_store');
 const CampaignActions = require('../../actions/campaign_actions');
 const MethodModule = require('../../constants/method_module');
-
+const RewardsIndex = require('../reward_components/RewardsIndex');
 
 const CampaignShow = React.createClass({
 
@@ -56,7 +48,6 @@ const CampaignShow = React.createClass({
 
 
   render() {
-
     let location = this.state.campaign.city + ", " + this.state.campaign.state;
     let days = this.state.campaign.days_to_go === 1 ? "day" : "days";
     let backers = this.state.campaign.backers === 1 ? " backer" : " backers";
@@ -64,9 +55,8 @@ const CampaignShow = React.createClass({
       <div>
       <div className="campaign-container">
 
-
         <div className="campaign-title">{this.state.campaign.title}</div>
-        <div className="campaign-author">by <span style={{"font-weight": "bold"}}>{this.state.campaign.author}</span></div>
+        <div className="campaign-author">by <span style={{"fontWeight": "bold"}}>{this.state.campaign.author}</span></div>
 
         <div className="campaign-body">
           <div className="preview-video">
@@ -150,7 +140,7 @@ const CampaignShow = React.createClass({
             <div className="rewards-container">
               <div className="rewards-body">
                 <div className = "reward-title">Rewards</div>
-
+                  <RewardsIndex campaign={this.state.campaign}/>
               </div>
             </div>
           </div>

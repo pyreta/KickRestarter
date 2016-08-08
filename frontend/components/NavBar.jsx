@@ -33,14 +33,19 @@ const NavBar = React.createClass({
   render() {
 
     let greeting;
+    let profileIcon = (<div></div>);
     if (SessionStore.isUserLoggedIn()) {
       greeting = (
-        <div>
-          <div>
-            {SessionStore.currentUser().username}
-          </div>
+
+
           <button onClick={this.logOutClick}>Log Out</button>
-        </div>);
+        );
+
+      profileIcon = (
+        <div className="profile-icon-container">
+          <img src={SessionStore.currentUser().image_url}></img>
+        </div>
+      );
     } else {
       greeting = (<a href="#/login">Log In</a>);
     }
@@ -54,18 +59,19 @@ const NavBar = React.createClass({
 
 
            <nav className="header-nav">
+
              <ul className="group">
                <li><a href="#/discover">Discover</a></li>
                <li><a href="#/start">Start a project</a></li>
                <li><a href="#">About us</a></li>
                <li>
-                    <Link to="/"><img src={window.logoNavbar}></img></Link>
+                  <Link to="/"><img src={window.logoNavbar}></img></Link>
                 </li>
                 <li><a href="#">search</a></li>
                 <li><a href="#/signup">Sign up</a></li>
                 <li>{ greeting }</li>
                <li>
-                 <a href="#">Profile</a>
+                 <a href="#" id="icon" >{ profileIcon }</a>
                  <ul className="header-nav-drop-down">
                    <li><a href="#/discover">Discover</a></li>
                    <li><a href="#">Start a project</a></li>

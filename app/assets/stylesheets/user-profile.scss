@@ -1,0 +1,22 @@
+.profile-picture-container{
+  width: 200px;
+  height:200px;
+}
+.profile-icon-container{
+  width: 50px;
+  height:50px;
+  padding-top: 0;
+}
+.profile-picture-container, .profile-icon-container{
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+  float: right;
+  border: 1px solid #f1eeea;
+}
+.profile-container{
+  text-align: center;
+}
+#icon{
+  padding: 4px;
+}

@@ -30,13 +30,13 @@ module.exports = {
     });
   },
 
-  updateCampaign (data, id, callback, error) {
+  updateCampaign (formData, id, callback, error) {
     $.ajax({
       url: `api/campaigns/${id}`,
       type: "PATCH",
       contentType: false,
       processData: false,
-      data: { campaign: { title: data.title, body: data.body } },
+      data: formData,
       success (campaign) {
         callback(campaign);
       },

@@ -8,7 +8,6 @@ const hashHistory = ReactRouter.hashHistory;
 const MethodModule = require('../../constants/method_module');
 
 
-
 const CampaignsIndexItem = React.createClass({
 
   percentPledged() {

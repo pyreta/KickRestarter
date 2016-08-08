@@ -20,6 +20,7 @@ class Api::CampainsController < ApplicationController
 			:description,
 			:author_id,
 			:category_id,
+			:image,
 			:goal,
 			:end_date,
 			:risks,
