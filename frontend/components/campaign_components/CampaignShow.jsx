@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 const React = require('react');
 const Link = require('react-router').Link;
 const SessionActions = require('../../actions/session_actions');
@@ -7,27 +15,11 @@ const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
 const CampaignStore = require('../../stores/campaign_store');
 const CampaignActions = require('../../actions/campaign_actions');
+const MethodModule = require('../../constants/method_module');
 
-Number.prototype.formatMoney = function(c, d, t){
-  let n = this;
-  c = isNaN(c = Math.abs(c)) ? 2 : c;
-  d = d === undefined ? "." : d;
-  t = t === undefined ? "," : t;
-  let s = n < 0 ? "-" : "";
-  let i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "";
-  let j = (j = i.length) > 3 ? j % 3 : 0;
-  return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-};
 
 const CampaignShow = React.createClass({
 
-  percentPledged() {
-    return '20%';
-  },
-
-  totalPledged() {
-    return '$3,745';
-  },
 
   componentDidMount() {
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
@@ -39,7 +31,6 @@ const CampaignShow = React.createClass({
 
   componentWillUnmount() {
     this.errorListener.remove();
-    this.sessionListener.remove();
     this.campaignListener.remove();
   },
 
@@ -53,61 +44,117 @@ const CampaignShow = React.createClass({
     return this.state.campaign.days_to_go;
   },
 
-
-  // parseUrl(url) {
-  //   let urlSplit = url.split("watch?v=");
-  //   if (urlSplit.length == 2){
-  //     this.setState({embedUrl: urlSplit.join("embed/")});
-  //   } else {
-  //     this.setState({embedUrl: null});
-  //   }
-  // },
-
   getInitialState() {
     const potentialCampaign = CampaignStore.find(this.props.params.campaignId);
     return ({campaign: potentialCampaign ? potentialCampaign : {}});
   },
 
-  parseGoal() {
-    if (!this.state.campaign.goal) return "";
-
-
-    return "$" + this.state.campaign.goal.formatMoney(0);
+  backProject(e) {
+    e.preventDefault();
+    console.log("Back PROJECT!");
   },
 
-  parseDollarAmount(amount) {
-    if (!amount) return "$0";
-
-
-    return "$" + amount.formatMoney(0);
-  },
 
   render() {
 
     let location = this.state.campaign.city + ", " + this.state.campaign.state;
-
+    let days = this.state.campaign.days_to_go === 1 ? "day" : "days";
+    let backers = this.state.campaign.backers === 1 ? " backer" : " backers";
     return (
-
       <div>
-        <div>{JSON.stringify(this.state.campaign)}</div>
+      <div className="campaign-container">
 
-        <div>{this.state.campaign.title}</div>
-        <div>by <span>{this.state.campaign.author}</span></div>
 
-        <div className="preview-video">
-          <iframe
-            width="680"
-            height="382.5"
-            src={this.state.campaign.video_embed_url}
-            frameBorder="0" allowFullScreen>
-          </iframe>
+        <div className="campaign-title">{this.state.campaign.title}</div>
+        <div className="campaign-author">by <span style={{"font-weight": "bold"}}>{this.state.campaign.author}</span></div>
+
+        <div className="campaign-body">
+          <div className="preview-video">
+            <iframe
+              width="680"
+              height="382.5"
+              src={this.state.campaign.video_embed_url}
+              frameBorder="0" allowFullScreen>
+            </iframe>
+          </div>
+
+          <div className="campaign-show-stats">
+
+            <div>
+              <span className="big-stats">
+                {MethodModule.parseAmount(this.state.campaign.backers)}
+              </span>
+              <span className="small-stat-labels">
+                {backers}
+              </span>
+            </div>
+
+            <div>
+              <span className="big-stats">
+                { MethodModule.parseDollarAmount(this.state.campaign.amount_pledged)}
+              </span>
+              <span className="small-stat-labels">
+                {" pledged of "+ MethodModule.parseDollarAmount(this.state.campaign.goal) + " goal" }
+              </span>
+            </div>
+
+
+            <div>
+              <span className="big-stats">
+              {MethodModule.parseAmount(this.state.campaign.days_to_go)}
+              </span>
+              <span className="small-stat-labels">
+              {days +" to go"}
+              </span>
+            </div>
+
+            <form onSubmit={this.backProject}>
+            <div className="submit">
+              <input
+                type="submit"
+                className="button"
+                id="back-project-button"
+                value="Back This Project"/>
+            </div>
+            </form>
+
+          </div>
+
+
+          <ul className="location small-stat-labels">
+            <li className="small-campaign-name project-stats-item">
+              <div className="marker"><img src={window.mapMarker}/></div>
+            </li>
+            <li className="show-location">{ location }</li>
+          </ul>
+
+
+
+
+          <div className = "show-description">{this.state.campaign.description}</div>
         </div>
-        { location }
-        { this.parseDollarAmount(this.state.campaign.amount_pledged) + " of "+ this.parseGoal() + " goal" }
-        <div>{this.state.campaign.description}</div>
-        <div>{this.state.campaign.days_to_go} days to go</div>
-        <div>{this.state.campaign.backers} Backers</div>
 
+
+      </div>
+
+      <div className="bottom-background">
+        <div className="bottom-container">
+          <div className="about-container">
+            <div className="about-body">
+              <div className = "show-description about-title">About this project</div>
+                <div>
+                  {MethodModule.lorem}
+                  </div>
+                </div>
+              </div>
+            <div className="rewards-container">
+              <div className="rewards-body">
+                <div className = "reward-title">Rewards</div>
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

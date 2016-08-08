@@ -5,18 +5,20 @@ const SessionStore = require('../../stores/session_store');
 const ErrorStore = require('../../stores/error_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
-
+const MethodModule = require('../../constants/method_module');
 
 
 
 const CampaignsIndexItem = React.createClass({
 
   percentPledged() {
-    return '20%';
+    let pDec = this.props.campaign.amount_pledged/this.props.campaign.goal;
+    return (Math.floor(pDec*100)).toString() + "%";
+    // return '20%';
   },
 
   totalPledged() {
-    return '$3,745';
+    return  MethodModule.parseDollarAmount(this.props.campaign.amount_pledged);
   },
 
   daysToGo() {
@@ -70,15 +72,6 @@ const CampaignsIndexItem = React.createClass({
               </ul>
             </div>
 
-            {
-
-              // <div className="small-campaign-name">{ this.props.campaign.funded }</div>
-              // <div className="small-campaign-name">{ this.props.campaign.pledged }</div>
-              // <div className="small-campaign-name">{ this.props.campaign.days_to_go }</div>
-              // <div className="small-campaign-name">{ this.props.campaign.city }</div>
-              // <div className="small-campaign-name">{ this.props.campaign.state }</div>
-
-            }
         </div>
       </div>
     );

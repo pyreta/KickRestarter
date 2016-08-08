@@ -1,0 +1,83 @@
+.campaign-title{
+  font-size: 32px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.campaign-author{
+  text-align: center;
+  margin: 12px;
+  font-size: 14px;
+}
+
+.big-stats{
+  font-size: 48px;
+  font-weight: bold;
+  display: block;
+  margin-top: 8px;
+}
+
+.small-stat-labels{
+  color: rgb(128, 128, 158);
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.show-description{
+  font-size: 22px;
+  width: 680px;
+}
+
+.show-location {
+  display: inline-block;
+  padding: 39px 0 39px 0;
+}
+
+.preview-video, .campaign-show-stats{
+  display: inline-block;
+}
+
+.campaign-show-stats{
+  overflow: hidden;
+  margin-left: 40px;
+}
+
+#back-project-button{
+  width: 158px;
+  margin-bottom: 0;
+  margin-top: 45px;
+  padding: 19px;
+  font-size: 16px;
+}
+
+.campaign-body, .bottom-container{
+  width: 925px;
+  margin: auto;
+}
+.about-body{
+  width: 680px;
+}
+
+.about-container{
+  padding-top: 50px;
+  display: inline-block;
+}
+
+.about-title{
+  padding-bottom: 50px;
+}
+
+.bottom-background{
+  background-color: white;
+}
+
+.campaign-container{
+  background-color: #F7F7F9;
+  border: 1px solid #f1eeea;
+  padding-bottom: 50px;
+}
+
+.reward-title{
+  font-size: 22px;
+  display: inline-block;
+}

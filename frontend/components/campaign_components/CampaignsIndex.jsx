@@ -19,14 +19,6 @@ const CampaignsIndex = React.createClass({
     return { campaigns: CampaignStore.all() };
   },
 
-  // errors() {
-  //   const errors = ErrorStore.errors("campaigns-index");
-  //   const messages = errors.map( (errorMsg, i) => {
-  //     return <li key={ i }>{ errorMsg }</li>;
-  //   });
-  //
-  //   return <ul>{ messages }</ul>;
-  // },
   onChange() {
     this.setState({campaigns: CampaignStore.all()});
   },
@@ -43,7 +35,7 @@ const CampaignsIndex = React.createClass({
   render() {
 
     let campaignList = this.state.campaigns.map(function(el, i){
-      return ( <Link key={i} to="#/login"><CampaignIndexItem campaign={el}/></Link>);
+      return ( <Link key={i} to={`/campaigns/${el.id}`}><CampaignIndexItem campaign={el}/></Link>);
     });
 
     return ( <div>

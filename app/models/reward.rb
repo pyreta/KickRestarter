@@ -13,4 +13,6 @@ class Reward < ActiveRecord::Base
     primary_key: :id
   )
 
+
+
 end

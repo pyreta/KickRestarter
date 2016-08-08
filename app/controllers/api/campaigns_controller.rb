@@ -4,7 +4,6 @@ class Api::CampaignsController < ApplicationController
     @campaigns = Campaign.includes(:author, :city, :state).all
   end
   def create
-    debugger
     # FORMAT INCOMING DATAAA
     #x = Time.zone.parse("2018-01-31 00:00:00.0000")
     # y = x+5.day
