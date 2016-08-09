@@ -13,6 +13,14 @@ class Reward < ActiveRecord::Base
     primary_key: :id
   )
 
+  has_many(
+    :pledgers,
+    through: :pledges,
+    source: :pledger
+  )
+
+
+
 
 
 end

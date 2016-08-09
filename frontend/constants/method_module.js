@@ -9,7 +9,20 @@ Number.prototype.formatMoney = function(c, d, t){
   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 
-
+let months = {
+  1: "Jan",
+  2: "Feb",
+  3: "Mar",
+  4: "Apr",
+  5: "May",
+  6: "Jun",
+  7: "Jul",
+  8: "Aug",
+  9: "Sept",
+  10: "Oct",
+  11: "Nov",
+  12: "Dec"
+};
 
 let loremString = `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla felis vitae lacinia facilisis. Curabitur rutrum posuere justo. Integer ut tortor orci. Ut rhoncus congue odio a cursus. Maecenas sapien nulla, fermentum eget eros tincidunt, condimentum tempor lacus. Vivamus pulvinar sagittis mattis. Duis diam tellus, lacinia in blandit convallis, molestie vitae enim. Nam mauris justo, mattis sit amet massa id, ultricies porta lacus. Proin velit turpis, suscipit laoreet tempor in, dignissim eget ex. Vivamus et mi quis velit faucibus porttitor.
@@ -87,10 +100,9 @@ strings!`;
 
 module.exports = {
   parseDollarAmount(amount) {
-    if (!amount) return "$0";
-
-
-    return "$" + amount.formatMoney(0);
+    // if (!amount) return "$0";
+    // return "$" + amount.formatMoney(0);
+    return "$" + this.parseAmount(amount);
   },
 
   parseAmount(amount) {
@@ -100,6 +112,15 @@ module.exports = {
     return amount.formatMoney(0);
   },
 
-  lorem: loremString
+  backers(amount) {
+    return (amount === 1) ? "backer" : "backers";
+  },
+
+  parseBackers(amount){
+    return this.parseAmount(amount) + " " + this.backers(amount);
+  },
+
+  lorem: loremString,
+  months
 
 };

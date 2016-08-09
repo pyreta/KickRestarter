@@ -66,6 +66,10 @@ body{
   font-family: "Helvetica Neue", Helvetica, 'Roboto', Arial, "Liberation Sans", FreeSans, sans-serif;
 }
 
+.background-campaign-show{
+  background-color: #F7F7F9;
+}
+
 
 button, input[type="submit"] {
  display: inline;

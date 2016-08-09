@@ -18,12 +18,14 @@ const CampaignShow = React.createClass({
     this.campaignListener = CampaignStore.addListener(this.onChange);
     this.id = parseInt(this.props.params.campaignId);
     CampaignActions.getCampaign(this.id);
+    jQuery("body").addClass('background-campaign-show');
 
   },
 
   componentWillUnmount() {
     this.errorListener.remove();
     this.campaignListener.remove();
+    jQuery("body").removeClass('background-campaign-show');
   },
 
   onChange() {
@@ -43,7 +45,7 @@ const CampaignShow = React.createClass({
 
   backProject(e) {
     e.preventDefault();
-    console.log("Back PROJECT!");
+    hashHistory.push(`campaigns/${this.props.params.campaignId}/pledge`);
   },
 
 
@@ -52,7 +54,7 @@ const CampaignShow = React.createClass({
     let days = this.state.campaign.days_to_go === 1 ? "day" : "days";
     let backers = this.state.campaign.backers === 1 ? " backer" : " backers";
     return (
-      <div>
+      <div className="group">
       <div className="campaign-container">
 
         <div className="campaign-title">{this.state.campaign.title}</div>
@@ -127,24 +129,43 @@ const CampaignShow = React.createClass({
 
       </div>
 
-      <div className="bottom-background">
+
+
+      <div className="bottom-background group">
         <div className="bottom-container">
           <div className="about-container">
             <div className="about-body">
               <div className = "show-description about-title">About this project</div>
-                <div>
-                  {MethodModule.lorem}
-                  </div>
-                </div>
-              </div>
-            <div className="rewards-container">
-              <div className="rewards-body">
-                <div className = "reward-title">Rewards</div>
-                  <RewardsIndex campaign={this.state.campaign}/>
-              </div>
+              <div className="about-p">{MethodModule.lorem}</div>
             </div>
           </div>
+          <div className="rewards-container">
+            <div>
+              <div className = "reward-title">Rewards</div>
+            </div>
+            <RewardsIndex campaign={this.state.campaign}/>
+          </div>
         </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
     );
   }

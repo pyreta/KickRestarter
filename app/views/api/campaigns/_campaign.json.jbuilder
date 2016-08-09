@@ -17,4 +17,8 @@ json.end_date campaign.end_date
 json.image_url asset_path(campaign.image.url)
 json.backers campaign.pledgers.count
 json.amount_pledged campaign.pledges.sum(:amount)
-json.rewards campaign.rewards
+# json.rewards campaign.rewards
+json.rewards campaign.rewards do |reward|
+  json.backers reward.pledgers
+  json.extract! reward, :title, :description, :campaign_id, :delivery_date, :min_amount, :id
+end

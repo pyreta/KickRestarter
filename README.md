@@ -13,9 +13,9 @@ KickRestarter is a web application inspired by Kickstarter that will focus on fu
 - [x] New account creation, login, and guest/demo login
 - [ ] A production README, replacing this README (**NB**: check out the [sample production README](docs/production_readme.md) -- you'll write this later)
 - [x] Campaigns
-  - [ ] Elegant layout displaying campaign goals and details
-  - [ ] Displays current state of campaign funding
-  - [ ] Options for creating new campaign
+  - [x] Elegant layout displaying campaign goals and details
+  - [x] Displays current state of campaign funding
+  - [x] Options for creating new campaign
 - [ ] Backing campaigns & rewards
   - [ ] Ability to contribute to or withdraw from a campaign
   - [ ] Funds updated instantaneously
@@ -75,7 +75,7 @@ the API.
   - [x] `CampaignIndex`
   - [x] `CampaignIndexItem`
   - [x] `CampaignForm`
-- [ ] style campaign components like Kickstarter
+- [x] style campaign components like Kickstarter
 - [x] seed campaigns
 
 ### Phase 3: Categories (2 day, W2 Tu 6pm)
@@ -85,7 +85,7 @@ the API.
 - [x] create `Category` model
 - build out API, Flux loop, and components for:
   - [x] adding campaigns requires a category
-  - [ ] moving campaigns to a different category
+  - [x] moving campaigns to a different category
   - [ ] viewing campaigns by category
 - [ ] Use CSS to style new components
 - [ ] Seed categories with campaigns

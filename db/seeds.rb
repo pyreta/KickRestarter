@@ -300,7 +300,7 @@ lou_diamond_phillips = Campaign.create(
 )
 
 slap_bracelets = Campaign.create(
-  video_url: "https://www.youtube.com/watch?v=h_JrO5urMHo",
+  video_url: "https://www.youtube.com/watch?v=0Nwnp51QV5s",
   title: "Bring Back Slap Bracelets",
   blurb: "They're worth cutting your wrists over.",
   description: "It's all fun and games until the cheap cloth comes off and you have little kids taking turns ramming sharp pieces of metal into their flesh.",
@@ -311,7 +311,14 @@ slap_bracelets = Campaign.create(
   # image: File.open('app/assets/images/peewee.jpg')
 )
 
-cheap_reward = Reward.create(title: "Cheapskate award!", description: "For people with no money", campaign_id: slap_bracelets.id, delivery_date:"2018-01-31 00:00:00.0000", min_amount: 5)
+cheap_reward = Reward.create(title: "Cheapskate award!", description: "wow f oksdflkjs  ekwelrkj  aflkaskj f lskdfj aslkjasd  gkdkdkfj f fkd f sdflkjasj a slkdjj g g dkjsdflkid d lksdflsdfj sdf eijflksjdf", campaign_id: slap_bracelets.id, delivery_date:"2018-01-31 00:00:00.0000", min_amount: 5)
+less_cheap_reward = Reward.create(
+  title: "You are better than awful",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla felis vitae lacinia facilisis. Curabitur rutrum posuere justo. Integer ut tortor orci. Ut rhoncus congue odio a cursus. Maecenas sapien nulla, fermentum eget eros tincidunt, condimentum tempor lacus. Vivamus pulvinar sagittis mattis. Duis diam tellus, lacinia in blandit convallis, molestie vitae enim. Nam mauris justo, mattis sit amet massa id, ultricies porta lacus. Proin velit turpis, suscipit laoreet tempor in, dignissim eget ex. Vivamus et mi quis velit faucibus porttitor. Donec semper nisl finibus ornare gravida.",
+  campaign_id: slap_bracelets.id,
+  delivery_date:"2019-09-31 00:00:00.0000",
+  min_amount: 10
+)
 cheap_pledge = Pledge.create(reward_id: cheap_reward.id, pledger_id: louis.id, amount:112)
 
 

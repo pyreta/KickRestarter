@@ -26,7 +26,7 @@ class Api::CampaignsController < ApplicationController
 
 
 	def show
-		@campaign = Campaign.find(params[:id])
+		@campaign = Campaign.includes(rewards: [:pledgers]).find(params[:id])
 	end
 
 	def update

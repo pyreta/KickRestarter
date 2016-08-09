@@ -1,27 +1,3 @@
 // Place all the styles related to the Rewards controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-.reward-item {
-    margin-bottom: 20px;
-    font-size: 14px;
-    color: #020621;
-    display: block;
-    background: #F8F9FD;
-    border: 1px solid #e0e4fb;
-    border-radius: 6px;
-    position: relative;
-    word-break: break-word;
-}
-
-.reward-column {
-
-  height: 266px;
-  width: 317.984px;
-
-}
-
-.rewards-container, .rewards-body{
-  width: 317.984px;
-  display: inline-block;
-}

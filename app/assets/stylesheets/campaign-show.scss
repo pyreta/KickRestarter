@@ -1,12 +1,13 @@
 .campaign-title{
   font-size: 32px;
   text-align: center;
-  padding-top: 20px;
+  padding-top: 35px;
 }
 
 .campaign-author{
   text-align: center;
   margin: 12px;
+  margin-bottom: 35px;
   font-size: 14px;
 }
 
@@ -51,17 +52,25 @@
 }
 
 .campaign-body, .bottom-container{
-  width: 925px;
+  width: 1075px;
   margin: auto;
 }
+
 .about-body{
   width: 680px;
 }
 
+.about-p{
+  line-height: 24px;
+}
+
 .about-container{
   padding-top: 50px;
-  display: inline-block;
+  // display: inline-block;
+  float: left;
 }
+
+
 
 .about-title{
   padding-bottom: 50px;
@@ -69,10 +78,11 @@
 
 .bottom-background{
   background-color: white;
+  padding-bottom: 20px;
 }
 
 .campaign-container{
-  background-color: #F7F7F9;
+  // background-color: #F7F7F9;
   border: 1px solid #f1eeea;
   padding-bottom: 50px;
 }
@@ -80,4 +90,144 @@
 .reward-title{
   font-size: 22px;
   display: inline-block;
+  padding-bottom: 50px;
+}
+
+.reward-item {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #020621;
+    display: block;
+    background: #F8F9FD;
+    border: 1px solid #e0e4fb;
+    border-radius: 6px;
+    position: relative;
+    word-break: break-word;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.reward-item:hover{
+  background-color: #e3e8fd;
+  transition: background-color 0.5s;
+  transform: scale(1.03);
+  transition: all .3s ease-in-out;
+  border-color: rgb(88, 107, 233);
+}
+
+
+
+.reward-column {
+
+  width: 317.984px;
+  position: relative;
+
+}
+
+.pledge-reward-column {
+
+  width: 680px;
+  position: relative;
+
+}
+
+.rewards-container{
+  padding-top: 50px;
+  padding-left: 40px;
+  float: left;
+  display: inline-block;
+}
+
+.reward-min {
+  color: rgb(88, 107, 233);
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.reward-item-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.reward-item-description {
+  color: rgb(128, 128, 158);
+  font-size: 14px;
+  margin-bottom: 20px;
+
+}
+
+.reward-delivery-label{
+  color: rgb(128, 128, 158);
+  font-size: 10px;
+}
+
+.reward-backer-label{
+  margin-top: 20px;
+  color: rgb(128, 128, 158);
+  font-size: 12px;
+}
+
+.pledge-form-container{
+  margin: auto;
+  width: 1085px;
+  // background: white;
+}
+
+.pledge-rewards-container{
+  width: 680px;
+  // background-color: yellow;
+  padding: 20px;
+  padding-top: 60px;
+  float: left;
+}
+
+.pledge-sidebar-container{
+  padding: 20px;
+  // background-color: blue;
+  float: left;
+  padding-top: 60px;
+}
+
+.pledge-form-body{
+  border-top: 1px solid #f1eeea;
+  background: white;
+}
+
+.bold-16{
+  font-weight: bold;
+  font-size: 16px;
+}
+.reg-14{
+  font-size: 14px;
+}
+.reg-12{
+  font-size: 12px;
+}
+
+.pad-bottom-3{
+  padding-bottom: 3px;
+}
+.pad-bottom-9{
+  padding-bottom: 9px;
+}
+.pad-bottom-28{
+  padding-bottom: 28px;
+}
+
+.pledge-warning-container{
+  width: 299.98px;
+  padding: 10px;
+  & > p, & > a{
+    line-height: 18px;
+  }
+  & > a{
+    color: rgb(39, 82, 255);
+    font-size: 12px;
+    border-bottom: 1px solid rgb(39, 82, 255);
+  }
+  & > a:hover{
+    color: black;
+    font-size: 12px;
+    border-bottom: 1px solid black;
+  }
 }
