@@ -12,7 +12,7 @@ const PledgeFormRewardIndexItem = require("./PledgeFormRewardIndexItem");
 
 
 
-const RewardsIndex = React.createClass({
+const PledgeFormRewardsIndex = React.createClass({
 
 
   render() {
@@ -39,4 +39,4 @@ const RewardsIndex = React.createClass({
 
 });
 
-module.exports = RewardsIndex;
+module.exports = PledgeFormRewardsIndex;

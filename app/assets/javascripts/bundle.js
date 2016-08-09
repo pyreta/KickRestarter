@@ -70,6 +70,7 @@
 	var SessionStore = __webpack_require__(248);
 	
 	var PledgeForm = __webpack_require__(286);
+	var RewardForm = __webpack_require__(295);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -110,6 +111,7 @@
 	    React.createElement(Route, { path: '/campaigns/:campaignId', component: CampaignShow }),
 	    React.createElement(Route, { path: '/campaigns/:campaignId/edit', component: CampaignEdit, onEnter: _ensureLoggedIn }),
 	    React.createElement(Route, { path: '/campaigns/:campaignId/pledge', component: PledgeForm }),
+	    React.createElement(Route, { path: '/campaigns/:campaignId/rewards/new', component: RewardForm }),
 	    React.createElement(Route, { path: '/profile', component: UserShow, onEnter: _ensureLoggedIn })
 	  )
 	);
@@ -34791,7 +34793,7 @@
 	    var location = this.props.campaign.city + ", " + this.props.campaign.state;
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'campaign-list-item' },
 	      React.createElement(
 	        'div',
 	        { className: 'small-campaign-item' },
@@ -36369,6 +36371,9 @@
 	    this.sessionListener.remove();
 	    this.campaignListener.remove();
 	  },
+	  campaignRedirect: function campaignRedirect() {
+	    hashHistory.push('/campaigns/' + this.state.campaign.id);
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -36378,7 +36383,7 @@
 	        { className: 'pledge-form-header' },
 	        React.createElement(
 	          'div',
-	          { className: 'campaign-title' },
+	          { className: 'campaign-title', onClick: this.campaignRedirect },
 	          this.state.campaign.title
 	        ),
 	        React.createElement(
@@ -36453,16 +36458,21 @@
 	var React = __webpack_require__(168);
 	var Link = __webpack_require__(175).Link;
 	var SessionActions = __webpack_require__(239);
+	var RewardActions = __webpack_require__(289);
+	var PledgeActions = __webpack_require__(292);
 	var SessionStore = __webpack_require__(248);
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var MethodModule = __webpack_require__(282);
 	
-	var RewardsIndexItem = React.createClass({
-	  displayName: 'RewardsIndexItem',
+	var PledgeFormRewardsIndexItem = React.createClass({
+	  displayName: 'PledgeFormRewardsIndexItem',
 	  getInitialState: function getInitialState() {
-	    return { expanded: false };
+	    return {
+	      expanded: false,
+	      amount: this.props.reward.min_amount
+	    };
 	  },
 	  parseDeliveryDate: function parseDeliveryDate() {
 	    // return this.props.reward.delivery_date;
@@ -36481,13 +36491,47 @@
 	      this.setState({ expanded: true });
 	    }
 	  },
+	  submitReward: function submitReward(e) {
+	    console.log("RsubmitReward!");
+	    console.log(e.currentTarget);
+	    e.preventDefault();
+	    PledgeActions.createPledge({
+	      pledge: {
+	        pledger_id: SessionStore.currentUser().id,
+	        reward_id: this.props.reward.id,
+	        amount: parseInt(this.state.amount)
+	      }
+	    });
+	  },
+	  changeAmount: function changeAmount(e) {
+	    console.log("changeAmount");
+	    this.setState({ amount: e.target.value });
+	    console.log(e.target);
+	  },
 	  render: function render() {
 	    var expandedSection = React.createElement('div', null);
 	    if (this.state.expanded) {
 	      expandedSection = React.createElement(
 	        'div',
-	        null,
-	        'kljahsdfgkjhasdfkjhasdfkjhsdf'
+	        { className: 'reward-input' },
+	        React.createElement(
+	          'form',
+	          { onClick: this.submitReward },
+	          React.createElement('input', {
+	            type: 'text',
+	            onChange: this.changeAmount,
+	            autoFocus: 'true',
+	            value: this.state.amount }),
+	          React.createElement(
+	            'div',
+	            { className: 'submit' },
+	            React.createElement('input', {
+	              type: 'submit',
+	              className: 'button',
+	              id: 'back-project-button',
+	              value: 'Submit Reward' })
+	          )
+	        )
 	      );
 	    }
 	    return React.createElement(
@@ -36495,40 +36539,45 @@
 	      { className: 'reward-item', onClick: this.clickReward },
 	      React.createElement(
 	        'div',
-	        { className: 'reward-min' },
-	        "Pledge " + MethodModule.parseDollarAmount(this.props.reward.min_amount) + " or more"
+	        { className: 'reward-radio group' },
+	        React.createElement('input', { type: 'radio', name: 'reward', value: this.props.reward.id }),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-min' },
+	          "Pledge " + MethodModule.parseDollarAmount(this.props.reward.min_amount) + " or more"
+	        )
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'reward-item-title' },
+	        { className: 'reward-item-title pad-left' },
 	        this.props.reward.title
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'reward-item-description' },
+	        { className: 'reward-item-description pad-left' },
 	        this.props.reward.description
 	      ),
 	      expandedSection,
 	      React.createElement(
 	        'div',
-	        { className: 'reward-delivery-label' },
+	        { className: 'reward-delivery-label pad-left' },
 	        'ESTIMATED DELIVERY'
 	      ),
 	      React.createElement(
 	        'div',
-	        null,
+	        { className: 'pad-left' },
 	        this.parseDeliveryDate()
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'reward-backer-label' },
+	        { className: 'reward-backer-label pad-left' },
 	        MethodModule.parseBackers(this.props.reward.backers.length)
 	      )
 	    );
 	  }
 	});
 	
-	module.exports = RewardsIndexItem;
+	module.exports = PledgeFormRewardsIndexItem;
 
 /***/ },
 /* 288 */
@@ -36547,8 +36596,8 @@
 	var hashHistory = ReactRouter.hashHistory;
 	var PledgeFormRewardIndexItem = __webpack_require__(287);
 	
-	var RewardsIndex = React.createClass({
-	  displayName: 'RewardsIndex',
+	var PledgeFormRewardsIndex = React.createClass({
+	  displayName: 'PledgeFormRewardsIndex',
 	  render: function render() {
 	
 	    var rewardList = [];
@@ -36575,7 +36624,395 @@
 	  }
 	});
 	
-	module.exports = RewardsIndex;
+	module.exports = PledgeFormRewardsIndex;
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var RewardApiUtil = __webpack_require__(290);
+	var AppDispatcher = __webpack_require__(240);
+	var RewardConstants = __webpack_require__(291);
+	var ErrorActions = __webpack_require__(246);
+	
+	module.exports = {
+	  // fetchRewards () {
+	  //   RewardApiUtil.fetchRewards(this.receiveAll);
+	  // },
+	  //
+	  // getReward (id) {
+	  //   RewardApiUtil.getReward(id, this.receiveReward, ErrorActions.setErrors);
+	  // },
+	
+	  createReward: function createReward(data) {
+	    RewardApiUtil.createReward(data, this.receiveReward, ErrorActions.setErrors);
+	  },
+	
+	
+	  // editReward (data, id) {
+	  //   RewardApiUtil.updateReward(data, id, this.receiveReward, ErrorActions.setErrors);
+	  // },
+	  //
+	  // deleteReward (id) {
+	  //   RewardApiUtil.deleteReward(id, this.removeReward);
+	  // },
+	  //
+	  // receiveAll (rewards) {
+	  //   AppDispatcher.dispatch({
+	  //     actionType: RewardConstants.REWARDS_RECEIVED,
+	  //     rewards: rewards
+	  //   });
+	  // },
+	  //
+	  receiveReward: function receiveReward(reward) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_RECEIVED,
+	      reward: reward
+	    });
+	  }
+	};
+
+/***/ },
+/* 290 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  fetchRewards: function fetchRewards(callback) {
+	    $.ajax({
+	      url: "api/rewards",
+	      success: function success(rewards) {
+	        callback(rewards);
+	      }
+	    });
+	  },
+	  getReward: function getReward(id, callback) {
+	    $.ajax({
+	      url: "api/rewards/" + id,
+	      success: function success(reward) {
+	        callback(reward);
+	      }
+	    });
+	  },
+	  createReward: function createReward(formData, callback) {
+	    $.ajax({
+	      url: "api/rewards",
+	      type: "POST",
+	      data: formData,
+	      success: function success(reward) {
+	        callback(reward);
+	      }
+	    });
+	  },
+	  updateReward: function updateReward(formData, id, callback, error) {
+	    $.ajax({
+	      url: "api/rewards/" + id,
+	      type: "PATCH",
+	      data: formData,
+	      success: function success(reward) {
+	        callback(reward);
+	      },
+	
+	      error: error
+	    });
+	  },
+	  deleteReward: function deleteReward(id, callback) {
+	    $.ajax({
+	      url: "api/rewards/" + id,
+	      type: "DELETE",
+	      success: function success(reward) {
+	        callback(reward);
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 291 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  REWARDS_RECEIVED: "REWARDS_RECEIVED",
+	  REWARD_RECEIVED: "REWARD_RECEIVED",
+	  REWARD_REMOVED: "REWARD_REMOVED"
+	};
+
+/***/ },
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var PledgeApiUtil = __webpack_require__(293);
+	var AppDispatcher = __webpack_require__(240);
+	var PledgeConstants = __webpack_require__(294);
+	var ErrorActions = __webpack_require__(246);
+	
+	module.exports = {
+	  // fetchPledges () {
+	  //   PledgeApiUtil.fetchPledges(this.receiveAll);
+	  // },
+	  //
+	  // getPledge (id) {
+	  //   PledgeApiUtil.getPledge(id, this.receivePledge, ErrorActions.setErrors);
+	  // },
+	
+	  createPledge: function createPledge(data) {
+	    PledgeApiUtil.createPledge(data, this.receivePledge, ErrorActions.setErrors);
+	  },
+	
+	
+	  // editPledge (data, id) {
+	  //   PledgeApiUtil.updatePledge(data, id, this.receivePledge, ErrorActions.setErrors);
+	  // },
+	  //
+	  // deletePledge (id) {
+	  //   PledgeApiUtil.deletePledge(id, this.removePledge);
+	  // },
+	  //
+	  // receiveAll (pledges) {
+	  //   AppDispatcher.dispatch({
+	  //     actionType: PledgeConstants.PLEDGES_RECEIVED,
+	  //     pledges: pledges
+	  //   });
+	  // },
+	  //
+	  receivePledge: function receivePledge(pledge) {
+	    AppDispatcher.dispatch({
+	      actionType: PledgeConstants.PLEDGE_RECEIVED,
+	      pledge: pledge
+	    });
+	  }
+	};
+
+/***/ },
+/* 293 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  fetchPledges: function fetchPledges(callback) {
+	    $.ajax({
+	      url: "api/pledges",
+	      success: function success(pledges) {
+	        callback(pledges);
+	      }
+	    });
+	  },
+	  getPledge: function getPledge(id, callback) {
+	    $.ajax({
+	      url: "api/pledges/" + id,
+	      success: function success(pledge) {
+	        callback(pledge);
+	      }
+	    });
+	  },
+	  createPledge: function createPledge(formData, callback) {
+	    $.ajax({
+	      url: "api/pledges",
+	      type: "POST",
+	      data: formData,
+	      success: function success(pledge) {
+	        callback(pledge);
+	      }
+	    });
+	  },
+	  updatePledge: function updatePledge(formData, id, callback, error) {
+	    $.ajax({
+	      url: "api/pledges/" + id,
+	      type: "PATCH",
+	      data: formData,
+	      success: function success(pledge) {
+	        callback(pledge);
+	      },
+	
+	      error: error
+	    });
+	  },
+	  deletePledge: function deletePledge(id, callback) {
+	    $.ajax({
+	      url: "api/pledges/" + id,
+	      type: "DELETE",
+	      success: function success(pledge) {
+	        callback(pledge);
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 294 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  PLEDGES_RECEIVED: "PLEDGES_RECEIVED",
+	  PLEDGE_RECEIVED: "PLEDGE_RECEIVED",
+	  PLEDGE_REMOVED: "PLEDGE_REMOVED"
+	};
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var RewardActions = __webpack_require__(289);
+	var SessionStore = __webpack_require__(248);
+	var CampaignStore = __webpack_require__(272);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var SessionForm = React.createClass({
+	  displayName: 'SessionForm',
+	  redirectIfNotCurrentUser: function redirectIfNotCurrentUser() {
+	    if (SessionStore.currentUser().id !== this.props.params.campaignId) {
+	      hashHistory.push("/");
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
+	    this.campaignListener = CampaignStore.addListener(this.onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	    this.campaignListener.remove();
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      title: "",
+	      description: "",
+	      min_amount: "",
+	      delivery_date: ""
+	    };
+	  },
+	  formSubmit: function formSubmit(e) {
+	    console.log(e.target.class);
+	    e.preventDefault();
+	    var data = { reward: {
+	        campaign_id: this.props.params.campaignId,
+	        description: this.state.description,
+	        min_amount: this.state.min_amount,
+	        delivery_date: this.state.delivery_date,
+	        title: this.state.title
+	      }
+	    };
+	    RewardActions.createReward(data);
+	    hashHistory.push('/campaigns/' + this.props.params.campaignId);
+	  },
+	  changeTitle: function changeTitle(e) {
+	    this.setState({ title: e.target.value });
+	  },
+	  changeDescription: function changeDescription(e) {
+	    this.setState({ description: e.target.value });
+	  },
+	
+	  // FIX DATE FORMATTING STUFF!!!
+	  changeDate: function changeDate(e) {
+	    this.setState({ delivery_date: e.target.value });
+	  },
+	  changeAmount: function changeAmount(e) {
+	    this.setState({ min_amount: e.target.value });
+	  },
+	  errors: function errors() {
+	    var errors = ErrorStore.errors("reward-form");
+	    var messages = errors.map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i },
+	        errorMsg
+	      );
+	    });
+	
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'login-form input-form' },
+	      this.errors(),
+	      React.createElement(
+	        'div',
+	        { className: 'form-padding' },
+	        React.createElement(
+	          'div',
+	          { className: 'form-label' },
+	          'Create a new Reward'
+	        ),
+	        React.createElement(
+	          'form',
+	          { onSubmit: this.formSubmit },
+	          React.createElement(
+	            'div',
+	            { className: 'input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeTitle,
+	              placeholder: 'Title',
+	              value: this.state.title })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeAmount,
+	              placeholder: 'Amount',
+	              value: this.state.min_amount })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input' },
+	            React.createElement('input', {
+	              type: 'date',
+	              className: 'no-input',
+	              onChange: this.changeDate,
+	              placeholder: 'Delivery Date',
+	              value: this.state.delivery_date })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input' },
+	            React.createElement('textarea', {
+	              className: 'no-input',
+	              onChange: this.changeDescription,
+	              placeholder: 'Description',
+	              value: this.state.password })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'submit' },
+	            React.createElement('input', {
+	              type: 'submit',
+	              className: 'button',
+	              id: 'login-button',
+	              value: 'Create Reward' })
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = SessionForm;
 
 /***/ }
 /******/ ]);

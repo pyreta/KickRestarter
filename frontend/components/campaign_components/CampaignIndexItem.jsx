@@ -28,7 +28,7 @@ const CampaignsIndexItem = React.createClass({
 
     let location = this.props.campaign.city + ", " + this.props.campaign.state;
     return (
-      <div>
+      <div  className="campaign-list-item">
         <div className="small-campaign-item">
           <img
             alt="Project image"

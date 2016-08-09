@@ -45,6 +45,7 @@ input[type="email"],
 input[type="text"],
 input[type="submit"],
 input[type="select"],
+input[type="radio"],
 textarea,
 button {
  -webkit-appearance: none;

@@ -12,4 +12,6 @@ class Pledge < ActiveRecord::Base
     foreign_key: :reward_id,
     primary_key: :id
   )
+
+  validates :pledger_id, uniqueness: true
 end

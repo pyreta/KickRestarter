@@ -107,12 +107,20 @@
     cursor: pointer;
 }
 
-.reward-item:hover{
+.reward-item:hover, .campaign-list-item:hover{
   background-color: #e3e8fd;
   transition: background-color 0.5s;
   transform: scale(1.03);
   transition: all .3s ease-in-out;
   border-color: rgb(88, 107, 233);
+  & > .reward-radio > input {
+    border-color: rgb(88, 107, 233);
+    transition: all .3s ease-in-out;
+  }
+  & > .reward-input > form > input{
+    border-color: rgb(88, 107, 233);
+    transition: all .3s ease-in-out;
+  }
 }
 
 
@@ -230,4 +238,49 @@
     font-size: 12px;
     border-bottom: 1px solid black;
   }
+}
+
+input[type="radio"]{
+  border: 1px solid #E6E4E2;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.reward-input {
+  & > form > input{
+    background-color:rgb(255, 255, 255);
+    border-radius: 6px;
+    border: 1px solid rgb(224, 228, 251);
+    box-sizing:border-box;
+    display:inline-block;
+    font-size:16px;
+    font-weight:bold;
+    height:40px;
+    letter-spacing:1px;
+    line-height:20px;
+    list-style-position:outside;
+    padding-bottom:10px;
+    padding-left:10px;
+    padding-right:40px;
+    padding-top:10px;
+    position:relative;
+    width: 134.5px;
+  }
+}
+
+.reward-radio {
+  & > input, & > .radio-min {
+    float: left;
+    margin-right: 20px;
+  }
+}
+
+.pad-left{
+  padding-left: 40px;
+}
+
+.pledge-form-header > .campaign-title {
+  cursor: pointer;
 }

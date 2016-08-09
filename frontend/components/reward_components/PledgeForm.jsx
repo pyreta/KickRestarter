@@ -39,11 +39,15 @@ const PledgeForm = React.createClass({
     this.campaignListener.remove();
   },
 
+  campaignRedirect() {
+    hashHistory.push(`/campaigns/${this.state.campaign.id}`);
+  },
+
   render () {
     return (
       <div className="pledge-form">
         <div className="pledge-form-header">
-          <div className="campaign-title">{this.state.campaign.title}</div>
+          <div className="campaign-title" onClick={this.campaignRedirect}>{this.state.campaign.title}</div>
 
           <div className="campaign-author">by <span style={{"fontWeight": "bold"}}>{this.state.campaign.author}</span></div>
 
