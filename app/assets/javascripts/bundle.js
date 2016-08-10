@@ -34570,12 +34570,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      null,
-	      React.createElement(
-	        'div',
-	        null,
-	        'CAMPAIGN INDEX'
-	      ),
+	      { className: 'group' },
 	      campaignList
 	    );
 	  }
@@ -35020,7 +35015,7 @@
 	                React.createElement(
 	                  'a',
 	                  { href: '#' },
-	                  'search'
+	                  React.createElement('i', { className: 'fa fa-search' })
 	                )
 	              ),
 	              React.createElement(
@@ -35207,7 +35202,7 @@
 	      url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
 	      goal: 1000,
 	      description: "I already told you thundercats are loose!",
-	      days: 362,
+	      end_date: "",
 	      imageFile: null,
 	      imageUrl: null,
 	      embedUrl: null
@@ -35218,11 +35213,11 @@
 	    formData.append("campaign[image]", this.state.imageFile);
 	    formData.append("campaign[title]", this.state.title);
 	    formData.append("campaign[blurb]", this.state.blurb);
-	    formData.append("campaign[categoryId]", this.state.categoryId);
+	    formData.append("campaign[category_id]", this.state.categoryId);
 	    formData.append("campaign[video_url]", this.state.url);
 	    formData.append("campaign[goal]", this.state.goal);
 	    formData.append("campaign[description]", this.state.description);
-	    formData.append("campaign[days]", this.state.days);
+	    formData.append("campaign[end_date]", this.state.end_date);
 	
 	    console.log(e.target.class);
 	    e.preventDefault();
@@ -35259,12 +35254,10 @@
 	    console.log("changeGoal");
 	    this.setState({ goal: e.target.value });
 	  },
-	  changeDays: function changeDays(e) {
-	    console.log("changeDays");
-	    this.setState({ days: e.target.value });
-	  },
 	  changeDate: function changeDate(e) {
 	    console.log("changeDate");
+	    this.setState({ end_date: e.target.value });
+	    console.log(this.state);
 	  },
 	  changeCategory: function changeCategory(e) {
 	    console.log("changeCategory");
@@ -35307,6 +35300,17 @@
 	    });
 	    return categorySelections;
 	  },
+	  clickRewards: function clickRewards() {
+	    console.log("rewards option");
+	    jQuery(".new-reward-form-container").addClass('hidden');
+	    jQuery(".reward-option").addClass('form-selected');
+	    jQuery(".info-option").removeClass('form-selected');
+	  },
+	  clickInfo: function clickInfo() {
+	    console.log("rewards option");
+	    jQuery(".reward-option").removeClass('form-selected');
+	    jQuery(".info-option").addClass('form-selected');
+	  },
 	  render: function render() {
 	    var previewImage = void 0;
 	    if (this.state.imageUrl) {
@@ -35341,165 +35345,224 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'campaign-form input-form' },
-	      this.errors(),
+	      null,
 	      React.createElement(
 	        'div',
-	        { className: 'form-padding' },
+	        { className: 'new-reward' },
 	        React.createElement(
 	          'div',
-	          { className: 'form-label' },
-	          'Start a Campaign'
+	          { className: 'group new-reward-form-buttons' },
+	          React.createElement(
+	            'div',
+	            { className: 'new-reward-options-container bold-14 group' },
+	            React.createElement(
+	              'div',
+	              { onClick: this.clickInfo, className: 'reward-form-option info-option checkFont form-selected' },
+	              'Info'
+	            ),
+	            React.createElement(
+	              'span',
+	              { onClick: this.clickRewards, className: 'reward-form-option reward-option checkFont' },
+	              'Rewards'
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'spacer' },
+	            " "
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'new-reward-options-container bold-14 group reward-form-submit' },
+	            React.createElement(
+	              'span',
+	              { className: 'reward-form-option' },
+	              'Submit your campaign!'
+	            )
+	          )
 	        ),
 	        React.createElement(
-	          'form',
-	          { onSubmit: this.formSubmit },
+	          'div',
+	          { className: 'new-info-header headers' },
 	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeTitle,
-	              placeholder: 'Project Title',
-	              value: this.state.title })
-	          ),
-	          previewImage,
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'file',
-	              className: 'no-input',
-	              onChange: this.changeFile,
-	              placeholder: 'Upload an image' })
+	            'span',
+	            null,
+	            'Let’s get started.'
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'input' },
-	            React.createElement('textarea', {
-	              maxLength: '135',
-	              className: 'no-input required textarea',
-	              onChange: this.changeBlurb,
-	              placeholder: 'Short Blurb',
-	              value: this.state.blurb })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input' },
-	            React.createElement(
-	              'select',
-	              { value: this.state.categoryId, className: 'category-select', onChange: this.changeCategory },
-	              React.createElement(
-	                'option',
-	                { value: '0', disabled: true },
-	                'Choose category'
-	              ),
-	              this.categorySelections()
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeGoal,
-	              placeholder: 'Goal',
-	              value: this.state.goal })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeDays,
-	              placeholder: 'Number of Days',
-	              value: this.state.days })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'date',
-	              className: 'no-input',
-	              onChange: this.changeDate,
-	              placeholder: 'Upload an image' })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input description' },
-	            React.createElement('textarea', {
-	              className: 'no-input required textarea',
-	              onChange: this.changeDescription,
-	              placeholder: 'Description',
-	              value: this.state.description })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeURL,
-	              placeholder: 'Video URL',
-	              value: this.state.url })
-	          ),
-	          previewVideo,
-	          React.createElement(
-	            'a',
-	            { href: '#', className: 'forgot' },
-	            'Forgot your password?'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'submit' },
-	            React.createElement('input', {
-	              type: 'submit',
-	              className: 'button',
-	              id: 'login-button',
-	              value: 'Create Campaign!' })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'checkbox' },
-	            React.createElement('input', {
-	              type: 'checkbox',
-	              id: 'remember',
-	              value: 'Remember me' }),
-	            React.createElement(
-	              'label',
-	              { id: 'remember-label', htmlFor: 'remember' },
-	              'Remember me'
-	            )
-	          ),
-	          React.createElement('div', { className: 'line' }),
-	          React.createElement(
-	            'div',
-	            { className: 'submit', onClick: this.guestClick },
-	            React.createElement('input', {
-	              type: 'submit',
-	              id: 'facebook-button',
-	              value: 'Create demo campaign' })
-	          ),
-	          React.createElement(
-	            'p',
-	            { className: 'never-post' },
-	            'We are totally going to post on Facebook',
-	            React.createElement('br', null),
-	            'without your permission.'
+	            null,
+	            'Make a great first impression with your project’s title and image, and set your funding goal, campaign duration, description, and project category.'
 	          )
-	        )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'new-reward-header headers hidden' },
+	          React.createElement(
+	            'span',
+	            null,
+	            'Set your rewards and other junk.'
+	          ),
+	          React.createElement(
+	            'div',
+	            null,
+	            'Invite backers to be a part of the creative experience by offering rewards like a copy machine, a sack of hamburgers, or a special appearence on Phil Donohue Show.'
+	          )
+	        ),
+	        React.createElement('div', { className: 'new-reward-form-container' })
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'login-footer' },
-	        'New to Kickrestarter?',
+	        { className: 'campaign-form input-form' },
+	        this.errors(),
 	        React.createElement(
-	          'a',
-	          { className: 'signup-link', href: '#/signup' },
-	          'Sign Up'
+	          'div',
+	          { className: 'form-padding' },
+	          React.createElement(
+	            'div',
+	            { className: 'form-label' },
+	            'Start a Campaign'
+	          ),
+	          React.createElement(
+	            'form',
+	            { onSubmit: this.formSubmit },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'text',
+	                className: 'no-input',
+	                onChange: this.changeTitle,
+	                placeholder: 'Project Title',
+	                value: this.state.title })
+	            ),
+	            previewImage,
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'file',
+	                className: 'no-input',
+	                onChange: this.changeFile,
+	                placeholder: 'Upload an image' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'input' },
+	              React.createElement('textarea', {
+	                maxLength: '135',
+	                className: 'no-input required textarea',
+	                onChange: this.changeBlurb,
+	                placeholder: 'Short Blurb',
+	                value: this.state.blurb })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'input' },
+	              React.createElement(
+	                'select',
+	                { value: this.state.categoryId, className: 'category-select', onChange: this.changeCategory },
+	                React.createElement(
+	                  'option',
+	                  { value: '0', disabled: true },
+	                  'Choose category'
+	                ),
+	                this.categorySelections()
+	              )
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'text',
+	                className: 'no-input',
+	                onChange: this.changeGoal,
+	                placeholder: 'Goal',
+	                value: this.state.goal })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'date',
+	                className: 'no-input',
+	                onChange: this.changeDate,
+	                placeholder: 'Upload an image' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'input description' },
+	              React.createElement('textarea', {
+	                className: 'no-input required textarea',
+	                onChange: this.changeDescription,
+	                placeholder: 'Description',
+	                value: this.state.description })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'text',
+	                className: 'no-input',
+	                onChange: this.changeURL,
+	                placeholder: 'Video URL',
+	                value: this.state.url })
+	            ),
+	            previewVideo,
+	            React.createElement(
+	              'a',
+	              { href: '#', className: 'forgot' },
+	              'Forgot your password?'
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'submit' },
+	              React.createElement('input', {
+	                type: 'submit',
+	                className: 'button',
+	                id: 'login-button',
+	                value: 'Create Campaign!' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'checkbox' },
+	              React.createElement('input', {
+	                type: 'checkbox',
+	                id: 'remember',
+	                value: 'Remember me' }),
+	              React.createElement(
+	                'label',
+	                { id: 'remember-label', htmlFor: 'remember' },
+	                'Remember me'
+	              )
+	            ),
+	            React.createElement('div', { className: 'line' }),
+	            React.createElement(
+	              'div',
+	              { className: 'submit', onClick: this.guestClick },
+	              React.createElement('input', {
+	                type: 'submit',
+	                id: 'facebook-button',
+	                value: 'Create demo campaign' })
+	            ),
+	            React.createElement(
+	              'p',
+	              { className: 'never-post' },
+	              'We are totally going to post on Facebook',
+	              React.createElement('br', null),
+	              'without your permission.'
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'login-footer' },
+	          'New to Kickrestarter?',
+	          React.createElement(
+	            'a',
+	            { className: 'signup-link', href: '#/signup' },
+	            'Sign Up'
+	          )
 	        )
 	      )
 	    );
@@ -36873,17 +36936,23 @@
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var SessionForm = React.createClass({
-	  displayName: 'SessionForm',
+	var RewardsIndex = __webpack_require__(284);
+	
+	var RewardForm = React.createClass({
+	  displayName: 'RewardForm',
 	  redirectIfNotCurrentUser: function redirectIfNotCurrentUser() {
 	    if (SessionStore.currentUser().id !== this.props.params.campaignId) {
 	      hashHistory.push("/");
 	    }
 	  },
+	  onChange: function onChange() {
+	    this.setState({ campaign: CampaignStore.find(this.props.params.id) });
+	  },
 	  componentDidMount: function componentDidMount() {
 	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 	    this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
 	    this.campaignListener = CampaignStore.addListener(this.onChange);
+	    CampaignStore.fetchCampaign(this.props.params.campaignId);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.errorListener.remove();
@@ -36891,11 +36960,13 @@
 	    this.campaignListener.remove();
 	  },
 	  getInitialState: function getInitialState() {
+	    this.campaign = {};
 	    return {
 	      title: "",
 	      description: "",
 	      min_amount: "",
-	      delivery_date: ""
+	      delivery_date: "",
+	      campaign: {}
 	    };
 	  },
 	  formSubmit: function formSubmit(e) {
@@ -36922,6 +36993,7 @@
 	  // FIX DATE FORMATTING STUFF!!!
 	  changeDate: function changeDate(e) {
 	    this.setState({ delivery_date: e.target.value });
+	    console.log(this.state);
 	  },
 	  changeAmount: function changeAmount(e) {
 	    this.setState({ min_amount: e.target.value });
@@ -36945,74 +37017,105 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'login-form input-form' },
-	      this.errors(),
+	      { className: 'new-reward' },
 	      React.createElement(
 	        'div',
-	        { className: 'form-padding' },
+	        { className: 'group new-reward-form-buttons' },
 	        React.createElement(
 	          'div',
-	          { className: 'form-label' },
-	          'Create a new Reward'
+	          { className: 'new-reward-options-container bold-14 group' },
+	          React.createElement(
+	            'div',
+	            { className: 'reward-form-option checkFont' },
+	            'Info'
+	          ),
+	          React.createElement(
+	            'span',
+	            { className: 'reward-form-option checkFont form-selected' },
+	            'Rewards'
+	          )
 	        ),
 	        React.createElement(
-	          'form',
-	          { onSubmit: this.formSubmit },
+	          'div',
+	          { className: 'spacer' },
+	          " "
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'new-reward-options-container bold-14 group reward-form-submit' },
 	          React.createElement(
-	            'div',
-	            { className: 'input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeTitle,
-	              placeholder: 'Title',
-	              value: this.state.title })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeAmount,
-	              placeholder: 'Amount',
-	              value: this.state.min_amount })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input' },
-	            React.createElement('input', {
-	              type: 'date',
-	              className: 'no-input',
-	              onChange: this.changeDate,
-	              placeholder: 'Delivery Date',
-	              value: this.state.delivery_date })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input' },
-	            React.createElement('textarea', {
-	              className: 'no-input',
-	              onChange: this.changeDescription,
-	              placeholder: 'Description',
-	              value: this.state.password })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'submit' },
-	            React.createElement('input', {
-	              type: 'submit',
-	              className: 'button',
-	              id: 'login-button',
-	              value: 'Create Reward' })
+	            'span',
+	            { className: 'reward-form-option' },
+	            'Submit your campaign!'
 	          )
 	        )
-	      )
+	      ),
+	      React.createElement('div', { className: 'new-reward-header' }),
+	      React.createElement('div', { className: 'new-reward-form-container' })
 	    );
+	
+	    // return (
+	    //   <div id="reward-form" className="input-form">
+	    //     { this.errors() }
+	    //     <div className="form-padding">
+	    //
+	    //       <div className="form-label">Create a new Reward</div>
+	    //         <form onSubmit={this.formSubmit}>
+	    //
+	    //           <div className="input">
+	    //             <input
+	    //               type="text"
+	    //               className="no-input"
+	    //               onChange={this.changeTitle}
+	    //               placeholder="Title"
+	    //               value={this.state.title} />
+	    //           </div>
+	    //
+	    //           <div className="input">
+	    //             <input
+	    //               type="text"
+	    //               className="no-input"
+	    //               onChange={this.changeAmount}
+	    //               placeholder="Amount"
+	    //               value={this.state.min_amount} />
+	    //           </div>
+	    //
+	    //           <div className="input">
+	    //             <input
+	    //               type="date"
+	    //               className="no-input"
+	    //               onChange={this.changeDate}
+	    //               placeholder="Delivery Date"
+	    //               value={this.state.delivery_date} />
+	    //           </div>
+	    //
+	    //           <div className="input">
+	    //             <textarea
+	    //               className="no-input"
+	    //               onChange={this.changeDescription}
+	    //               placeholder="Description"
+	    //               value={this.state.password} />
+	    //           </div>
+	    //
+	    //
+	    //           <div className="submit">
+	    //             <input
+	    //               type="submit"
+	    //               className="button"
+	    //               id="login-button"
+	    //               value="Create Reward"/>
+	    //           </div>
+	    //         </form>
+	    //
+	    //       </div>
+	    //       <RewardsIndex campaign={this.state.campaign}/>
+	    //
+	    //   </div>
+	    // );
 	  }
 	});
 	
-	module.exports = SessionForm;
+	module.exports = RewardForm;
 
 /***/ }
 /******/ ]);

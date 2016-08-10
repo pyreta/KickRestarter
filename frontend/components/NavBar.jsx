@@ -67,7 +67,7 @@ const NavBar = React.createClass({
                <li>
                   <Link to="/"><img src={window.logoNavbar}></img></Link>
                 </li>
-                <li><a href="#">search</a></li>
+                <li><a href="#"><i className="fa fa-search"></i></a></li>
                 <li><a href="#/signup">Sign up</a></li>
                 <li>{ greeting }</li>
                <li>

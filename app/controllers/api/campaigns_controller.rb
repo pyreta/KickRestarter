@@ -8,8 +8,8 @@ class Api::CampaignsController < ApplicationController
     #x = Time.zone.parse("2018-01-31 00:00:00.0000")
     # y = x+5.day
     # ((y-Time.now)/86400.00).to_i
-    end_date = Time.now + (params[:campaign][:days]).to_i.day
-    params[:campaign][:end_date] = end_date
+    # end_date = Time.now + (params[:campaign][:days]).to_i.day
+    # params[:campaign][:end_date] = end_date
     # params[:campaign][:video_embed_url] = params[:campaign][:video_url]
     # .split("watch?v=")
     # .join("embed/")

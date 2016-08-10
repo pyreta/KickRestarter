@@ -1,3 +1,94 @@
 // Place all the styles related to the Rewards controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+// #reward-form{
+//   width: 300px;
+// }
+.new-reward-options-container{
+  border: 1px solid rgb(223, 220, 218);
+  background-color: white;
+  margin: auto;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  border-radius: 6px;
+  width: 281px;
+  cursor: pointer;
+
+  &>div{
+    border-right: 1px solid rgb(223, 220, 218);
+  }
+  float: left;
+}
+
+.new-reward-form-buttons{
+  width: 540px;
+  margin: auto;
+}
+
+.spacer{
+  width:20px;
+  height: 20px;
+  float: left;
+}
+
+.reward-form-option{
+  float:left;
+  padding: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.checkFont::before{
+  font-family: "FontAwesome";
+  content: "\f058";
+  margin-right: 5px;
+  color: #cccccc;
+}
+
+.new-reward-form-container{
+  border: 1px solid rgb(223, 220, 218);
+  width: 934px;
+  height: 700px;
+  background-color: white;
+  margin: auto;
+  border-radius: 6px;
+}
+
+.new-reward{
+  color: rgb(6, 35, 64);
+}
+
+.reward-form-submit{
+  width: 235px;
+  &:hover{
+    background-color: #eef7ff;
+    transition: background-color 0.5s;
+  }
+}
+
+.form-selected{
+  color: rgb(39, 82, 255);
+  background-color: rgba(247, 245, 242, 0.6);
+  &:hover{
+    background-color: white;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.headers{
+  text-align: center;
+  color: rgb(6, 35, 64);
+  font-size: 22px;
+  line-height: 30px;
+  width: 940px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  &>span{
+    font-size: 32px;
+    font-weight: bold;
+  }
+}

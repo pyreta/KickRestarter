@@ -3,8 +3,8 @@ class Api::RewardsController < ApplicationController
   end
 
   def create
+
     params[:reward][:campaign_id] = params[:reward][:campaign_id].to_i
-    debugger
     @reward = Reward.new(reward_params)
     if @reward.save
       render json: @reward
@@ -20,6 +20,6 @@ class Api::RewardsController < ApplicationController
   end
 
   def reward_params
-    params.require(:reward).permit(:title, :campaign_id, :description, :min_amount)
+    params.require(:reward).permit(:title, :campaign_id, :description, :min_amount, :delivery_date)
   end
 end

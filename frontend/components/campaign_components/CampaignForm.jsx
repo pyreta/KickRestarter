@@ -39,7 +39,7 @@ const CampaignForm = React.createClass({
       url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
       goal: 1000,
       description: "I already told you thundercats are loose!",
-      days: 362,
+      end_date: "",
       imageFile: null,
       imageUrl: null,
       embedUrl: null
@@ -51,11 +51,11 @@ const CampaignForm = React.createClass({
     formData.append("campaign[image]", this.state.imageFile);
     formData.append("campaign[title]", this.state.title);
     formData.append("campaign[blurb]", this.state.blurb);
-    formData.append("campaign[categoryId]", this.state.categoryId);
+    formData.append("campaign[category_id]", this.state.categoryId);
     formData.append("campaign[video_url]", this.state.url);
     formData.append("campaign[goal]", this.state.goal);
     formData.append("campaign[description]", this.state.description);
-    formData.append("campaign[days]", this.state.days);
+    formData.append("campaign[end_date]", this.state.end_date);
 
 
     console.log(e.target.class);
@@ -101,13 +101,10 @@ const CampaignForm = React.createClass({
     this.setState({goal: e.target.value});
   },
 
-  changeDays(e){
-    console.log("changeDays");
-    this.setState({days: e.target.value});
-  },
-
   changeDate(e){
     console.log("changeDate");
+    this.setState({end_date: e.target.value});
+    console.log(this.state);
   },
 
   changeCategory(e){
@@ -146,6 +143,20 @@ const CampaignForm = React.createClass({
     return categorySelections;
   },
 
+
+  clickRewards(){
+    console.log("rewards option");
+    jQuery(".new-reward-form-container").addClass('hidden');
+    jQuery(".reward-option").addClass('form-selected');
+    jQuery(".info-option").removeClass('form-selected');
+  },
+
+  clickInfo(){
+    console.log("rewards option");
+    jQuery(".reward-option").removeClass('form-selected');
+    jQuery(".info-option").addClass('form-selected');
+  },
+
   render() {
     let previewImage;
     if (this.state.imageUrl) {
@@ -179,140 +190,168 @@ const CampaignForm = React.createClass({
       previewVideo = (<div></div>);
     }
 
-
-
     return (
-      <div className="campaign-form input-form">
-        { this.errors() }
-        <div className="form-padding">
+      <div>
+        <div className="new-reward">
 
-          <div className="form-label">Start a Campaign</div>
-            <form onSubmit={this.formSubmit}>
+          <div className="group new-reward-form-buttons">
+            <div className="new-reward-options-container bold-14 group">
+                <div onClick={this.clickInfo} className="reward-form-option info-option checkFont form-selected">Info</div>
+                <span onClick={this.clickRewards} className="reward-form-option reward-option checkFont">Rewards</span>
+            </div>
 
-              <div className="input campaign-input">
-                <input
-                  type="text"
+            <div className="spacer">{" "}</div>
+
+            <div className="new-reward-options-container bold-14 group reward-form-submit">
+                <span className="reward-form-option">Submit your campaign!</span>
+            </div>
+          </div>
+
+          <div className="new-info-header headers">
+            <span>Let’s get started.</span>
+            <div>Make a great first impression with your project’s title and image, and set your funding goal, campaign duration, description, and project category.</div>
+          </div>
+
+          <div className="new-reward-header headers hidden">
+            <span>Set your rewards and other junk.</span>
+            <div>Invite backers to be a part of the creative experience by offering rewards like a copy machine, a sack of hamburgers, or a special appearence on Phil Donohue Show.</div>
+          </div>
+
+
+          <div className="new-reward-form-container">
+
+          </div>
+
+        </div>
+
+
+
+
+
+
+        <div className="campaign-form input-form">
+          { this.errors() }
+          <div className="form-padding">
+
+            <div className="form-label">Start a Campaign</div>
+              <form onSubmit={this.formSubmit}>
+
+                <div className="input campaign-input">
+                  <input
+                    type="text"
+                    className="no-input"
+                    onChange={this.changeTitle}
+                    placeholder="Project Title"
+                    value={this.state.title} />
+                </div>
+
+                { previewImage }
+
+                <div className="input campaign-input">
+                  <input
+                    type="file"
+                    className="no-input"
+                    onChange={this.changeFile}
+                    placeholder="Upload an image" />
+                </div>
+
+                <div className="input">
+                  <textarea
+                    maxLength="135"
+                    className="no-input required textarea"
+                    onChange={this.changeBlurb}
+                    placeholder="Short Blurb"
+                    value={this.state.blurb} />
+                </div>
+
+                <div className="input">
+                  <select value={this.state.categoryId} className="category-select" onChange={this.changeCategory}>
+                  <option value="0" disabled>Choose category</option>
+                    { this.categorySelections() }
+                  </select>
+                </div>
+
+
+
+                <div className="input campaign-input">
+                  <input
+                    type="text"
+                    className="no-input"
+                    onChange={this.changeGoal}
+                    placeholder="Goal"
+                    value={this.state.goal} />
+                </div>
+
+
+                <div className="input campaign-input">
+                  <input
+                  type="date"
                   className="no-input"
-                  onChange={this.changeTitle}
-                  placeholder="Project Title"
-                  value={this.state.title} />
-              </div>
-
-              { previewImage }
-
-              <div className="input campaign-input">
-                <input
-                  type="file"
-                  className="no-input"
-                  onChange={this.changeFile}
+                  onChange={this.changeDate}
                   placeholder="Upload an image" />
-              </div>
+                </div>
 
-              <div className="input">
-                <textarea
-                  maxLength="135"
-                  className="no-input required textarea"
-                  onChange={this.changeBlurb}
-                  placeholder="Short Blurb"
-                  value={this.state.blurb} />
-              </div>
+                <div className="input description">
+                  <textarea
+                    className="no-input required textarea"
+                    onChange={this.changeDescription}
+                    placeholder="Description"
+                    value={this.state.description} />
+                </div>
 
-              <div className="input">
-                <select value={this.state.categoryId} className="category-select" onChange={this.changeCategory}>
-                <option value="0" disabled>Choose category</option>
-                  { this.categorySelections() }
-                </select>
-              </div>
-
-
-
-              <div className="input campaign-input">
+                <div className="input campaign-input">
                 <input
                   type="text"
                   className="no-input"
-                  onChange={this.changeGoal}
-                  placeholder="Goal"
-                  value={this.state.goal} />
-              </div>
+                  onChange={this.changeURL}
+                  placeholder="Video URL"
+                  value={this.state.url} />
+                </div>
 
-              <div className="input campaign-input">
-                <input
-                  type="text"
-                  className="no-input"
-                  onChange={this.changeDays}
-                  placeholder="Number of Days"
-                  value={this.state.days} />
-              </div>
+                { previewVideo }
 
+                <a href="#" className="forgot">Forgot your password?</a>
 
-              <div className="input campaign-input">
-                <input
-                type="date"
-                className="no-input"
-                onChange={this.changeDate}
-                placeholder="Upload an image" />
-              </div>
-
-              <div className="input description">
-                <textarea
-                  className="no-input required textarea"
-                  onChange={this.changeDescription}
-                  placeholder="Description"
-                  value={this.state.description} />
-              </div>
-
-              <div className="input campaign-input">
-              <input
-                type="text"
-                className="no-input"
-                onChange={this.changeURL}
-                placeholder="Video URL"
-                value={this.state.url} />
-              </div>
-
-              { previewVideo }
-
-              <a href="#" className="forgot">Forgot your password?</a>
-
-              <div className="submit">
-                <input
-                  type="submit"
-                  className="button"
-                  id="login-button"
-                  value="Create Campaign!"/>
-              </div>
+                <div className="submit">
+                  <input
+                    type="submit"
+                    className="button"
+                    id="login-button"
+                    value="Create Campaign!"/>
+                </div>
 
 
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  value="Remember me"/>
-                  <label id="remember-label" htmlFor="remember">Remember me</label>
-              </div>
-              <div className="line"></div>
+                <div className="checkbox">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    value="Remember me"/>
+                    <label id="remember-label" htmlFor="remember">Remember me</label>
+                </div>
+                <div className="line"></div>
 
-              <div className="submit" onClick={this.guestClick}>
-                <input
-                  type="submit"
-                  id = "facebook-button"
-                  value="Create demo campaign"/>
-              </div>
+                <div className="submit" onClick={this.guestClick}>
+                  <input
+                    type="submit"
+                    id = "facebook-button"
+                    value="Create demo campaign"/>
+                </div>
 
-              <p className="never-post">
-                We are totally going to post on Facebook
-                <br/>
-                without your permission.
-              </p>
+                <p className="never-post">
+                  We are totally going to post on Facebook
+                  <br/>
+                  without your permission.
+                </p>
 
 
 
-            </form>
-          </div>
-          <div className="login-footer">
-          New to Kickrestarter?
-          <a className="signup-link" href="#/signup">Sign Up</a>
-          </div>
+              </form>
+            </div>
+            <div className="login-footer">
+            New to Kickrestarter?
+            <a className="signup-link" href="#/signup">Sign Up</a>
+            </div>
+        </div>
       </div>
     );
   }

@@ -16,9 +16,9 @@ KickRestarter is a web application inspired by Kickstarter that will focus on fu
   - [x] Elegant layout displaying campaign goals and details
   - [x] Displays current state of campaign funding
   - [x] Options for creating new campaign
-- [ ] Backing campaigns & rewards
-  - [ ] Ability to contribute to or withdraw from a campaign
-  - [ ] Funds updated instantaneously
+- [x] Backing campaigns & rewards
+  - [x] Ability to contribute to or withdraw from a campaign
+  - [x] Funds updated instantaneously
 - [ ] Search
   - [ ] Real time search displaying top results
   - [ ] Load more option to show all results
@@ -99,10 +99,10 @@ which has its own `Index` view.
 
 - [x] create `Pledge` model and join table
 - build out API, Flux loop, and components for:
-  - [ ] fetching pledges for campaign
-  - [ ] adding pledges to campaign
-- [ ] Style new elements
-- [ ] Seed users and add pledges to the seeded Campaigns
+  - [x] fetching pledges for campaign
+  - [x] adding pledges to campaign
+- [x] Style new elements
+- [x] Seed users and add pledges to the seeded Campaigns
 
 ### Phase 5: Comments (1 days, W2 Th 6pm)
 

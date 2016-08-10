@@ -38,8 +38,7 @@ const CampaignsIndex = React.createClass({
       return ( <Link key={i} to={`/campaigns/${el.id}`}><CampaignIndexItem campaign={el}/></Link>);
     });
 
-    return ( <div>
-                <div>CAMPAIGN INDEX</div>
+    return ( <div className="group">
                   { campaignList }
               </div>
             );

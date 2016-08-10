@@ -7,7 +7,11 @@ const CampaignStore = require('../../stores/campaign_store');
 const ErrorStore = require('../../stores/error_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
-const SessionForm = React.createClass({
+const RewardsIndex = require("./RewardsIndex");
+
+
+
+const RewardForm = React.createClass({
 
   redirectIfNotCurrentUser() {
     if (SessionStore.currentUser().id !== this.props.params.campaignId) {
@@ -15,10 +19,15 @@ const SessionForm = React.createClass({
     }
   },
 
+  onChange() {
+    this.setState({campaign: CampaignStore.find(this.props.params.id)});
+  },
+
   componentDidMount() {
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
     this.campaignListener = CampaignStore.addListener(this.onChange);
+    CampaignStore.fetchCampaign(this.props.params.campaignId);
   },
 
   componentWillUnmount() {
@@ -29,11 +38,13 @@ const SessionForm = React.createClass({
   },
 
   getInitialState() {
+    this.campaign = {};
     return {
       title: "",
       description: "",
       min_amount: "",
       delivery_date: "",
+      campaign: {}
     };
   },
 
@@ -64,6 +75,7 @@ const SessionForm = React.createClass({
   // FIX DATE FORMATTING STUFF!!!
   changeDate(e){
     this.setState({delivery_date: e.target.value});
+    console.log(this.state);
   },
 
   changeAmount(e){
@@ -81,64 +93,91 @@ const SessionForm = React.createClass({
 
   render() {
     return (
-      <div className="login-form input-form">
-        { this.errors() }
-        <div className="form-padding">
+      <div className="new-reward">
 
-          <div className="form-label">Create a new Reward</div>
-            <form onSubmit={this.formSubmit}>
-
-              <div className="input">
-                <input
-                  type="text"
-                  className="no-input"
-                  onChange={this.changeTitle}
-                  placeholder="Title"
-                  value={this.state.title} />
-              </div>
-
-              <div className="input">
-                <input
-                  type="text"
-                  className="no-input"
-                  onChange={this.changeAmount}
-                  placeholder="Amount"
-                  value={this.state.min_amount} />
-              </div>
-
-              <div className="input">
-                <input
-                  type="date"
-                  className="no-input"
-                  onChange={this.changeDate}
-                  placeholder="Delivery Date"
-                  value={this.state.delivery_date} />
-              </div>
-
-              <div className="input">
-                <textarea
-                  className="no-input"
-                  onChange={this.changeDescription}
-                  placeholder="Description"
-                  value={this.state.password} />
-              </div>
-
-
-              <div className="submit">
-                <input
-                  type="submit"
-                  className="button"
-                  id="login-button"
-                  value="Create Reward"/>
-              </div>
-            </form>
-
+        <div className="group new-reward-form-buttons">
+          <div className="new-reward-options-container bold-14 group">
+              <div className="reward-form-option checkFont">Info</div>
+              <span className="reward-form-option checkFont form-selected">Rewards</span>
           </div>
 
+          <div className="spacer">{" "}</div>
+
+          <div className="new-reward-options-container bold-14 group reward-form-submit">
+              <span className="reward-form-option">Submit your campaign!</span>
+          </div>
+        </div>
+
+        <div className="new-reward-header">
+
+        </div>
+
+        <div className="new-reward-form-container">
+
+        </div>
 
       </div>
     );
+
+    // return (
+    //   <div id="reward-form" className="input-form">
+    //     { this.errors() }
+    //     <div className="form-padding">
+    //
+    //       <div className="form-label">Create a new Reward</div>
+    //         <form onSubmit={this.formSubmit}>
+    //
+    //           <div className="input">
+    //             <input
+    //               type="text"
+    //               className="no-input"
+    //               onChange={this.changeTitle}
+    //               placeholder="Title"
+    //               value={this.state.title} />
+    //           </div>
+    //
+    //           <div className="input">
+    //             <input
+    //               type="text"
+    //               className="no-input"
+    //               onChange={this.changeAmount}
+    //               placeholder="Amount"
+    //               value={this.state.min_amount} />
+    //           </div>
+    //
+    //           <div className="input">
+    //             <input
+    //               type="date"
+    //               className="no-input"
+    //               onChange={this.changeDate}
+    //               placeholder="Delivery Date"
+    //               value={this.state.delivery_date} />
+    //           </div>
+    //
+    //           <div className="input">
+    //             <textarea
+    //               className="no-input"
+    //               onChange={this.changeDescription}
+    //               placeholder="Description"
+    //               value={this.state.password} />
+    //           </div>
+    //
+    //
+    //           <div className="submit">
+    //             <input
+    //               type="submit"
+    //               className="button"
+    //               id="login-button"
+    //               value="Create Reward"/>
+    //           </div>
+    //         </form>
+    //
+    //       </div>
+    //       <RewardsIndex campaign={this.state.campaign}/>
+    //
+    //   </div>
+    // );
   }
 });
 
-module.exports = SessionForm;
+module.exports = RewardForm;
