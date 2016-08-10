@@ -65,29 +65,29 @@ const PledgeFormRewardsIndexItem = React.createClass({
 
 
   render() {
-    let expandedSection = (<div></div>);
-    if (this.state.expanded){
-      expandedSection = (
-      <div className="reward-input">
-        <form onClick={this.submitReward}>
-          <input
-            type="text"
-            onChange={this.changeAmount}
-            autoFocus="true"
-            value={this.state.amount} />
-
-            <div className="submit">
-              <input
-                type="submit"
-                className="button"
-                id="back-project-button"
-                value="Submit Reward"/>
-            </div>
-        </form>
-
-
-      </div>);
-    }
+    // let expandedSection = (<div></div>);
+    // if (this.state.expanded){
+    //   expandedSection = (
+    //   <div className="reward-input">
+    //     <form onClick={this.submitReward}>
+    //       <input
+    //         type="text"
+    //         onChange={this.changeAmount}
+    //         autoFocus="true"
+    //         value={this.state.amount} />
+    //
+    //         <div className="submit">
+    //           <input
+    //             type="submit"
+    //             className="button"
+    //             id="back-project-button"
+    //             value="Submit Reward"/>
+    //         </div>
+    //     </form>
+    //
+    //
+    //   </div>);
+    // }
     return (
       <div className="reward-item" onClick={this.clickReward}>
 

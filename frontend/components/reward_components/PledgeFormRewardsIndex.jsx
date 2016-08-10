@@ -14,6 +14,14 @@ const PledgeFormRewardIndexItem = require("./PledgeFormRewardIndexItem");
 
 const PledgeFormRewardsIndex = React.createClass({
 
+  getInitialState(){
+    return {selectedItem: null};
+  },
+
+  changeSelected(e){
+    this.setState({selectedItem: e.target.id});
+  },
+
 
   render() {
 
@@ -23,7 +31,7 @@ const PledgeFormRewardsIndex = React.createClass({
       rewardList = this.props.campaign.rewards.map(function (reward, i){
         return (
             <li key={i}>
-              <PledgeFormRewardIndexItem reward={ reward } key={i}/>
+              <PledgeFormRewardIndexItem reward={ reward } key={i} id={i}/>
             </li>
           );
       });

@@ -1,3 +1,15 @@
+loremString = "
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla felis vitae lacinia facilisis. Curabitur rutrum posuere justo. Integer ut tortor orci. Ut rhoncus congue odio a cursus. Maecenas sapien nulla, fermentum eget eros tincidunt, condimentum tempor lacus. Vivamus pulvinar sagittis mattis. Duis diam tellus, lacinia in blandit convallis, molestie vitae enim. Nam mauris justo, mattis sit amet massa id, ultricies porta lacus. Proin velit turpis, suscipit laoreet tempor in, dignissim eget ex. Vivamus et mi quis velit faucibus porttitor.
+
+Donec semper nisl finibus ornare gravida. Phasellus porttitor sollicitudin dui vel posuere. In at ex ac ligula egestas congue. Vestibulum leo nulla, aliquet vitae suscipit eu, gravida eu ex. Nulla elementum fringilla tincidunt. Nulla facilisi. Cras porta luctus nisi at vehicula. Proin ut nisl neque. Nullam non facilisis enim. Vestibulum fermentum in lectus in rutrum.
+
+Vivamus eu sapien pretium, interdum sapien vitae, tincidunt nibh. In ac turpis ac nulla laoreet iaculis a a justo. Aenean vehicula diam quis finibus gravida. Donec in metus pulvinar libero vulputate finibus. Vestibulum sit amet arcu in velit ullamcorper rhoncus consequat id tellus. Suspendisse vitae nunc efficitur, dictum sem sit amet, vestibulum risus. Cras hendrerit odio tellus, a efficitur orci bibendum at. Nullam aliquam dignissim nisl non fringilla. Sed iaculis, magna eu sagittis cursus, enim tortor dictum nulla, nec semper quam justo id ex. Aenean sed elit luctus lacus ullamcorper faucibus. Nam a imperdiet odio. Phasellus tincidunt sapien eget vestibulum malesuada. Nam in iaculis est, vel mollis ipsum.
+
+Donec vehicula venenatis pretium. Vestibulum ornare bibendum felis, in vehicula dolor luctus nec. Pellentesque ut viverra nunc, eu placerat diam. Nunc est magna, commodo id ante non, porttitor ultrices tortor. Duis scelerisque, justo quis pellentesque faucibus, mi felis vehicula sapien, non porttitor justo elit id metus. Aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut placerat lorem. Praesent finibus neque eget eros dignissim tincidunt. Nullam fringilla vitae mauris vel finibus.
+
+Proin eu consequat lectus, nec interdum mi. Duis elementum augue nec dui rhoncus, et venenatis metus scelerisque. Donec quis urna nec mi sollicitudin congue. Ut rhoncus sed nisl vel blandit. Fusce aliquam magna at nunc bibendum, quis lobortis velit posuere. Curabitur accumsan et nunc commodo volutpat. Nullam velit dui, aliquam vitae placerat eget, ultricies eget neque.
+"
+
 # States
 new_york_state = State.create(name:"NY")
 florida_state = State.create(name:"FL")
@@ -296,7 +308,8 @@ lou_diamond_phillips = Campaign.create(
   author_id: louis.id,
   category_id: film_and_video_category.id,
   goal: 1000000,
-  end_date: "2032-08-04 15:42:49.94213"
+  end_date: "2032-08-04 15:42:49.94213",
+  body: loremString
 )
 
 slap_bracelets = Campaign.create(
@@ -308,6 +321,7 @@ slap_bracelets = Campaign.create(
   category_id: fashion_category.id,
   goal: 450,
   end_date: "2018-01-31 00:00:00.0000",
+  body: loremString
   # image: File.open('app/assets/images/peewee.jpg')
 )
 
@@ -317,7 +331,8 @@ less_cheap_reward = Reward.create(
   description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla felis vitae lacinia facilisis. Curabitur rutrum posuere justo. Integer ut tortor orci. Ut rhoncus congue odio a cursus. Maecenas sapien nulla, fermentum eget eros tincidunt, condimentum tempor lacus. Vivamus pulvinar sagittis mattis. Duis diam tellus, lacinia in blandit convallis, molestie vitae enim. Nam mauris justo, mattis sit amet massa id, ultricies porta lacus. Proin velit turpis, suscipit laoreet tempor in, dignissim eget ex. Vivamus et mi quis velit faucibus porttitor. Donec semper nisl finibus ornare gravida.",
   campaign_id: slap_bracelets.id,
   delivery_date:"2019-09-31 00:00:00.0000",
-  min_amount: 10
+  min_amount: 10,
+  body: loremString
 )
 cheap_pledge = Pledge.create(reward_id: cheap_reward.id, pledger_id: louis.id, amount:112)
 

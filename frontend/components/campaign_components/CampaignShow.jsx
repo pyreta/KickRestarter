@@ -123,7 +123,7 @@ const CampaignShow = React.createClass({
 
 
 
-          <div className = "show-description">{this.state.campaign.description}</div>
+          <div className = "show-description">{this.state.campaign.blurb}</div>
         </div>
 
 
@@ -136,7 +136,7 @@ const CampaignShow = React.createClass({
           <div className="about-container">
             <div className="about-body">
               <div className = "show-description about-title">About this project</div>
-              <div className="about-p">{MethodModule.lorem}</div>
+              <div className="about-p">{this.state.campaign.description}</div>
             </div>
           </div>
           <div className="rewards-container">

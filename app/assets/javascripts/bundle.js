@@ -34816,7 +34816,7 @@
 	            { className: 'small-blurb' },
 	            React.createElement(
 	              'div',
-	              { className: 'small-campaign-name' },
+	              { className: 'small-campaign-name small-campaign-blurb' },
 	              this.props.campaign.description
 	            )
 	          ),
@@ -34933,6 +34933,7 @@
 	    e.preventDefault();
 	    SessionActions.logOut();
 	    this.setState({ currentUser: false });
+	    hashHistory.push("/login");
 	  },
 	  render: function render() {
 	
@@ -35178,6 +35179,8 @@
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var CampaignFormConstants = __webpack_require__(279);
+	var RewardForm = __webpack_require__(295);
+	var InfoForm = __webpack_require__(296);
 	
 	var CampaignForm = React.createClass({
 	  displayName: 'CampaignForm',
@@ -35199,10 +35202,10 @@
 	      title: "Thundercats are Loose!",
 	      blurb: "thundercats, thundercats, thundercats are loose!",
 	      categoryId: 11,
-	      url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
+	      video_url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
 	      goal: 1000,
 	      description: "I already told you thundercats are loose!",
-	      end_date: "",
+	      end_date: "2019-03-06",
 	      imageFile: null,
 	      imageUrl: null,
 	      embedUrl: null
@@ -35239,7 +35242,7 @@
 	  changeURL: function changeURL(e) {
 	    console.log("changeURL");
 	
-	    this.setState({ url: e.target.value });
+	    this.setState({ video_url: e.target.value });
 	    this.parseUrl(e.target.value);
 	  },
 	  changeBlurb: function changeBlurb(e) {
@@ -35301,47 +35304,32 @@
 	    return categorySelections;
 	  },
 	  clickRewards: function clickRewards() {
-	    console.log("rewards option");
-	    jQuery(".new-reward-form-container").addClass('hidden');
+	    jQuery(".new-reward-form-container").removeClass('hidden');
+	    jQuery(".new-info-form-container").addClass('hidden');
+	
 	    jQuery(".reward-option").addClass('form-selected');
 	    jQuery(".info-option").removeClass('form-selected');
+	
+	    jQuery(".new-info-header").addClass('hidden');
+	    jQuery(".new-reward-header").removeClass('hidden');
+	
+	    jQuery(".new-info-header").removeClass('fade-in');
+	    jQuery(".new-reward-header").addClass('fade-in');
 	  },
 	  clickInfo: function clickInfo() {
-	    console.log("rewards option");
+	    jQuery(".new-reward-form-container").addClass('hidden');
+	    jQuery(".new-info-form-container").removeClass('hidden');
+	
 	    jQuery(".reward-option").removeClass('form-selected');
 	    jQuery(".info-option").addClass('form-selected');
+	
+	    jQuery(".new-info-header").removeClass('hidden');
+	    jQuery(".new-reward-header").addClass('hidden');
+	
+	    jQuery(".new-info-header").addClass('fade-in');
+	    jQuery(".new-reward-header").removeClass('fade-in');
 	  },
 	  render: function render() {
-	    var previewImage = void 0;
-	    if (this.state.imageUrl) {
-	      previewImage = React.createElement(
-	        'div',
-	        { className: 'preview-image' },
-	        React.createElement('img', {
-	          alt: 'Project image',
-	          src: this.state.imageUrl,
-	          width: '100 px',
-	          height: 'auto' })
-	      );
-	    } else {
-	      previewImage = React.createElement('div', null);
-	    }
-	
-	    var previewVideo = void 0;
-	
-	    if (this.state.embedUrl) {
-	      previewVideo = React.createElement(
-	        'div',
-	        { className: 'preview-video' },
-	        React.createElement('iframe', {
-	          width: '449',
-	          height: '252.5625',
-	          src: this.state.embedUrl,
-	          frameBorder: '0', allowFullScreen: true })
-	      );
-	    } else {
-	      previewVideo = React.createElement('div', null);
-	    }
 	
 	    return React.createElement(
 	      'div',
@@ -35373,7 +35361,7 @@
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'new-reward-options-container bold-14 group reward-form-submit' },
+	            { onClick: this.formSubmit, className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
 	            React.createElement(
 	              'span',
 	              { className: 'reward-form-option' },
@@ -35383,7 +35371,7 @@
 	        ),
 	        React.createElement(
 	          'div',
-	          { className: 'new-info-header headers' },
+	          { className: 'new-info-header headers fade-in' },
 	          React.createElement(
 	            'span',
 	            null,
@@ -35406,164 +35394,37 @@
 	          React.createElement(
 	            'div',
 	            null,
-	            'Invite backers to be a part of the creative experience by offering rewards like a copy machine, a sack of hamburgers, or a special appearence on Phil Donohue Show.'
+	            'Invite backers to be a part of the creative experience by offering rewards like a copy machine, a sack of hamburgers, or a special appearence on the Phil Donohue Show.'
 	          )
 	        ),
-	        React.createElement('div', { className: 'new-reward-form-container' })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'campaign-form input-form' },
-	        this.errors(),
-	        React.createElement(
-	          'div',
-	          { className: 'form-padding' },
-	          React.createElement(
-	            'div',
-	            { className: 'form-label' },
-	            'Start a Campaign'
-	          ),
-	          React.createElement(
-	            'form',
-	            { onSubmit: this.formSubmit },
-	            React.createElement(
-	              'div',
-	              { className: 'input campaign-input' },
-	              React.createElement('input', {
-	                type: 'text',
-	                className: 'no-input',
-	                onChange: this.changeTitle,
-	                placeholder: 'Project Title',
-	                value: this.state.title })
-	            ),
-	            previewImage,
-	            React.createElement(
-	              'div',
-	              { className: 'input campaign-input' },
-	              React.createElement('input', {
-	                type: 'file',
-	                className: 'no-input',
-	                onChange: this.changeFile,
-	                placeholder: 'Upload an image' })
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'input' },
-	              React.createElement('textarea', {
-	                maxLength: '135',
-	                className: 'no-input required textarea',
-	                onChange: this.changeBlurb,
-	                placeholder: 'Short Blurb',
-	                value: this.state.blurb })
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'input' },
-	              React.createElement(
-	                'select',
-	                { value: this.state.categoryId, className: 'category-select', onChange: this.changeCategory },
-	                React.createElement(
-	                  'option',
-	                  { value: '0', disabled: true },
-	                  'Choose category'
-	                ),
-	                this.categorySelections()
-	              )
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'input campaign-input' },
-	              React.createElement('input', {
-	                type: 'text',
-	                className: 'no-input',
-	                onChange: this.changeGoal,
-	                placeholder: 'Goal',
-	                value: this.state.goal })
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'input campaign-input' },
-	              React.createElement('input', {
-	                type: 'date',
-	                className: 'no-input',
-	                onChange: this.changeDate,
-	                placeholder: 'Upload an image' })
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'input description' },
-	              React.createElement('textarea', {
-	                className: 'no-input required textarea',
-	                onChange: this.changeDescription,
-	                placeholder: 'Description',
-	                value: this.state.description })
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'input campaign-input' },
-	              React.createElement('input', {
-	                type: 'text',
-	                className: 'no-input',
-	                onChange: this.changeURL,
-	                placeholder: 'Video URL',
-	                value: this.state.url })
-	            ),
-	            previewVideo,
-	            React.createElement(
-	              'a',
-	              { href: '#', className: 'forgot' },
-	              'Forgot your password?'
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'submit' },
-	              React.createElement('input', {
-	                type: 'submit',
-	                className: 'button',
-	                id: 'login-button',
-	                value: 'Create Campaign!' })
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'checkbox' },
-	              React.createElement('input', {
-	                type: 'checkbox',
-	                id: 'remember',
-	                value: 'Remember me' }),
-	              React.createElement(
-	                'label',
-	                { id: 'remember-label', htmlFor: 'remember' },
-	                'Remember me'
-	              )
-	            ),
-	            React.createElement('div', { className: 'line' }),
-	            React.createElement(
-	              'div',
-	              { className: 'submit', onClick: this.guestClick },
-	              React.createElement('input', {
-	                type: 'submit',
-	                id: 'facebook-button',
-	                value: 'Create demo campaign' })
-	            ),
-	            React.createElement(
-	              'p',
-	              { className: 'never-post' },
-	              'We are totally going to post on Facebook',
-	              React.createElement('br', null),
-	              'without your permission.'
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'login-footer' },
-	          'New to Kickrestarter?',
-	          React.createElement(
-	            'a',
-	            { className: 'signup-link', href: '#/signup' },
-	            'Sign Up'
-	          )
-	        )
+	        React.createElement(InfoForm, {
+	          changeTitle: this.changeTitle,
+	          titleState: this.state.title,
+	          changeBlurb: this.changeBlurb,
+	          blurbState: this.state.blurb,
+	
+	          imageUrl: this.state.imageUrl,
+	          embedUrl: this.state.embedUrl,
+	
+	          urlState: this.state.video_url,
+	          changeURL: this.changeURL,
+	
+	          descriptionState: this.state.description,
+	          changeDescription: this.changeDescription,
+	
+	          goalState: this.state.goal,
+	          changeGoal: this.changeGoal,
+	
+	          dateState: this.state.date,
+	          changeDate: this.changeDate,
+	
+	          changeCategory: this.state.changeCategory,
+	          categoryState: this.category,
+	
+	          changeFile: this.changeFile
+	
+	        }),
+	        React.createElement(RewardForm, null)
 	      )
 	    );
 	  }
@@ -36095,7 +35956,7 @@
 	          React.createElement(
 	            'div',
 	            { className: 'show-description' },
-	            this.state.campaign.description
+	            this.state.campaign.blurb
 	          )
 	        )
 	      ),
@@ -36119,7 +35980,7 @@
 	              React.createElement(
 	                'div',
 	                { className: 'about-p' },
-	                MethodModule.lorem
+	                this.state.campaign.description
 	              )
 	            )
 	          ),
@@ -36572,31 +36433,29 @@
 	    console.log(e.target);
 	  },
 	  render: function render() {
-	    var expandedSection = React.createElement('div', null);
-	    if (this.state.expanded) {
-	      expandedSection = React.createElement(
-	        'div',
-	        { className: 'reward-input' },
-	        React.createElement(
-	          'form',
-	          { onClick: this.submitReward },
-	          React.createElement('input', {
-	            type: 'text',
-	            onChange: this.changeAmount,
-	            autoFocus: 'true',
-	            value: this.state.amount }),
-	          React.createElement(
-	            'div',
-	            { className: 'submit' },
-	            React.createElement('input', {
-	              type: 'submit',
-	              className: 'button',
-	              id: 'back-project-button',
-	              value: 'Submit Reward' })
-	          )
-	        )
-	      );
-	    }
+	    // let expandedSection = (<div></div>);
+	    // if (this.state.expanded){
+	    //   expandedSection = (
+	    //   <div className="reward-input">
+	    //     <form onClick={this.submitReward}>
+	    //       <input
+	    //         type="text"
+	    //         onChange={this.changeAmount}
+	    //         autoFocus="true"
+	    //         value={this.state.amount} />
+	    //
+	    //         <div className="submit">
+	    //           <input
+	    //             type="submit"
+	    //             className="button"
+	    //             id="back-project-button"
+	    //             value="Submit Reward"/>
+	    //         </div>
+	    //     </form>
+	    //
+	    //
+	    //   </div>);
+	    // }
 	    return React.createElement(
 	      'div',
 	      { className: 'reward-item', onClick: this.clickReward },
@@ -36661,6 +36520,12 @@
 	
 	var PledgeFormRewardsIndex = React.createClass({
 	  displayName: 'PledgeFormRewardsIndex',
+	  getInitialState: function getInitialState() {
+	    return { selectedItem: null };
+	  },
+	  changeSelected: function changeSelected(e) {
+	    this.setState({ selectedItem: e.target.id });
+	  },
 	  render: function render() {
 	
 	    var rewardList = [];
@@ -36670,7 +36535,7 @@
 	        return React.createElement(
 	          'li',
 	          { key: i },
-	          React.createElement(PledgeFormRewardIndexItem, { reward: reward, key: i })
+	          React.createElement(PledgeFormRewardIndexItem, { reward: reward, key: i, id: i })
 	        );
 	      });
 	    }
@@ -36802,7 +36667,11 @@
 	module.exports = {
 	  REWARDS_RECEIVED: "REWARDS_RECEIVED",
 	  REWARD_RECEIVED: "REWARD_RECEIVED",
-	  REWARD_REMOVED: "REWARD_REMOVED"
+	  REWARD_REMOVED: "REWARD_REMOVED",
+	  REWARD_FORM_ITEMS_RECEIVED: "REWARD_FORM_ITEMS_RECEIVED",
+	  REWARD_FORM_ITEM_RECEIVED: "REWARD_FORM_ITEM_RECEIVED",
+	  REWARD_FORM_ITEM_REMOVED: "REWARD_FORM_ITEM_REMOVED",
+	  REWARD_FORM_ITEM_UPDATED: "REWARD_FORM_ITEM_UPDATED"
 	};
 
 /***/ },
@@ -36930,35 +36799,44 @@
 	var React = __webpack_require__(168);
 	var Link = __webpack_require__(175).Link;
 	var SessionActions = __webpack_require__(239);
-	var RewardActions = __webpack_require__(289);
+	var RewardFormActions = __webpack_require__(301);
 	var SessionStore = __webpack_require__(248);
 	var CampaignStore = __webpack_require__(272);
 	var ErrorStore = __webpack_require__(266);
+	var RewardStore = __webpack_require__(300);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var RewardsIndex = __webpack_require__(284);
+	var RewardFormIndex = __webpack_require__(298);
 	
 	var RewardForm = React.createClass({
 	  displayName: 'RewardForm',
-	  redirectIfNotCurrentUser: function redirectIfNotCurrentUser() {
-	    if (SessionStore.currentUser().id !== this.props.params.campaignId) {
-	      hashHistory.push("/");
-	    }
-	  },
-	  onChange: function onChange() {
-	    this.setState({ campaign: CampaignStore.find(this.props.params.id) });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
-	    this.campaignListener = CampaignStore.addListener(this.onChange);
-	    CampaignStore.fetchCampaign(this.props.params.campaignId);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
-	    this.campaignListener.remove();
-	  },
+	
+	
+	  // redirectIfNotCurrentUser() {
+	  //   if (SessionStore.currentUser().id !== this.props.params.campaignId) {
+	  //     hashHistory.push("/");
+	  //   }
+	  // },
+	
+	  // onChange() {
+	  //   this.setState({campaign: CampaignStore.find(this.props.params.id)});
+	  // },
+	  //
+	  // componentDidMount() {
+	  //   this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	  //   this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
+	  //   this.campaignListener = CampaignStore.addListener(this.onChange);
+	  //   CampaignStore.fetchCampaign(this.props.params.campaignId);
+	  // },
+	  //
+	  // componentWillUnmount() {
+	  //   this.errorListener.remove();
+	  //   this.sessionListener.remove();
+	  //   this.campaignListener.remove();
+	  //
+	  // },
+	  //
 	  getInitialState: function getInitialState() {
 	    this.campaign = {};
 	    return {
@@ -36969,89 +36847,798 @@
 	      campaign: {}
 	    };
 	  },
-	  formSubmit: function formSubmit(e) {
-	    console.log(e.target.class);
-	    e.preventDefault();
-	    var data = { reward: {
-	        campaign_id: this.props.params.campaignId,
-	        description: this.state.description,
-	        min_amount: this.state.min_amount,
-	        delivery_date: this.state.delivery_date,
-	        title: this.state.title
-	      }
-	    };
-	    RewardActions.createReward(data);
-	    hashHistory.push('/campaigns/' + this.props.params.campaignId);
-	  },
-	  changeTitle: function changeTitle(e) {
-	    this.setState({ title: e.target.value });
-	  },
-	  changeDescription: function changeDescription(e) {
-	    this.setState({ description: e.target.value });
-	  },
 	
-	  // FIX DATE FORMATTING STUFF!!!
-	  changeDate: function changeDate(e) {
-	    this.setState({ delivery_date: e.target.value });
-	    console.log(this.state);
-	  },
-	  changeAmount: function changeAmount(e) {
-	    this.setState({ min_amount: e.target.value });
-	  },
-	  errors: function errors() {
-	    var errors = ErrorStore.errors("reward-form");
-	    var messages = errors.map(function (errorMsg, i) {
-	      return React.createElement(
-	        'li',
-	        { key: i },
-	        errorMsg
-	      );
+	  //
+	  // formSubmit(e) {
+	  //   console.log(e.target.class);
+	  //   e.preventDefault();
+	  //   let data = {reward:
+	  //     {
+	  //       // campaign_id: this.props.params.campaignId,
+	  //       description: this.state.description,
+	  //       min_amount: this.state.min_amount,
+	  //       delivery_date: this.state.delivery_date,
+	  //       title: this.state.title
+	  //     }
+	  //   };
+	  //   RewardFormActions.createReward(data);
+	  //   hashHistory.push(`/campaigns/${this.props.params.campaignId}`);
+	  // },
+	  //
+	  //
+	  // changeTitle(e) {
+	  //   this.setState({title: e.target.value});
+	  // },
+	  //
+	  // changeDescription(e){
+	  //   this.setState({description: e.target.value});
+	  // },
+	  // // FIX DATE FORMATTING STUFF!!!
+	  // changeDate(e){
+	  //   this.setState({delivery_date: e.target.value});
+	  //   console.log(this.state);
+	  // },
+	  //
+	  // changeAmount(e){
+	  //   this.setState({min_amount: e.target.value});
+	  // },
+	  //
+	  // errors() {
+	  //   const errors = ErrorStore.errors("reward-form");
+	  //   const messages = errors.map( (errorMsg, i) => {
+	  //     return <li key={ i }>{ errorMsg }</li>;
+	  //   });
+	  //
+	  //   return <ul>{ messages }</ul>;
+	  // },
+	  addReward: function addReward() {
+	    console.log("ADd REWARD");
+	    RewardFormActions.createReward({
+	      min_amount: 0,
+	      title: "",
+	      description: "",
+	      delivery_date: "",
+	      id: RewardStore.nextId()
 	    });
-	
-	    return React.createElement(
-	      'ul',
-	      null,
-	      messages
-	    );
 	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'new-reward' },
+	      { className: 'new-reward-form-container new-form-container hidden group' },
 	      React.createElement(
 	        'div',
-	        { className: 'group new-reward-form-buttons' },
+	        { className: 'form-field-containers' },
+	        React.createElement(RewardFormIndex, null),
 	        React.createElement(
 	          'div',
-	          { className: 'new-reward-options-container bold-14 group' },
+	          { onClick: this.addReward, className: 'add-reward reg-14' },
 	          React.createElement(
-	            'div',
-	            { className: 'reward-form-option checkFont' },
-	            'Info'
-	          ),
-	          React.createElement(
-	            'span',
-	            { className: 'reward-form-option checkFont form-selected' },
-	            'Rewards'
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'spacer' },
-	          " "
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'new-reward-options-container bold-14 group reward-form-submit' },
-	          React.createElement(
-	            'span',
-	            { className: 'reward-form-option' },
-	            'Submit your campaign!'
+	            'h3',
+	            null,
+	            'Add a reward'
 	          )
 	        )
 	      ),
-	      React.createElement('div', { className: 'new-reward-header' }),
-	      React.createElement('div', { className: 'new-reward-form-container' })
+	      React.createElement(
+	        'div',
+	        { className: 'campaign-form-sidebar-container' },
+	        React.createElement(
+	          'div',
+	          { className: 'bold-16 pad-bottom-3' },
+	          "Kickrestarter is not a store"
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reg-14 pad-bottom-9' },
+	          'It\'s a fabricated nonsenical mess of nonsense.'
+	        ),
+	        React.createElement(
+	          'p',
+	          { className: 'reg-12 pad-bottom-9' },
+	          'KickRestarter does not guarantee projects or investigate a creator\'s ability to complete their project. In fact, none of these projects are even real.  So if you find yourself supporting one, and being confused as to the outcome, look inward.  The answer lies within your soul, not on Kickrestarter.'
+	        ),
+	        React.createElement(
+	          'a',
+	          { href: 'https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg' },
+	          'Click here for a picture of an elephant!'
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = RewardForm;
+
+/***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var RewardActions = __webpack_require__(289);
+	var SessionStore = __webpack_require__(248);
+	var CampaignStore = __webpack_require__(272);
+	var CampaignFormConstants = __webpack_require__(279);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var RewardsIndex = __webpack_require__(284);
+	
+	var RewardForm = React.createClass({
+	  displayName: 'RewardForm',
+	
+	
+	  // redirectIfNotCurrentUser() {
+	  //   if (SessionStore.currentUser().id !== this.props.params.campaignId) {
+	  //     hashHistory.push("/");
+	  //   }
+	  // },
+	  //
+	  // onChange() {
+	  //   this.setState({campaign: CampaignStore.find(this.props.params.id)});
+	  // },
+	  //
+	  // componentDidMount() {
+	  //   this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	  //   this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
+	  //   this.campaignListener = CampaignStore.addListener(this.onChange);
+	  //   CampaignStore.fetchCampaign(this.props.params.campaignId);
+	  // },
+	  //
+	  // componentWillUnmount() {
+	  //   this.errorListener.remove();
+	  //   this.sessionListener.remove();
+	  //   this.campaignListener.remove();
+	  //
+	  // },
+	
+	  // getInitialState() {
+	  //   this.campaign = {};
+	  //   return {
+	  //     title: "",
+	  //     blurb: "",
+	  //     description: "",
+	  //     min_amount: "",
+	  //     delivery_date: "",
+	  //     campaign: {}
+	  //   };
+	  // },
+	
+	  // formSubmit(e) {
+	  //   console.log(e.target.class);
+	  //   e.preventDefault();
+	  //   let data = {reward:
+	  //     {
+	  //       campaign_id: this.props.params.campaignId,
+	  //       description: this.state.description,
+	  //       min_amount: this.state.min_amount,
+	  //       delivery_date: this.state.delivery_date,
+	  //       title: this.state.title
+	  //     }
+	  //   };
+	  //   RewardActions.createReward(data);
+	  //   hashHistory.push(`/campaigns/${this.props.params.campaignId}`);
+	  // },
+	  //
+	  //
+	  // changeTitle(e) {
+	  //   this.setState({title: e.target.value});
+	  // },
+	  //
+	  // changeDescription(e){
+	  //   this.setState({description: e.target.value});
+	  // },
+	  // // FIX DATE FORMATTING STUFF!!!
+	  // changeDate(e){
+	  //   this.setState({delivery_date: e.target.value});
+	  //   console.log(this.state);
+	  // },
+	  //
+	  // changeAmount(e){
+	  //   this.setState({min_amount: e.target.value});
+	  // },
+	  //
+	  // errors() {
+	  //   const errors = ErrorStore.errors("reward-form");
+	  //   const messages = errors.map( (errorMsg, i) => {
+	  //     return <li key={ i }>{ errorMsg }</li>;
+	  //   });
+	  //
+	  //   return <ul>{ messages }</ul>;
+	  // },
+	
+	  categorySelections: function categorySelections() {
+	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
+	      return React.createElement(
+	        'option',
+	        { key: i, value: category_id },
+	        CampaignFormConstants.CATEGORIES[category_id]
+	      );
+	    });
+	    return categorySelections;
+	  },
+	  render: function render() {
+	    var previewImage = void 0;
+	    if (this.props.imageUrl) {
+	      previewImage = React.createElement(
+	        'div',
+	        { className: 'preview-image fade-in' },
+	        React.createElement('img', {
+	          alt: 'Project image',
+	          src: this.props.imageUrl,
+	          width: '100 px',
+	          height: 'auto' })
+	      );
+	    } else {
+	      previewImage = React.createElement('div', null);
+	    }
+	
+	    var previewVideo = void 0;
+	
+	    if (this.props.embedUrl) {
+	      previewVideo = React.createElement(
+	        'div',
+	        { className: 'preview-video' },
+	        React.createElement('iframe', {
+	          width: '449',
+	          height: '252.5625',
+	          src: this.props.embedUrl,
+	          frameBorder: '0', allowFullScreen: true })
+	      );
+	    } else {
+	      previewVideo = React.createElement('div', null);
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'new-info-form-container new-form-container group' },
+	      React.createElement(
+	        'div',
+	        { className: 'form-field-containers' },
+	        React.createElement(
+	          'div',
+	          { className: 'form-field-container group' },
+	          previewImage,
+	          React.createElement(
+	            'div',
+	            { className: 'field-label' },
+	            'Campaign image'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'campaign-input-container' },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'file',
+	                className: 'no-input campaign-input-field',
+	                onChange: this.props.changeFile,
+	                placeholder: 'Upload an image' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'reg-12 input-field-description' },
+	              'upload a super cool picture for your campaign!'
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'form-field-container group' },
+	          React.createElement(
+	            'div',
+	            { className: 'field-label' },
+	            'Campaign title'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'campaign-input-container' },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'text',
+	                className: 'no-input campaign-input-field',
+	                onChange: this.props.changeTitle,
+	                value: this.props.titleState,
+	                placeholder: 'Title' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'reg-12 input-field-description' },
+	              'Your project title and blurb should be simple, specific, and memorable. Our search tools run through these sections of your project, so be sure to incorporate any key words here!                '
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'reg-12 input-field-description' },
+	              'These words will help people find your project, so choose them wisely! Your name will be searchable too.                '
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'form-field-container group' },
+	          React.createElement(
+	            'div',
+	            { className: 'field-label' },
+	            'Short blurb'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'campaign-input-container' },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('textarea', {
+	                maxLength: '135',
+	                className: 'no-input required textarea campaign-input-field',
+	                onChange: this.props.changeBlurb,
+	                value: this.props.blurbState,
+	                placeholder: 'Short Blurb' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'reg-12 input-field-description' },
+	              "If you had to describe what you're creating in one tweet, how would you do it?",
+	              '                '
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'form-field-container group' },
+	          React.createElement(
+	            'div',
+	            { className: 'field-label' },
+	            'Category'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'campaign-input-container' },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement(
+	                'select',
+	                { value: this.props.categoryState, className: 'category-select campaign-input-field', onChange: this.props.changeCategory },
+	                React.createElement(
+	                  'option',
+	                  { value: '0', disabled: true },
+	                  'Choose category'
+	                ),
+	                this.categorySelections()
+	              )
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'reg-12 input-field-description' },
+	              "There is no such category as Fingershoes, so don't even think about it."
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'form-field-container group' },
+	          React.createElement(
+	            'div',
+	            { className: 'field-label' },
+	            'End date'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'campaign-input-container' },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'date',
+	                className: 'no-input campaign-input-field',
+	                onChange: this.props.changeDate,
+	                value: this.props.dateState,
+	                placeholder: 'Upload an image' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'reg-12 input-field-description' },
+	              "Wake up, wake up, wake up it's the first of the month.  Get up, get up, get up cash your checks and get up."
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'form-field-container group' },
+	          React.createElement(
+	            'div',
+	            { className: 'field-label' },
+	            'Campaign Description'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'campaign-input-container' },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('textarea', {
+	                className: 'no-input required textarea campaign-input-field textarea-big',
+	                onChange: this.props.changeDescription,
+	                placeholder: 'Description',
+	                value: this.props.descriptionState })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'reg-12 input-field-description' },
+	              "Here's your chance to really wax poetic.  Just go on and on and on about stuff that nobody cares about."
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'form-field-container group' },
+	          React.createElement(
+	            'div',
+	            { className: 'field-label' },
+	            'Funding Goal'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'campaign-input-container' },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'text',
+	                className: 'no-input campaign-input-field',
+	                onChange: this.props.changeGoal,
+	                value: this.props.goalState,
+	                placeholder: 'Number between one and a zillion' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'reg-12 input-field-description' },
+	              "How much money do you want to take from people?"
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'form-field-container group' },
+	          previewVideo,
+	          React.createElement(
+	            'div',
+	            { className: 'field-label' },
+	            'Embed a video'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'campaign-input-container' },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input' },
+	              React.createElement('input', {
+	                type: 'text',
+	                className: 'no-input campaign-input-field',
+	                onChange: this.props.changeURL,
+	                value: this.props.urlState,
+	                placeholder: 'www.randomYouTubelink.com' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'reg-12 input-field-description' },
+	              "Emdeb a video in your project so people don't have to read all that crap you wrote."
+	            )
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'campaign-form-sidebar-container' },
+	        React.createElement(
+	          'div',
+	          { className: 'bold-16 pad-bottom-3' },
+	          "Kickrestarter is not a store"
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reg-14 pad-bottom-9' },
+	          'It\'s a fabricated nonsenical mess of nonsense.'
+	        ),
+	        React.createElement(
+	          'p',
+	          { className: 'reg-12 pad-bottom-9' },
+	          'KickRestarter does not guarantee projects or investigate a creator\'s ability to complete their project. In fact, none of these projects are even real.  So if you find yourself supporting one, and being confused as to the outcome, look inward.  The answer lies within your soul, not on Kickrestarter.'
+	        ),
+	        React.createElement(
+	          'a',
+	          { href: 'https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg' },
+	          'Click here for a picture of an elephant!'
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = RewardForm;
+
+/***/ },
+/* 297 */,
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var RewardActions = __webpack_require__(289);
+	var SessionStore = __webpack_require__(248);
+	var CampaignStore = __webpack_require__(272);
+	var ErrorStore = __webpack_require__(266);
+	var RewardStore = __webpack_require__(300);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var RewardsIndex = __webpack_require__(284);
+	var RewardFormIndexItem = __webpack_require__(299);
+	
+	var RewardFormIndex = React.createClass({
+	  displayName: 'RewardFormIndex',
+	  componentDidMount: function componentDidMount() {
+	    this.rewardListener = RewardStore.addListener(this.onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.rewardListener.remove();
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      rewards: RewardStore.all()
+	    };
+	  },
+	  onChange: function onChange() {
+	    this.setState({ rewards: RewardStore.all() });
+	  },
+	  rewards: function rewards() {
+	    var rewardList = this.state.rewards.map(function (reward, idx) {
+	
+	      return React.createElement(RewardFormIndexItem, { key: idx, rewardState: reward });
+	    });
+	    console.log(rewardList);
+	    return rewardList;
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      this.rewards()
+	    );
+	  }
+	});
+	
+	module.exports = RewardFormIndex;
+
+/***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var RewardFormActions = __webpack_require__(301);
+	var SessionStore = __webpack_require__(248);
+	var CampaignStore = __webpack_require__(272);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var RewardsIndex = __webpack_require__(284);
+	
+	var RewardFormIndexItem = React.createClass({
+	  displayName: 'RewardFormIndexItem',
+	
+	
+	  // redirectIfNotCurrentUser() {
+	  //   if (SessionStore.currentUser().id !== this.props.params.campaignId) {
+	  //     hashHistory.push("/");
+	  //   }
+	  // },
+	
+	  // onChange() {
+	  //   this.setState({campaign: CampaignStore.find(this.props.params.id)});
+	  // },
+	  //
+	  // componentDidMount() {
+	  //   this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	  //   this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
+	  //   this.campaignListener = CampaignStore.addListener(this.onChange);
+	  //   CampaignStore.fetchCampaign(this.props.params.campaignId);
+	  // },
+	  //
+	  // componentWillUnmount() {
+	  //   this.errorListener.remove();
+	  //   this.sessionListener.remove();
+	  //   this.campaignListener.remove();
+	  //
+	  // },
+	  //
+	  getInitialState: function getInitialState() {
+	    this.campaign = {};
+	    return {
+	      title: this.props.rewardState.title,
+	      description: this.props.rewardState.description,
+	      min_amount: this.props.rewardState.min_amount,
+	      delivery_date: this.props.rewardState.delivery_date
+	    };
+	  },
+	
+	  //
+	  // formSubmit(e) {
+	  //   console.log(e.target.class);
+	  //   e.preventDefault();
+	  //   let data = {reward:
+	  //     {
+	  //       // campaign_id: this.props.params.campaignId,
+	  //       description: this.state.description,
+	  //       min_amount: this.state.min_amount,
+	  //       delivery_date: this.state.delivery_date,
+	  //       title: this.state.title
+	  //     }
+	  //   };
+	  //   RewardActions.createReward(data);
+	  //   hashHistory.push(`/campaigns/${this.props.params.campaignId}`);
+	  // },
+	  //
+	  //
+	  // changeTitle(e) {
+	  //   this.setState({title: e.target.value});
+	  // },
+	  //
+	  // changeDescription(e){
+	  //   this.setState({description: e.target.value});
+	  // },
+	  // // FIX DATE FORMATTING STUFF!!!
+	  // changeDate(e){
+	  //   this.setState({delivery_date: e.target.value});
+	  //   console.log(this.state);
+	  // },
+	  //
+	  // changeAmount(e){
+	  //   this.setState({min_amount: e.target.value});
+	  // },
+	  //
+	  // errors() {
+	  //   const errors = ErrorStore.errors("reward-form");
+	  //   const messages = errors.map( (errorMsg, i) => {
+	  //     return <li key={ i }>{ errorMsg }</li>;
+	  //   });
+	  //
+	  //   return <ul>{ messages }</ul>;
+	  // },
+	  deleteReward: function deleteReward() {
+	    RewardFormActions.removeReward(this.props.rewardState.id);
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'form-field-container group reward-form-item' },
+	      React.createElement(
+	        'div',
+	        { className: 'form-field-container group' },
+	        React.createElement(
+	          'div',
+	          { className: 'field-label' },
+	          'Reward title'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-input-container' },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input campaign-input-field',
+	              onChange: this.changeFile,
+	              value: this.state.title,
+	              placeholder: 'Title' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'reg-12 input-field-description' },
+	            "Call your reward something cool so people think they're getting something of value"
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-field-container group' },
+	        React.createElement(
+	          'div',
+	          { className: 'field-label' },
+	          'Pledge amount'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-input-container' },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input campaign-input-field',
+	              onChange: this.changeFile,
+	              value: this.state.min_amount,
+	              placeholder: 'Amount' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'reg-12 input-field-description' },
+	            "This is the minimum amount of money a backer needs to fork over in order to actually get this thing."
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-field-container group' },
+	        React.createElement(
+	          'div',
+	          { className: 'field-label' },
+	          'Reward Description'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-input-container' },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('textarea', {
+	              maxLength: '135',
+	              className: 'no-input required textarea campaign-input-field',
+	              onChange: this.changeBlurb,
+	              placeholder: 'Reward Description',
+	              value: this.state.description })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'reg-12 input-field-description' },
+	            "Go ahead, let us in.  What's this about?  Anything?"
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-field-container group' },
+	        React.createElement(
+	          'div',
+	          { className: 'field-label' },
+	          'Delivery date'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-input-container' },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'date',
+	              className: 'no-input campaign-input-field',
+	              onChange: this.changeDate,
+	              value: this.state.delivery_date,
+	              placeholder: 'Upload an image' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'reg-12 input-field-description' },
+	            "Here's a chance to really quanitfy your false promises!"
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'h1',
+	        { onClick: this.deleteReward },
+	        'Delete Reward ' + this.props.rewardState.id
+	      )
 	    );
 	
 	    // return (
@@ -37115,7 +37702,113 @@
 	  }
 	});
 	
-	module.exports = RewardForm;
+	module.exports = RewardFormIndexItem;
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(249).Store;
+	var RewardConstants = __webpack_require__(291);
+	var AppDispatcher = __webpack_require__(240);
+	
+	var RewardStore = new Store(AppDispatcher);
+	
+	var _rewards = {
+	  1: { min_amount: 0, title: "", description: "", delivery_date: "2017-08-30", id: 1 }
+	};
+	
+	var resetRewards = function resetRewards(rewards) {
+	  _rewards = {};
+	  rewards.forEach(function (reward) {
+	    _rewards[reward.id] = reward;
+	  });
+	};
+	
+	RewardStore.nextId = function () {
+	  function getMaxOfArray(numArray) {
+	    return Math.max.apply(null, numArray);
+	  }
+	  if (Object.keys(_rewards).length === 0) return 1;
+	  return getMaxOfArray(Object.keys(_rewards)) + 1;
+	};
+	
+	var setReward = function setReward(reward) {
+	  _rewards[reward.id] = reward;
+	};
+	
+	var removeReward = function removeReward(id) {
+	  delete _rewards[id];
+	};
+	
+	RewardStore.all = function () {
+	  return Object.keys(_rewards).map(function (rewardId) {
+	    return _rewards[rewardId];
+	  });
+	};
+	
+	RewardStore.find = function (id) {
+	  return _rewards[id];
+	};
+	
+	RewardStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case RewardConstants.REWARD_FORM_ITEMS_RECEIVED:
+	      resetRewards(payload.rewards);
+	      RewardStore.__emitChange();
+	      break;
+	    case RewardConstants.REWARD_FORM_ITEM_RECEIVED:
+	      setReward(payload.reward);
+	      RewardStore.__emitChange();
+	      break;
+	    case RewardConstants.REWARD_FORM_ITEM_REMOVED:
+	      removeReward(payload.id);
+	      RewardStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = RewardStore;
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var RewardApiUtil = __webpack_require__(290);
+	var AppDispatcher = __webpack_require__(240);
+	var RewardConstants = __webpack_require__(291);
+	var ErrorActions = __webpack_require__(246);
+	
+	module.exports = {
+	  fetchRewards: function fetchRewards(rewards) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_FORM_ITEMS_RECEIVED,
+	      rewards: rewards
+	    });
+	  },
+	  createReward: function createReward(reward) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_FORM_ITEM_RECEIVED,
+	      reward: reward
+	    });
+	  },
+	  editReward: function editReward(reward) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_FORM_ITEM_UPDATED,
+	      reward: reward
+	    });
+	  },
+	  removeReward: function removeReward(id) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_FORM_ITEM_REMOVED,
+	      id: id
+	    });
+	  }
+	};
 
 /***/ }
 /******/ ]);

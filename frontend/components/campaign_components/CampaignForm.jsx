@@ -7,6 +7,8 @@ const ErrorStore = require('../../stores/error_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
 const CampaignFormConstants = require('../../constants/campaign_form_constants');
+const RewardForm = require('../reward_components/RewardForm');
+const InfoForm = require('../reward_components/InfoForm');
 
 
 
@@ -36,13 +38,13 @@ const CampaignForm = React.createClass({
       title: "Thundercats are Loose!",
       blurb: "thundercats, thundercats, thundercats are loose!",
       categoryId: 11,
-      url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
+      video_url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
       goal: 1000,
       description: "I already told you thundercats are loose!",
-      end_date: "",
+      end_date: "2019-03-06",
       imageFile: null,
       imageUrl: null,
-      embedUrl: null
+      embedUrl: null,
     };
   },
 
@@ -82,7 +84,7 @@ const CampaignForm = React.createClass({
     console.log("changeURL");
 
 
-    this.setState({url: e.target.value});
+    this.setState({video_url: e.target.value});
     this.parseUrl(e.target.value);
   },
 
@@ -145,50 +147,35 @@ const CampaignForm = React.createClass({
 
 
   clickRewards(){
-    console.log("rewards option");
-    jQuery(".new-reward-form-container").addClass('hidden');
+    jQuery(".new-reward-form-container").removeClass('hidden');
+    jQuery(".new-info-form-container").addClass('hidden');
+
     jQuery(".reward-option").addClass('form-selected');
     jQuery(".info-option").removeClass('form-selected');
+
+    jQuery(".new-info-header").addClass('hidden');
+    jQuery(".new-reward-header").removeClass('hidden');
+
+    jQuery(".new-info-header").removeClass('fade-in');
+    jQuery(".new-reward-header").addClass('fade-in');
+
   },
 
   clickInfo(){
-    console.log("rewards option");
+    jQuery(".new-reward-form-container").addClass('hidden');
+    jQuery(".new-info-form-container").removeClass('hidden');
+
     jQuery(".reward-option").removeClass('form-selected');
     jQuery(".info-option").addClass('form-selected');
+
+    jQuery(".new-info-header").removeClass('hidden');
+    jQuery(".new-reward-header").addClass('hidden');
+
+    jQuery(".new-info-header").addClass('fade-in');
+    jQuery(".new-reward-header").removeClass('fade-in');
   },
 
   render() {
-    let previewImage;
-    if (this.state.imageUrl) {
-      previewImage = (
-        <div className="preview-image">
-          <img
-            alt="Project image"
-            src={this.state.imageUrl}
-            width="100 px"
-            height="auto"/>
-        </div>
-      );
-    } else {
-      previewImage = (<div></div>);
-    }
-
-    let previewVideo;
-
-    if (this.state.embedUrl) {
-      previewVideo = (
-        <div className="preview-video">
-          <iframe
-            width="449"
-            height="252.5625"
-            src={this.state.embedUrl}
-            frameBorder="0" allowFullScreen>
-          </iframe>
-        </div>
-      );
-    } else {
-      previewVideo = (<div></div>);
-    }
 
     return (
       <div>
@@ -202,25 +189,51 @@ const CampaignForm = React.createClass({
 
             <div className="spacer">{" "}</div>
 
-            <div className="new-reward-options-container bold-14 group reward-form-submit">
+            <div onClick={this.formSubmit} className="new-reward-options-container bold-14 group reward-form-submit submit-campaign">
                 <span className="reward-form-option">Submit your campaign!</span>
             </div>
           </div>
 
-          <div className="new-info-header headers">
+          <div className="new-info-header headers fade-in">
             <span>Let’s get started.</span>
             <div>Make a great first impression with your project’s title and image, and set your funding goal, campaign duration, description, and project category.</div>
           </div>
 
           <div className="new-reward-header headers hidden">
             <span>Set your rewards and other junk.</span>
-            <div>Invite backers to be a part of the creative experience by offering rewards like a copy machine, a sack of hamburgers, or a special appearence on Phil Donohue Show.</div>
+            <div>Invite backers to be a part of the creative experience by offering rewards like a copy machine, a sack of hamburgers, or a special appearence on the Phil Donohue Show.</div>
           </div>
 
 
-          <div className="new-reward-form-container">
+          <InfoForm
+            changeTitle={this.changeTitle}
+            titleState={this.state.title}
+            changeBlurb={this.changeBlurb}
+            blurbState={this.state.blurb}
 
-          </div>
+            imageUrl={this.state.imageUrl}
+            embedUrl={this.state.embedUrl}
+
+            urlState={this.state.video_url}
+            changeURL={this.changeURL}
+
+            descriptionState={this.state.description}
+            changeDescription={this.changeDescription}
+
+            goalState={this.state.goal}
+            changeGoal={this.changeGoal}
+
+            dateState={this.state.date}
+            changeDate={this.changeDate}
+
+            changeCategory={this.state.changeCategory}
+            categoryState={this.category}
+
+            changeFile={this.changeFile}
+
+            />
+          <RewardForm />
+
 
         </div>
 
@@ -228,130 +241,132 @@ const CampaignForm = React.createClass({
 
 
 
+        {
 
-        <div className="campaign-form input-form">
-          { this.errors() }
-          <div className="form-padding">
-
-            <div className="form-label">Start a Campaign</div>
-              <form onSubmit={this.formSubmit}>
-
-                <div className="input campaign-input">
-                  <input
-                    type="text"
-                    className="no-input"
-                    onChange={this.changeTitle}
-                    placeholder="Project Title"
-                    value={this.state.title} />
-                </div>
-
-                { previewImage }
-
-                <div className="input campaign-input">
-                  <input
-                    type="file"
-                    className="no-input"
-                    onChange={this.changeFile}
-                    placeholder="Upload an image" />
-                </div>
-
-                <div className="input">
-                  <textarea
-                    maxLength="135"
-                    className="no-input required textarea"
-                    onChange={this.changeBlurb}
-                    placeholder="Short Blurb"
-                    value={this.state.blurb} />
-                </div>
-
-                <div className="input">
-                  <select value={this.state.categoryId} className="category-select" onChange={this.changeCategory}>
-                  <option value="0" disabled>Choose category</option>
-                    { this.categorySelections() }
-                  </select>
-                </div>
-
-
-
-                <div className="input campaign-input">
-                  <input
-                    type="text"
-                    className="no-input"
-                    onChange={this.changeGoal}
-                    placeholder="Goal"
-                    value={this.state.goal} />
-                </div>
-
-
-                <div className="input campaign-input">
-                  <input
-                  type="date"
-                  className="no-input"
-                  onChange={this.changeDate}
-                  placeholder="Upload an image" />
-                </div>
-
-                <div className="input description">
-                  <textarea
-                    className="no-input required textarea"
-                    onChange={this.changeDescription}
-                    placeholder="Description"
-                    value={this.state.description} />
-                </div>
-
-                <div className="input campaign-input">
-                <input
-                  type="text"
-                  className="no-input"
-                  onChange={this.changeURL}
-                  placeholder="Video URL"
-                  value={this.state.url} />
-                </div>
-
-                { previewVideo }
-
-                <a href="#" className="forgot">Forgot your password?</a>
-
-                <div className="submit">
-                  <input
-                    type="submit"
-                    className="button"
-                    id="login-button"
-                    value="Create Campaign!"/>
-                </div>
-
-
-                <div className="checkbox">
-                  <input
-                    type="checkbox"
-                    id="remember"
-                    value="Remember me"/>
-                    <label id="remember-label" htmlFor="remember">Remember me</label>
-                </div>
-                <div className="line"></div>
-
-                <div className="submit" onClick={this.guestClick}>
-                  <input
-                    type="submit"
-                    id = "facebook-button"
-                    value="Create demo campaign"/>
-                </div>
-
-                <p className="never-post">
-                  We are totally going to post on Facebook
-                  <br/>
-                  without your permission.
-                </p>
-
-
-
-              </form>
-            </div>
-            <div className="login-footer">
-            New to Kickrestarter?
-            <a className="signup-link" href="#/signup">Sign Up</a>
-            </div>
-        </div>
+          // <div className="campaign-form input-form">
+          // { this.errors() }
+          // <div className="form-padding">
+          //
+          // <div className="form-label">Start a Campaign</div>
+          // <form onSubmit={this.formSubmit}>
+          //
+          // <div className="input campaign-input">
+          // <input
+          // type="text"
+          // className="no-input"
+          // onChange={this.changeTitle}
+          // placeholder="Project Title"
+          // value={this.state.title} />
+          // </div>
+          //
+          // { previewImage }
+          //
+          // <div className="input campaign-input">
+          // <input
+          // type="file"
+          // className="no-input"
+          // onChange={this.changeFile}
+          // placeholder="Upload an image" />
+          // </div>
+          //
+          // <div className="input">
+          // <textarea
+          // maxLength="135"
+          // className="no-input required textarea"
+          // onChange={this.changeBlurb}
+          // placeholder="Short Blurb"
+          // value={this.state.blurb} />
+          // </div>
+          //
+          // <div className="input">
+          // <select value={this.state.categoryId} className="category-select" onChange={this.changeCategory}>
+          // <option value="0" disabled>Choose category</option>
+          // { this.categorySelections() }
+          // </select>
+          // </div>
+          //
+          //
+          //
+          // <div className="input campaign-input">
+          // <input
+          // type="text"
+          // className="no-input"
+          // onChange={this.changeGoal}
+          // placeholder="Goal"
+          // value={this.state.goal} />
+          // </div>
+          //
+          //
+          // <div className="input campaign-input">
+          // <input
+          // type="date"
+          // className="no-input"
+          // onChange={this.changeDate}
+          // placeholder="Upload an image" />
+          // </div>
+          //
+          // <div className="input description">
+          // <textarea
+          // className="no-input required textarea"
+          // onChange={this.changeDescription}
+          // placeholder="Description"
+          // value={this.state.description} />
+          // </div>
+          //
+          // <div className="input campaign-input">
+          // <input
+          // type="text"
+          // className="no-input"
+          // onChange={this.changeURL}
+          // placeholder="Video URL"
+          // value={this.state.url} />
+          // </div>
+          //
+          // { previewVideo }
+          //
+          // <a href="#" className="forgot">Forgot your password?</a>
+          //
+          // <div className="submit">
+          // <input
+          // type="submit"
+          // className="button"
+          // id="login-button"
+          // value="Create Campaign!"/>
+          // </div>
+          //
+          //
+          // <div className="checkbox">
+          // <input
+          // type="checkbox"
+          // id="remember"
+          // value="Remember me"/>
+          // <label id="remember-label" htmlFor="remember">Remember me</label>
+          // </div>
+          // <div className="line"></div>
+          //
+          // <div className="submit" onClick={this.guestClick}>
+          // <input
+          // type="submit"
+          // id = "facebook-button"
+          // value="Create demo campaign"/>
+          // </div>
+          //
+          // <p className="never-post">
+          // We are totally going to post on Facebook
+          // <br/>
+          // without your permission.
+          // </p>
+          //
+          //
+          //
+          // </form>
+          // </div>
+          // <div className="login-footer">
+          // New to Kickrestarter?
+          // <a className="signup-link" href="#/signup">Sign Up</a>
+          // </div>
+          // </div>
+        }
       </div>
     );
   }

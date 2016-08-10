@@ -42,7 +42,7 @@ const CampaignsIndexItem = React.createClass({
               <div className="small-campaign-name">{ this.props.campaign.author }</div>
 
               <div className="small-blurb">
-                <div className="small-campaign-name">{ this.props.campaign.description }</div>
+                <div className="small-campaign-name small-campaign-blurb">{ this.props.campaign.description }</div>
               </div>
 
               <ul className="location">

@@ -38,6 +38,11 @@
   display: inline-block;
 }
 
+.preview-video{
+  margin-bottom: 6px;
+  margin-left: 70px;
+}
+
 .campaign-show-stats{
   overflow: hidden;
   margin-left: 40px;
@@ -210,6 +215,10 @@
   font-weight: bold;
   font-size: 14px;
 }
+.bold-12{
+  font-weight: bold;
+  font-size: 12px;
+}
 .reg-14{
   font-size: 14px;
 }
@@ -227,7 +236,7 @@
   padding-bottom: 28px;
 }
 
-.pledge-warning-container{
+.pledge-warning-container, .campaign-form-sidebar-container{
   width: 299.98px;
   padding: 10px;
   & > p, & > a{

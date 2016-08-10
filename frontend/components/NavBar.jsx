@@ -28,6 +28,7 @@ const NavBar = React.createClass({
     e.preventDefault();
     SessionActions.logOut();
     this.setState({ currentUser: false });
+    hashHistory.push("/login");
   },
 
   render() {

@@ -45,13 +45,13 @@
   color: #cccccc;
 }
 
-.new-reward-form-container{
+.new-form-container{
   border: 1px solid rgb(223, 220, 218);
   width: 934px;
-  height: 700px;
   background-color: white;
   margin: auto;
   border-radius: 6px;
+  padding: 12px 12px 0 12px;
 }
 
 .new-reward{
@@ -78,6 +78,54 @@
   display: none;
 }
 
+.box{
+
+}
+
+.fade-in {
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:2s;
+  -moz-animation-duration:2s;
+  animation-duration:2s;
+  -webkit-animation-delay: 0.2s;
+  -moz-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fade-out {
+  opacity:1;  /* make things invisible upon start */
+  -webkit-animation:fadeOut ease-in 1;  /* call our keyframe named fadeOut, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeOut ease-in 1;
+  animation:fadeOut ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:6s;
+  -moz-animation-duration:6s;
+  animation-duration:6s;
+  -webkit-animation-delay: 0.5s;
+  -moz-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+
+@-webkit-keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+@-moz-keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+@keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+
 .headers{
   text-align: center;
   color: rgb(6, 35, 64);
@@ -91,4 +139,109 @@
     font-size: 32px;
     font-weight: bold;
   }
+}
+
+.form-field-container{
+  background-color: rgb(248, 249, 253);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 12px;
+  & > h1{
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    cursor: pointer;
+    padding: 0;
+    &:hover{
+      color: red;
+      transition: color 0.1s;
+      transform: scale(1.01);
+      transition: all .3s ease-in-out;
+    }
+    &::before{
+      font-family: "FontAwesome";
+      content: "\f00d";
+      margin-right: 5px;
+    }
+  }
+}
+
+.form-field-containers{
+  width: 632px;
+  float: left;
+}
+
+.field-label{
+  font-size: 13px;
+  font-weight: bold;
+  float: left;
+}
+
+.campaign-input > .campaign-input-field {
+  background-color: white;
+  margin: 0;
+  width: 426px;
+}
+
+.campaign-input > .textarea, .campaign-input > .category-select{
+  width: 449px;
+}
+
+.input-field-description{
+  margin-top: 7px;
+  width: 446px;
+}
+
+.campaign-input-container{
+  float: right;
+}
+
+.textarea-big{
+  height: 300px;
+}
+
+.campaign-form-sidebar-container{
+  float:left;
+  padding: 20px;
+  width: 261px;
+}
+
+.add-reward{
+  height: 100px;
+  margin-bottom: 12px;
+  border: 2px dashed #e2e8ff;
+  text-align: center;
+  cursor: pointer;
+  &:hover{
+    background-color: #eef7ff;
+    transform: scale(1.01);
+    transition: all .3s ease-in-out;
+    transition: background-color 0.5s;
+    color: blue;
+  }
+  &>h3::before{
+    font-family: "FontAwesome";
+    content: "\f067";
+    margin-right: 5px;
+  }
+  &>h3{
+    margin-top: 40px;
+  }
+}
+
+.submit-campaign{
+  background-color: rgb(38, 208, 106);
+  color: white;
+  &:hover{
+    background-color: #1db95c;
+    transition: background-color 0.5s;
+  }
+}
+
+.reward-form-item:hover{
+  background-color: #e3e8fd;
+  transition: background-color 0.5s;
+  transform: scale(1.01);
+  transition: all .6s ease-in-out;
+  border: 1px solid rgb(88, 107, 233);
 }
