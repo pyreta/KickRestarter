@@ -40,7 +40,11 @@
 
 .preview-video{
   margin-bottom: 6px;
+}
+
+.info-video{
   margin-left: 70px;
+
 }
 
 .campaign-show-stats{
@@ -89,7 +93,7 @@
 .campaign-container{
   // background-color: #F7F7F9;
   border: 1px solid #f1eeea;
-  padding-bottom: 50px;
+  padding-bottom: 26px;
 }
 
 .reward-title{
@@ -118,6 +122,12 @@
   transform: scale(1.03);
   transition: all .3s ease-in-out;
   border-color: rgb(88, 107, 233);
+
+}
+
+.selected-reward-radio{
+  background-color: #e3e8fd;
+  border: 1px solid rgb(88, 107, 233);
   & > .reward-radio > input {
     border-color: rgb(88, 107, 233);
     transition: all .3s ease-in-out;
@@ -127,6 +137,7 @@
     transition: all .3s ease-in-out;
   }
 }
+
 
 
 
@@ -297,4 +308,62 @@ input[type="radio"]{
 
 .pledge-form-header > .campaign-title {
   cursor: pointer;
+}
+
+.comment-toggle-bar{
+  height: 63px;
+  border-bottom: 1px solid #f1eeea;
+}
+
+.link-section{
+  color: rgb(61, 61, 102);
+  &>ul{
+    margin-top: 20px;
+  }
+  &>ul>li{
+    float: left;
+    padding: 10px 10px 10px 0;
+  }
+  &>ul>li>a{
+    border: 1px solid rgb(230, 228, 226);
+    border-radius: 2px;
+    padding: 5px
+  }
+}
+
+
+.comment-toggle-button{
+  float: left;
+  padding: 20px;
+  padding-left: 0;
+  border-bottom: 4px solid white;
+  padding-right: 0;
+  margin-right: 40px;
+}
+
+.comment-toggle-button-container{
+  margin: auto;
+  width: 1075px;
+  // padding: 23px;
+}
+
+.comment-toggle-selected{
+  // font-weight: bold;
+  border-color: #1db95c;
+}
+
+.choose-campaign, .choose-comments{
+  cursor: pointer;
+}
+
+#submit-comment-button{
+  width: 66px;
+  margin-top: 10px;
+  padding: 10px;
+  text-align: center;
+  background-color: #0c5d6b;
+}
+
+.comment-box{
+  display: block;
 }

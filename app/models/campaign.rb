@@ -18,6 +18,19 @@ class Campaign < ActiveRecord::Base
   )
 
   has_many(
+    :comments,
+    class_name: "Comment",
+    foreign_key: :campaign_id,
+    primary_key: :id
+  )
+
+  has_many(
+    :commenters,
+    through: :comments,
+    source: :author,
+  )
+
+  has_many(
     :pledges,
     through: :rewards,
     source: :pledges

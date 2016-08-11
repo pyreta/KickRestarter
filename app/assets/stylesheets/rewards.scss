@@ -245,3 +245,34 @@
   transition: all .6s ease-in-out;
   border: 1px solid rgb(88, 107, 233);
 }
+
+.selected-min{
+  color: #2bde73;
+  // font-family: "FontAwesome";
+  // content: "\f05d";
+  // margin-right: 5px;
+  // color: #2bde73;
+}
+
+.pledge-form > input, .pledge-form > .submit{
+  float: left;
+}
+
+#submit-pledge-button{
+  width: 153px;
+  text-align: center;
+  padding: 15px;
+  font-size: 16px;
+  margin: 20px;
+  margin-left:10px;
+}
+
+.button-text{
+  padding:0;
+}
+
+#thick-input{
+  height: 50px;
+  margin: 20px;
+  margin-right:10px;
+}

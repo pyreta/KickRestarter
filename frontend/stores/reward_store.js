@@ -52,6 +52,10 @@ RewardStore.__onDispatch = function (payload) {
       setReward(payload.reward);
       RewardStore.__emitChange();
       break;
+    case RewardConstants.REWARD_FORM_ITEM_UPDATED:
+      setReward(payload.reward);
+      RewardStore.__emitChange();
+      break;
     case RewardConstants.REWARD_FORM_ITEM_REMOVED:
       removeReward(payload.id);
       RewardStore.__emitChange();

@@ -4,19 +4,23 @@ class Api::CampaignsController < ApplicationController
     @campaigns = Campaign.includes(:author, :city, :state).all
   end
   def create
-    # FORMAT INCOMING DATAAA
-    #x = Time.zone.parse("2018-01-31 00:00:00.0000")
-    # y = x+5.day
-    # ((y-Time.now)/86400.00).to_i
-    # end_date = Time.now + (params[:campaign][:days]).to_i.day
-    # params[:campaign][:end_date] = end_date
-    # params[:campaign][:video_embed_url] = params[:campaign][:video_url]
-    # .split("watch?v=")
-    # .join("embed/")
+    debugger
     params[:campaign][:category_id] = params[:campaign][:categoryId].to_i
 		@campaign = Campaign.new(campaign_params)
     @campaign.author_id = current_user.id
 		if @campaign.save
+      JSON.parse(params[:campaign][:rewards]).each do |reward|
+        reward_params = {
+          title: reward["title"],
+          campaign_id: @campaign.id,
+          description: reward["description"],
+          min_amount: reward["min_amount"],
+          delivery_date: reward["delivery_date"]
+        }
+        @reward = Reward.new(reward_params)
+        @reward.save
+
+      end
       render json: @campaign
 		else
 			render json: @campaign.errors.full_messages, status: 422
@@ -26,7 +30,7 @@ class Api::CampaignsController < ApplicationController
 
 
 	def show
-		@campaign = Campaign.includes(rewards: [:pledgers]).find(params[:id])
+		@campaign = Campaign.includes(rewards: [:pledgers], comments: [:author]).find(params[:id])
 	end
 
 	def update

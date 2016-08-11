@@ -4,6 +4,7 @@ const SessionActions = require('../../actions/session_actions');
 const CampaignActions = require('../../actions/campaign_actions');
 const SessionStore = require('../../stores/session_store');
 const ErrorStore = require('../../stores/error_store');
+const RewardStore = require('../../stores/reward_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
 const CampaignFormConstants = require('../../constants/campaign_form_constants');
@@ -26,11 +27,17 @@ const CampaignForm = React.createClass({
   componentDidMount() {
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+    this.rewardListener = RewardStore.addListener(this.updateRewards);
+  },
+
+  updateRewards(){
+    this.setState({rewards: RewardStore.all()});
   },
 
   componentWillUnmount() {
     this.errorListener.remove();
     this.sessionListener.remove();
+    this.rewardListener.remove();
   },
 
   getInitialState() {
@@ -45,24 +52,29 @@ const CampaignForm = React.createClass({
       imageFile: null,
       imageUrl: null,
       embedUrl: null,
+      rewards: []
     };
   },
 
   formSubmit(e) {
     let formData = new FormData();
-    formData.append("campaign[image]", this.state.imageFile);
+    if (this.state.imageFile) {
+      formData.append("campaign[image]", this.state.imageFile);
+    }
     formData.append("campaign[title]", this.state.title);
     formData.append("campaign[blurb]", this.state.blurb);
     formData.append("campaign[category_id]", this.state.categoryId);
-    formData.append("campaign[video_url]", this.state.url);
+    formData.append("campaign[video_url]", this.state.video_url);
     formData.append("campaign[goal]", this.state.goal);
     formData.append("campaign[description]", this.state.description);
     formData.append("campaign[end_date]", this.state.end_date);
+    formData.append("campaign[end_date]", this.state.end_date);
+    formData.append("campaign[rewards]", JSON.stringify(this.state.rewards));
 
 
-    console.log(e.target.class);
     e.preventDefault();
     CampaignActions.createCampaign(formData);
+    // hashHistory.push("/discover");
   },
 
   changeTitle(e) {

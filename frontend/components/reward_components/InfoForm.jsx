@@ -123,7 +123,7 @@ const RewardForm = React.createClass({
 
     if (this.props.embedUrl) {
       previewVideo = (
-        <div className="preview-video">
+        <div className="preview-video info-video">
           <iframe
             width="449"
             height="252.5625"

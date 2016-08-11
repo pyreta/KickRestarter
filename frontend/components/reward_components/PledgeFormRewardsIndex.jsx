@@ -18,8 +18,10 @@ const PledgeFormRewardsIndex = React.createClass({
     return {selectedItem: null};
   },
 
-  changeSelected(e){
-    this.setState({selectedItem: e.target.id});
+  changeSelected(selected_id){
+    this.setState({selectedItem: selected_id});
+    console.log(this.state);
+    console.log("SELECTED REWARD CALLBACK CLICKED");
   },
 
 
@@ -28,10 +30,15 @@ const PledgeFormRewardsIndex = React.createClass({
     let rewardList = [];
 
     if (this.props.campaign.rewards){
-      rewardList = this.props.campaign.rewards.map(function (reward, i){
+      rewardList = this.props.campaign.rewards.map((reward, i)=>{
         return (
             <li key={i}>
-              <PledgeFormRewardIndexItem reward={ reward } key={i} id={i}/>
+              <PledgeFormRewardIndexItem
+                reward={ reward }
+                key={i}
+                id={i}
+                selectedCallback={this.changeSelected}
+                selected_id={this.state.selectedItem}/>
             </li>
           );
       });

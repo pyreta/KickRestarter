@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  campaign_id: 1
+  author_id: 1
+  body: MyText
+  date: 2016-08-11 15:03:25
+
+two:
+  campaign_id: 1
+  author_id: 1
+  body: MyText
+  date: 2016-08-11 15:03:25

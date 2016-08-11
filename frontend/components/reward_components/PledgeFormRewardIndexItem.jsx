@@ -15,7 +15,7 @@ const PledgeFormRewardsIndexItem = React.createClass({
 
   getInitialState() {
     return {
-      expanded: false,
+      selected: false,
       amount: this.props.reward.min_amount
     };
   },
@@ -33,15 +33,11 @@ const PledgeFormRewardsIndexItem = React.createClass({
   clickReward(e) {
     console.log("REWARD CLICKED!");
     console.log(e.currentTarget);
-    if (this.state.expanded) {
-      this.setState({expanded: false});
-    } else {
-      this.setState({expanded: true});
-    }
+    this.props.selectedCallback(this.props.id);
   },
 
-  submitReward(e) {
-    console.log("RsubmitReward!");
+  submitPledge(e) {
+    console.log("RsubmitPledge!");
     console.log(e.currentTarget);
     e.preventDefault();
     PledgeActions.createPledge(
@@ -63,45 +59,66 @@ const PledgeFormRewardsIndexItem = React.createClass({
     console.log(e.target);
   },
 
+  formattedComponent() {
+    if (this.props.selected_id === this.props.id){
+      return (
+        <div className="reward-item selected-reward-radio" onClick={this.clickReward}>
+          <div className="reward-radio group">
+            <input className="selected-min" type="radio" name="reward" value={this.props.reward.id}/>
+            <div className="reward-min">{"Pledge " + MethodModule.parseDollarAmount(this.props.reward.min_amount)+ " or more"}</div>
+          </div>
+
+          <div className="reward-item-title pad-left">{this.props.reward.title}</div>
+          <div className="reward-item-description pad-left">{this.props.reward.description}</div>
+          <div className="reward-delivery-label pad-left">ESTIMATED DELIVERY</div>
+          <div className="pad-left">{this.parseDeliveryDate()}</div>
+          <div className="reward-backer-label pad-left">{MethodModule.parseBackers(this.props.reward.backers.length)}</div>
+
+          <div className="reward-input">
+            <form onClick={this.submitPledge} className="pledge-form group">
+              <input
+                type="text"
+                onChange={this.changeAmount}
+                autoFocus="true"
+                id="thick-input"
+                value={this.state.amount} />
+
+                <div onClick={this.formSubmit} id="submit-pledge-button" className="new-reward-options-container bold-14 group reward-form-submit submit-campaign">
+                    <span className="reward-form-option button-text">Submit your pledge!</span>
+                </div>
+            </form>
+
+
+          </div>
+
+        </div>
+      );
+    } else {
+      return (
+        <div className="reward-item" onClick={this.clickReward}>
+          <div className="reward-radio group">
+            <input type="radio" name="reward" value={this.props.reward.id}/>
+            <div className="reward-min">{"Pledge " + MethodModule.parseDollarAmount(this.props.reward.min_amount)+ " or more"}</div>
+          </div>
+
+          <div className="reward-item-title pad-left">{this.props.reward.title}</div>
+          <div className="reward-item-description pad-left">{this.props.reward.description}</div>
+          <div className="reward-delivery-label pad-left">ESTIMATED DELIVERY</div>
+          <div className="pad-left">{this.parseDeliveryDate()}</div>
+          <div className="reward-backer-label pad-left">{MethodModule.parseBackers(this.props.reward.backers.length)}</div>
+        </div>
+      );
+    }
+
+  },
+
 
   render() {
-    // let expandedSection = (<div></div>);
-    // if (this.state.expanded){
-    //   expandedSection = (
-    //   <div className="reward-input">
-    //     <form onClick={this.submitReward}>
-    //       <input
-    //         type="text"
-    //         onChange={this.changeAmount}
-    //         autoFocus="true"
-    //         value={this.state.amount} />
-    //
-    //         <div className="submit">
-    //           <input
-    //             type="submit"
-    //             className="button"
-    //             id="back-project-button"
-    //             value="Submit Reward"/>
-    //         </div>
-    //     </form>
-    //
-    //
-    //   </div>);
-    // }
+
     return (
-      <div className="reward-item" onClick={this.clickReward}>
+      <div>
+        { this.formattedComponent() }
 
-        <div className="reward-radio group">
-          <input type="radio" name="reward" value={this.props.reward.id}/>
-          <div className="reward-min">{"Pledge " + MethodModule.parseDollarAmount(this.props.reward.min_amount)+ " or more"}</div>
-        </div>
-
-        <div className="reward-item-title pad-left">{this.props.reward.title}</div>
-        <div className="reward-item-description pad-left">{this.props.reward.description}</div>
-        { expandedSection }
-        <div className="reward-delivery-label pad-left">ESTIMATED DELIVERY</div>
-        <div className="pad-left">{this.parseDeliveryDate()}</div>
-        <div className="reward-backer-label pad-left">{MethodModule.parseBackers(this.props.reward.backers.length)}</div>
       </div>
     );
   }

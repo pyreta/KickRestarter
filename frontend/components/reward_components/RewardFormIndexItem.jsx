@@ -44,6 +44,7 @@ const RewardFormIndexItem = React.createClass({
       description: this.props.rewardState.description,
       min_amount: this.props.rewardState.min_amount,
       delivery_date: this.props.rewardState.delivery_date,
+      id: this.props.rewardState.id
     };
   },
   //
@@ -62,33 +63,42 @@ const RewardFormIndexItem = React.createClass({
   //   RewardActions.createReward(data);
   //   hashHistory.push(`/campaigns/${this.props.params.campaignId}`);
   // },
-  //
-  //
-  // changeTitle(e) {
-  //   this.setState({title: e.target.value});
-  // },
-  //
-  // changeDescription(e){
-  //   this.setState({description: e.target.value});
-  // },
+
+
+  changeTitle(e) {
+    this.setState({title: e.target.value});
+    let data = Object.assign({}, this.state, { title: e.target.value });
+    RewardFormActions.editReward(data);
+  },
+
+  changeDescription(e){
+    this.setState({description: e.target.value});
+    let data = Object.assign({}, this.state, { description: e.target.value });
+
+    RewardFormActions.editReward(data);
+  },
   // // FIX DATE FORMATTING STUFF!!!
-  // changeDate(e){
-  //   this.setState({delivery_date: e.target.value});
-  //   console.log(this.state);
-  // },
-  //
-  // changeAmount(e){
-  //   this.setState({min_amount: e.target.value});
-  // },
-  //
-  // errors() {
-  //   const errors = ErrorStore.errors("reward-form");
-  //   const messages = errors.map( (errorMsg, i) => {
-  //     return <li key={ i }>{ errorMsg }</li>;
-  //   });
-  //
-  //   return <ul>{ messages }</ul>;
-  // },
+  changeDate(e){
+    this.setState({delivery_date: e.target.value});
+    let data = Object.assign({}, this.state, { delivery_date: e.target.value });
+    RewardFormActions.editReward(data);
+  },
+
+  changeAmount(e){
+    this.setState({min_amount: e.target.value});
+    let data = Object.assign({}, this.state, { min_amount: e.target.value });
+    RewardFormActions.editReward(data);
+  },
+
+  errors() {
+    const errors = ErrorStore.errors("reward-form");
+    const messages = errors.map( (errorMsg, i) => {
+      return <li key={ i }>{ errorMsg }</li>;
+    });
+
+    return <ul>{ messages }</ul>;
+  },
+
   deleteReward() {
     RewardFormActions.removeReward(this.props.rewardState.id);
   },
@@ -103,7 +113,7 @@ const RewardFormIndexItem = React.createClass({
                   <input
                   type="text"
                   className="no-input campaign-input-field"
-                  onChange={this.changeFile}
+                  onChange={this.changeTitle}
                   value={this.state.title}
                   placeholder="Title" />
                 </div>
@@ -120,7 +130,7 @@ const RewardFormIndexItem = React.createClass({
                   <input
                   type="text"
                   className="no-input campaign-input-field"
-                  onChange={this.changeFile}
+                  onChange={this.changeAmount}
                   value={this.state.min_amount}
                   placeholder="Amount" />
                 </div>
@@ -138,7 +148,7 @@ const RewardFormIndexItem = React.createClass({
                 <textarea
                   maxLength="135"
                   className="no-input required textarea campaign-input-field"
-                  onChange={this.changeBlurb}
+                  onChange={this.changeDescription}
                   placeholder="Reward Description"
                   value={this.state.description} />
                 </div>
