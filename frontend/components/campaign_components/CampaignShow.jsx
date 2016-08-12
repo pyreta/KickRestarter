@@ -63,6 +63,15 @@ const CampaignShow = React.createClass({
     jQuery(".all-comments").removeClass('hidden');
   },
 
+  editPage(){
+    if (SessionStore.currentUser().id === this.state.campaign.author_id){
+
+      hashHistory.push(`/campaigns/${this.state.campaign.id}/edit`);
+    } else {
+      alert("You can only edit campaigns you've created.");
+    }
+  },
+
   render() {
     let location = this.state.campaign.city + ", " + this.state.campaign.state;
     let days = this.state.campaign.days_to_go === 1 ? "day" : "days";
@@ -140,6 +149,7 @@ const CampaignShow = React.createClass({
               <div className="marker"><img src={window.mapMarker}/></div>
             </li>
             <li className="show-location">{ location }</li>
+            <li onClick={this.editPage} className="show-location edit-page">Edit</li>
           </ul>
 
 

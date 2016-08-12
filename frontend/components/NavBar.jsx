@@ -89,11 +89,10 @@ const NavBar = React.createClass({
                  <a href="#" id="icon" >{ profileIcon }</a>
                  <ul className="header-nav-drop-down">
                    <li><a href="#/discover">Discover</a></li>
-                   <li><a href="#">Start a project</a></li>
+                   <li><a href="#/start">Start a project</a></li>
                    <li><a href="http://media.mnn.com/assets/images/2015/06/octopus.jpg">An Octopus</a></li>
-                   <li><a href="#">Search</a></li>
+                   <li><a href="#/profile">Profile</a></li>
                    <li>Log out</li>
-                   <li><a href="#/signup">Sign up</a></li>
                  </ul>
                </li>
              </ul>

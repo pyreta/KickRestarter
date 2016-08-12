@@ -23,6 +23,7 @@ const SessionStore = require("./stores/session_store");
 
 const PledgeForm = require("./components/reward_components/PledgeForm");
 const RewardForm = require("./components/reward_components/RewardForm");
+const ProfileForm = require("./components/user_components/ProfileForm");
 
 const App = React.createClass({
 
@@ -51,6 +52,7 @@ const appRouter = (
       <IndexRoute component={HomePage} />
       <Route path="/login" component={LoginForm} />
       <Route path="/signup" component={SignUpForm} />
+      <Route path="/profile" component={ProfileForm} />
       <Route path="/discover" component={CampaignsIndex} />
       <Route path="/homepage" component={HomePage} />
       <Route path="/start" component={CampaignForm} onEnter={ _ensureLoggedIn }/>

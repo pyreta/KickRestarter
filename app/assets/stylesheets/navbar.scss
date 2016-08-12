@@ -23,6 +23,7 @@
   border-bottom: 3px solid white;
   &:hover{
     border-color: #2BDE73;
+    transition: border-color 0.3s;
   }
 }
 .header-nav > ul > li > a, .header-nav > ul > li > button {

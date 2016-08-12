@@ -71,6 +71,7 @@
 	
 	var PledgeForm = __webpack_require__(286);
 	var RewardForm = __webpack_require__(295);
+	var ProfileForm = __webpack_require__(306);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -106,6 +107,7 @@
 	    React.createElement(IndexRoute, { component: HomePage }),
 	    React.createElement(Route, { path: '/login', component: LoginForm }),
 	    React.createElement(Route, { path: '/signup', component: SignUpForm }),
+	    React.createElement(Route, { path: '/profile', component: ProfileForm }),
 	    React.createElement(Route, { path: '/discover', component: CampaignsIndex }),
 	    React.createElement(Route, { path: '/homepage', component: HomePage }),
 	    React.createElement(Route, { path: '/start', component: CampaignForm, onEnter: _ensureLoggedIn }),
@@ -35188,7 +35190,7 @@
 	                    null,
 	                    React.createElement(
 	                      'a',
-	                      { href: '#' },
+	                      { href: '#/start' },
 	                      'Start a project'
 	                    )
 	                  ),
@@ -35206,23 +35208,14 @@
 	                    null,
 	                    React.createElement(
 	                      'a',
-	                      { href: '#' },
-	                      'Search'
+	                      { href: '#/profile' },
+	                      'Profile'
 	                    )
 	                  ),
 	                  React.createElement(
 	                    'li',
 	                    null,
 	                    'Log out'
-	                  ),
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: '#/signup' },
-	                      'Sign up'
-	                    )
 	                  )
 	                )
 	              )
@@ -35684,6 +35677,7 @@
 	    console.log(e.target.class);
 	    e.preventDefault();
 	    CampaignActions.editCampaign(formData, this.id);
+	    hashHistory.push('/campaigns/' + this.id);
 	  },
 	  changeTitle: function changeTitle(e) {
 	    console.log("changeTitle");
@@ -35995,6 +35989,14 @@
 	    jQuery(".all-about").addClass('hidden');
 	    jQuery(".all-comments").removeClass('hidden');
 	  },
+	  editPage: function editPage() {
+	    if (SessionStore.currentUser().id === this.state.campaign.author_id) {
+	
+	      hashHistory.push('/campaigns/' + this.state.campaign.id + '/edit');
+	    } else {
+	      alert("You can only edit campaigns you've created.");
+	    }
+	  },
 	  render: function render() {
 	    var location = this.state.campaign.city + ", " + this.state.campaign.state;
 	    var days = this.state.campaign.days_to_go === 1 ? "day" : "days";
@@ -36129,6 +36131,11 @@
 	              'li',
 	              { className: 'show-location' },
 	              location
+	            ),
+	            React.createElement(
+	              'li',
+	              { onClick: this.editPage, className: 'show-location edit-page' },
+	              'Edit'
 	            )
 	          ),
 	          React.createElement(
@@ -38294,6 +38301,49 @@
 	    });
 	  }
 	};
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var RewardActions = __webpack_require__(289);
+	var PledgeActions = __webpack_require__(292);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var MethodModule = __webpack_require__(282);
+	
+	var ProfileForm = React.createClass({
+	  displayName: 'ProfileForm',
+	  getInitialState: function getInitialState() {
+	    return { image: null, imageUrl: null };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.user = SessionStore.currentUser();
+	    this.setState({ image: this.user.image, imageUrl: this.user.image_url });
+	  },
+	  render: function render() {
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'group' },
+	      SessionStore.currentUser().username,
+	      React.createElement(
+	        'div',
+	        { className: 'profile-picture-container group' },
+	        React.createElement('img', { src: this.state.imageUrl })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = ProfileForm;
 
 /***/ }
 /******/ ]);

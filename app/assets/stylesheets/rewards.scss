@@ -276,3 +276,15 @@
   margin: 20px;
   margin-right:10px;
 }
+
+
+.edit-page{
+  padding-left: 15px;
+  cursor: pointer;
+  &::before{
+    font-family: "FontAwesome";
+    content: "\f044";
+    margin-right: 5px;
+    color: #cccccc;
+  }
+}

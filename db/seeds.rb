@@ -26,7 +26,7 @@ louis = User.create(
   location_id: new_york_city.id,
   url: "www.jollyband.com",
   email: "pyreta@gmail.com",
-  image: File.open('app/assets/images/shame.jpg')
+  image: File.open('app/assets/images/profile-pic.jpg')
 )
 
 louie = User.create(

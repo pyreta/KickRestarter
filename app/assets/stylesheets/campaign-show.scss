@@ -349,7 +349,8 @@ input[type="radio"]{
 
 .comment-toggle-selected{
   // font-weight: bold;
-  border-color: #1db95c;
+  border-color: #2BDE73;
+  transition: border-color 0.3s;
 }
 
 .choose-campaign, .choose-comments{

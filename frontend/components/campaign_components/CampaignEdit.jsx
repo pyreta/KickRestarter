@@ -84,6 +84,7 @@ const CampaignForm = React.createClass({
     console.log(e.target.class);
     e.preventDefault();
     CampaignActions.editCampaign(formData, this.id);
+    hashHistory.push(`/campaigns/${this.id}`);
   },
 
   changeTitle(e) {
