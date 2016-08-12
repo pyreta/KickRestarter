@@ -38021,6 +38021,7 @@
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var CommentIndexItem = __webpack_require__(303);
+	var CampaignActions = __webpack_require__(269);
 	
 	var CommentsIndex = React.createClass({
 	  displayName: 'CommentsIndex',
@@ -38028,6 +38029,7 @@
 	    var data = Object.assign({}, this.state, { author_id: SessionStore.currentUser().id, campaign_id: this.props.campaign.id });
 	    this.setState({ body: "" });
 	    CommentActions.createComment(data);
+	    CampaignActions.getCampaign(this.props.campaign.id);
 	  },
 	  getInitialState: function getInitialState() {
 	    return { body: "" };

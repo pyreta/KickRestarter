@@ -9,6 +9,7 @@ const ErrorStore = require('../../stores/error_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
 const CommentIndexItem = require("./CommentIndexItem");
+const CampaignActions = require('../../actions/campaign_actions');
 
 
 
@@ -19,6 +20,7 @@ const CommentsIndex = React.createClass({
     let data = Object.assign({}, this.state, {author_id: SessionStore.currentUser().id, campaign_id: this.props.campaign.id});
     this.setState({ body: "" });
     CommentActions.createComment(data);
+    CampaignActions.getCampaign(this.props.campaign.id);
   },
 
   getInitialState() {
