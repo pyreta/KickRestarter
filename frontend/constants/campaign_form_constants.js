@@ -1,5 +1,6 @@
 module.exports = {
   CATEGORIES: {
+    0: "All Categories",
     1: "Art",
     2: "Comics",
     3: "Crafts",

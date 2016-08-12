@@ -103,7 +103,7 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
-	    React.createElement(IndexRoute, { component: CampaignsIndex }),
+	    React.createElement(IndexRoute, { component: HomePage }),
 	    React.createElement(Route, { path: '/login', component: LoginForm }),
 	    React.createElement(Route, { path: '/signup', component: SignUpForm }),
 	    React.createElement(Route, { path: '/discover', component: CampaignsIndex }),
@@ -27139,7 +27139,7 @@
 	  displayName: 'LoginForm',
 	  redirectIfLoggedIn: function redirectIfLoggedIn() {
 	    if (SessionStore.isUserLoggedIn()) {
-	      hashHistory.push("/");
+	      hashHistory.push("/discover");
 	    }
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -27699,7 +27699,6 @@
 			});
 		},
 		signUp: function signUp(user, success, _error) {
-			debugger;
 			$.ajax({
 				url: '/api/users',
 				type: 'POST',
@@ -34330,7 +34329,7 @@
 	  displayName: 'SignUpForm',
 	  redirectIfLoggedIn: function redirectIfLoggedIn() {
 	    if (SessionStore.isUserLoggedIn()) {
-	      hashHistory.push("/");
+	      hashHistory.push("/discover");
 	    }
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -34575,9 +34574,12 @@
 	  componentDidMount: function componentDidMount() {
 	    this.listener = CampaignStore.addListener(this.onChange);
 	    CampaignActions.fetchCampaigns();
+	
+	    jQuery("body").addClass('background-campaign-show');
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.listener.remove();
+	    jQuery("body").removeClass('background-campaign-show');
 	  },
 	  render: function render() {
 	
@@ -34594,33 +34596,60 @@
 	      { className: 'group' },
 	      React.createElement(
 	        'div',
-	        { className: 'group' },
+	        null,
 	        React.createElement(
 	          'div',
-	          { className: 'input campaign-input navbar-input' },
-	          React.createElement('input', {
-	            type: 'text',
-	            className: 'no-input campaign-input-field',
-	            onChange: this.changeSearch,
-	            value: this.state.searchQuery,
-	            placeholder: 'search...' })
+	          { className: 'search-container' },
+	          React.createElement(
+	            'div',
+	            { className: 'group search-toggle hidden' },
+	            React.createElement(
+	              'div',
+	              { className: 'input campaign-input navbar-input' },
+	              React.createElement('input', {
+	                type: 'text',
+	                id: 'search',
+	                className: 'no-input campaign-input-field',
+	                onChange: this.changeSearch,
+	                value: this.state.searchQuery,
+	                placeholder: 'search...' })
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'category-filter category-container group' },
+	          React.createElement(
+	            'div',
+	            null,
+	            "Campaigns sorted by "
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'category-filter-container' },
+	            React.createElement(
+	              'select',
+	              { value: this.state.categoryId, className: 'filter-dropdown category-filter', onChange: this.changeCategory },
+	              React.createElement(
+	                'option',
+	                { value: '0' },
+	                'Everything'
+	              ),
+	              this.categorySelections()
+	            )
+	          )
 	        )
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'input campaign-input' },
+	        { className: "campaign-index-container" },
 	        React.createElement(
-	          'select',
-	          { value: this.state.categoryId, className: 'category-select campaign-input-field', onChange: this.changeCategory },
-	          React.createElement(
-	            'option',
-	            { value: '0' },
-	            'All Categories'
-	          ),
-	          this.categorySelections()
-	        )
-	      ),
-	      campaignList
+	          'div',
+	          { className: "index-title" },
+	          "Discover campaigns in " + CampaignFormConstants.CATEGORIES[parseInt(this.state.categoryId)]
+	        ),
+	        campaignList
+	      )
 	    );
 	  }
 	});
@@ -35015,13 +35044,26 @@
 	    SessionStore.addListener(this.sessionChanged);
 	  },
 	  getInitialState: function getInitialState() {
-	    return { currentUser: false };
+	    return { currentUser: false, search: false };
 	  },
 	  logOutClick: function logOutClick(e) {
 	    e.preventDefault();
 	    SessionActions.logOut();
 	    this.setState({ currentUser: false });
 	    hashHistory.push("/login");
+	  },
+	  toggleSearch: function toggleSearch() {
+	    // jQuery("body").addClass('background-campaign-show');
+	    console.log("SEARCH");
+	    if (this.state.search === false) {
+	      jQuery(".search-toggle").removeClass('hidden');
+	      // jQuery(".search-toggle").attr("auto-focus", "true");
+	      document.getElementById("search").focus();
+	      this.setState({ search: true });
+	    } else {
+	      jQuery(".search-toggle").addClass('hidden');
+	      this.setState({ search: false });
+	    }
 	  },
 	  render: function render() {
 	
@@ -35085,8 +35127,8 @@
 	                null,
 	                React.createElement(
 	                  'a',
-	                  { href: '#' },
-	                  'About us'
+	                  { href: 'http://media.mnn.com/assets/images/2015/06/octopus.jpg' },
+	                  'An Octopus'
 	                )
 	              ),
 	              React.createElement(
@@ -35100,10 +35142,10 @@
 	              ),
 	              React.createElement(
 	                'li',
-	                null,
+	                { onClick: this.toggleSearch },
 	                React.createElement(
 	                  'a',
-	                  { href: '#' },
+	                  { href: '#/discover' },
 	                  React.createElement('i', { className: 'fa fa-search' })
 	                )
 	              ),
@@ -35155,8 +35197,8 @@
 	                    null,
 	                    React.createElement(
 	                      'a',
-	                      { href: '#' },
-	                      'About us'
+	                      { href: 'http://media.mnn.com/assets/images/2015/06/octopus.jpg' },
+	                      'An Octopus'
 	                    )
 	                  ),
 	                  React.createElement(
@@ -35171,11 +35213,7 @@
 	                  React.createElement(
 	                    'li',
 	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: '#/login' },
-	                      'Log in'
-	                    )
+	                    'Log out'
 	                  ),
 	                  React.createElement(
 	                    'li',
@@ -35245,7 +35283,11 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'homepage' },
-	      React.createElement('img', { style: { marginBottom: 600 }, src: window.placeholder })
+	      React.createElement(
+	        Link,
+	        { to: "/discover" },
+	        React.createElement('img', { style: { marginBottom: 600 }, src: window.placeholder })
+	      )
 	    );
 	  }
 	});
@@ -35541,6 +35583,7 @@
 	
 	module.exports = {
 	  CATEGORIES: {
+	    0: "All Categories",
 	    1: "Art",
 	    2: "Comics",
 	    3: "Crafts",
@@ -36385,11 +36428,13 @@
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var MethodModule = __webpack_require__(282);
+	var PledgeActions = __webpack_require__(292);
+	var CampaignActions = __webpack_require__(269);
 	
 	var RewardsIndexItem = React.createClass({
 	  displayName: 'RewardsIndexItem',
 	  getInitialState: function getInitialState() {
-	    return { expanded: false };
+	    return { expanded: false, amount: this.props.reward.min_amount };
 	  },
 	  parseDeliveryDate: function parseDeliveryDate() {
 	    // return this.props.reward.delivery_date;
@@ -36398,6 +36443,24 @@
 	    var month = MethodModule.months[dateObj.getMonth() + 1];
 	    var year = dateObj.getFullYear();
 	    return month + " " + year.toString();
+	  },
+	  submitPledge: function submitPledge(e) {
+	    console.log("RsubmitPledge!");
+	    console.log(e.currentTarget);
+	    e.preventDefault();
+	    PledgeActions.createPledge({
+	      pledge: {
+	        pledger_id: SessionStore.currentUser().id,
+	        reward_id: this.props.reward.id,
+	        amount: parseInt(this.state.amount)
+	      }
+	    });
+	    CampaignActions.getCampaign(this.props.reward.campaign_id);
+	  },
+	  changeAmount: function changeAmount(e) {
+	    console.log("changeAmount");
+	    this.setState({ amount: e.target.value });
+	    console.log(e.target);
 	  },
 	  clickReward: function clickReward(e) {
 	    console.log("REWARD CLICKED!");
@@ -36413,8 +36476,26 @@
 	    if (this.state.expanded) {
 	      expandedSection = React.createElement(
 	        'div',
-	        null,
-	        'kljahsdfgkjhasdfkjhasdfkjhsdf'
+	        { className: 'reward-input' },
+	        React.createElement(
+	          'form',
+	          { onClick: this.submitPledge, className: 'pledge-form group' },
+	          React.createElement('input', {
+	            type: 'text',
+	            onChange: this.changeAmount,
+	            autoFocus: 'true',
+	            id: 'thick-input',
+	            value: this.state.amount }),
+	          React.createElement(
+	            'div',
+	            { onClick: this.formSubmit, id: 'submit-pledge-button', className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
+	            React.createElement(
+	              'span',
+	              { className: 'reward-form-option button-text' },
+	              'Submit your pledge!'
+	            )
+	          )
+	        )
 	      );
 	    }
 	    return React.createElement(

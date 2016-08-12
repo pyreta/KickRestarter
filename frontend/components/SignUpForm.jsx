@@ -13,7 +13,7 @@ const SignUpForm = React.createClass({
 
   redirectIfLoggedIn() {
     if (SessionStore.isUserLoggedIn()) {
-      hashHistory.push("/");
+      hashHistory.push("/discover");
     }
   },
 

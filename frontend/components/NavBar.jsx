@@ -21,7 +21,7 @@ const NavBar = React.createClass({
   },
 
   getInitialState() {
-    return { currentUser: false };
+    return { currentUser: false, search: false};
   },
 
   logOutClick(e) {
@@ -29,6 +29,20 @@ const NavBar = React.createClass({
     SessionActions.logOut();
     this.setState({ currentUser: false });
     hashHistory.push("/login");
+  },
+
+  toggleSearch(){
+    // jQuery("body").addClass('background-campaign-show');
+    console.log("SEARCH");
+    if (this.state.search === false){
+      jQuery(".search-toggle").removeClass('hidden');
+      // jQuery(".search-toggle").attr("auto-focus", "true");
+      document.getElementById("search").focus();
+      this.setState({search: true});
+    } else {
+      jQuery(".search-toggle").addClass('hidden');
+      this.setState({search: false});
+    }
   },
 
   render() {
@@ -64,11 +78,11 @@ const NavBar = React.createClass({
              <ul className="group">
                <li><a href="#/discover">Discover</a></li>
                <li><a href="#/start">Start a project</a></li>
-               <li><a href="#">About us</a></li>
+               <li><a href="http://media.mnn.com/assets/images/2015/06/octopus.jpg">An Octopus</a></li>
                <li>
                   <Link to="/"><img src={window.logoNavbar}></img></Link>
                 </li>
-                <li><a href="#"><i className="fa fa-search"></i></a></li>
+                <li onClick={this.toggleSearch}><a href="#/discover"><i className="fa fa-search"></i></a></li>
                 <li><a href="#/signup">Sign up</a></li>
                 <li>{ greeting }</li>
                <li>
@@ -76,9 +90,9 @@ const NavBar = React.createClass({
                  <ul className="header-nav-drop-down">
                    <li><a href="#/discover">Discover</a></li>
                    <li><a href="#">Start a project</a></li>
-                   <li><a href="#">About us</a></li>
+                   <li><a href="http://media.mnn.com/assets/images/2015/06/octopus.jpg">An Octopus</a></li>
                    <li><a href="#">Search</a></li>
-                   <li><a href="#/login">Log in</a></li>
+                   <li>Log out</li>
                    <li><a href="#/signup">Sign up</a></li>
                  </ul>
                </li>

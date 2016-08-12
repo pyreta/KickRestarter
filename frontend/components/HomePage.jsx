@@ -16,7 +16,7 @@ const HomePage = React.createClass({
     return (
       <div className="homepage">
 
-      <img style={{marginBottom:600}} src={window.placeholder}></img>
+      <Link to={"/discover"}><img style={{marginBottom:600}} src={window.placeholder}></img></Link>
 
       {
         // <iframe

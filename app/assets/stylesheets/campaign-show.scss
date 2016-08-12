@@ -409,3 +409,48 @@ input[type="radio"]{
 .navbar-input{
   float: right;
 }
+
+
+.campaign-index-container{
+  width: 1086px;
+  margin: auto;
+  margin-top: 53px;
+}
+
+.category-filter{
+  font-size: 48px;
+  font-weight: 200;
+
+  // -webkit-appearance: none;
+  &>div{
+    float:left
+  }
+}
+.filter-dropdown{
+
+}
+
+.category-filter-container{
+  margin-left: 17px;
+  &>select{
+    font-style: italic;
+  }
+}
+.category-container{
+  padding: 44px;
+  padding-top: 2px;
+  background-color: #8871b5;
+  border-bottom: 2px solid black;
+}
+
+.search-container{
+  height: 38px;
+  width: 100%;
+  background-color: #8871b5;
+}
+
+.index-title{
+  color: rgb(6, 35, 64);
+  font-size: 22px;
+  padding-left: 19px;
+}

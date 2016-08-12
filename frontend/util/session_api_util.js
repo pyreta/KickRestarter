@@ -26,7 +26,6 @@ const SessionApiUtil = {
 	},
 
 	signUp(user, success, error) {
-		debugger
 		$.ajax({
 			url: '/api/users',
 			type: 'POST',

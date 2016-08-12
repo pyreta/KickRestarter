@@ -45,10 +45,14 @@ const CampaignsIndex = React.createClass({
   componentDidMount() {
     this.listener = CampaignStore.addListener(this.onChange);
     CampaignActions.fetchCampaigns();
+
+    jQuery("body").addClass('background-campaign-show');
+
   },
 
   componentWillUnmount() {
     this.listener.remove();
+    jQuery("body").removeClass('background-campaign-show');
   },
 
   render() {
@@ -63,30 +67,48 @@ const CampaignsIndex = React.createClass({
 
               <div className="group">
 
-              <div className="group">
-                <div className="input campaign-input navbar-input">
-                  <input
-                  type="text"
-                  className="no-input campaign-input-field"
-                  onChange={this.changeSearch}
-                  value={this.state.searchQuery}
-                  placeholder="search..." />
+
+
+
+              {
+                <div>
+
+                <div className="search-container">
+
+                  <div className="group search-toggle hidden">
+                    <div className="input campaign-input navbar-input">
+                      <input
+                      type="text"
+                      id="search"
+                      className="no-input campaign-input-field"
+                      onChange={this.changeSearch}
+                      value={this.state.searchQuery}
+                      placeholder="search..." />
+                    </div>
+                  </div>
+                </div>
+
+
+                <div className="category-filter category-container group">
+                <div>{"Campaigns sorted by "}</div>
+
+
+                  <div className="category-filter-container">
+                    <select value={this.state.categoryId} className="filter-dropdown category-filter" onChange={this.changeCategory}>
+                      <option value="0" >Everything</option>
+                      { this.categorySelections() }
+                    </select>
+                  </div>
                 </div>
               </div>
+              }
 
-
-
-                <div className="input campaign-input">
-                  <select value={this.state.categoryId} className="category-select campaign-input-field" onChange={this.changeCategory}>
-                  <option value="0" >All Categories</option>
-                  { this.categorySelections() }
-                </select>
-
-                </div>
-
-
+                <div className={"campaign-index-container"}>
+                  <div className={"index-title"}>{"Discover campaigns in " + CampaignFormConstants.CATEGORIES[parseInt(this.state.categoryId)]}</div>
                   { campaignList }
+                </div>
               </div>
+
             );
   }
 

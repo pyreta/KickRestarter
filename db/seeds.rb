@@ -349,6 +349,18 @@ slap_bracelets = Campaign.create(
   image: File.open('app/assets/images/slap-bracelets.jpg')
 )
 
+dinosaurs = Campaign.create(
+  video_url: "https://www.youtube.com/watch?v=YQX7JYQjDOQ",
+  title: "Dinosaurs are cool!",
+  blurb: "It's time we have giant man-eaters roaming the planes once again.  This shouldn't cost much.",
+  description: "Oh yeah Dinosaurs man thats cool huh?. " + loremString,
+  author_id: louie.id,
+  category_id: technology_category.id,
+  goal: 7000,
+  end_date: "2018-01-31 00:00:00.0000",
+  image: File.open('app/assets/images/dinosaurs.jpg')
+)
+
 jncos = Campaign.create(
   video_url: "https://www.youtube.com/watch?v=fBPDk4EtwaM",
   title: "JNCOs are cool, right?",
@@ -436,7 +448,30 @@ less_cheap_reward = Reward.create(
   delivery_date:"2019-09-31 00:00:00.0000",
   min_amount: 10,
 )
+
+dino_reward_1 = Reward.create(
+  title: "Littlefoot",
+  description: "You get a fossil egg thing.  And you get to ride a dinosaur.",  campaign_id: dinosaurs.id,
+  delivery_date:"2019-09-31 00:00:00.0000",
+  min_amount: 10,
+)
+dino_reward_2 = Reward.create(
+  title: "T-Rex package",
+  campaign_id: dinosaurs.id,
+  delivery_date:"2019-09-31 00:00:00.0000",
+  description: "You get 1 dozen dinosaur eggs and a white t-shirt.",
+  min_amount: 500,
+)
+dino_reward_3 = Reward.create(
+  title: "Roar!",
+  campaign_id: dinosaurs.id,
+  delivery_date:"2019-09-31 00:00:00.0000",
+  description: "You get nothing",
+  min_amount: 1000,
+)
+
 cheap_pledge = Pledge.create(reward_id: cheap_reward.id, pledger_id: louis.id, amount:112)
+cheap_pledge = Pledge.create(reward_id: dino_reward_2.id, pledger_id: louis.id, amount:501)
 
 comment1 = Comment.create(author_id: louis.id, campaign_id: slap_bracelets.id, body: "woah this is a cool page dude!", date:DateTime.now)
 comment1 = Comment.create(author_id: louis.id, campaign_id: running_man.id, body: "woah this is a cool page dude!", date:DateTime.now)

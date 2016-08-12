@@ -20,13 +20,17 @@
 .header-nav > ul > li {
   position: relative;
   float: left;
+  border-bottom: 3px solid white;
+  &:hover{
+    border-color: #2BDE73;
+  }
 }
 .header-nav > ul > li > a, .header-nav > ul > li > button {
   display: block;
   padding: 20px 20px;
 }
 .header-nav > ul > li:hover > a, .header-nav > ul > li:hover > button {
-  background: #2BDE73;
+  // background: #2BDE73;
 }
 
 .header-nav-drop-down {
@@ -48,7 +52,7 @@
 .header-nav-drop-down > li:first-child {
   border-top: 0;
 }
-.header-nav-drop-down > li > a {
+.header-nav-drop-down > li > {
   display: block;
   padding: 5px 10px;
   color: #333;
