@@ -1,11 +1,17 @@
 class Api::CampaignsController < ApplicationController
 
   def index
-    @campaigns = Campaign.includes(:author, :city, :state).all
+    if (params[:query] && params[:query] != "")
+      @campaigns = Campaign.includes(:author, :city, :state).where("lower(title || blurb || description) LIKE ?", "%#{params[:query].downcase}%")
+    elsif (params[:category_id] && params[:category_id] != "0")
+      @campaigns = Campaign.includes(:author, :city, :state).where(category_id: params[:category_id])
+    else
+      @campaigns = Campaign.includes(:author, :city, :state).all
+    end
   end
+
   def create
-    debugger
-    params[:campaign][:category_id] = params[:campaign][:categoryId].to_i
+    params[:campaign][:category_id] = params[:campaign][:category_id].to_i
 		@campaign = Campaign.new(campaign_params)
     @campaign.author_id = current_user.id
 		if @campaign.save

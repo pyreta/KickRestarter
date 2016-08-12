@@ -367,3 +367,45 @@ input[type="radio"]{
 .comment-box{
   display: block;
 }
+
+.comment-form{
+  border-bottom: 1px solid #E6E4E2;
+  width: 535px;
+  margin-bottom: 40px;
+  padding-bottom: 14px;
+}
+
+.comment-list-item{
+  background-color: #e8f5f1;
+  margin-bottom: 40px;
+  padding: 10px;
+  width: 500px;
+  border: 1px solid #E6E4E2;
+  // border-radius: 6px;
+}
+
+.comment-photo{
+  height:50px;
+  width: 50px;
+  border-radius: 50%;
+  // background-color: red;
+  border: 1px solid black;
+}
+
+.comment-user-info-container{
+  text-align: center;
+  // background-color: blue;
+  float: left;
+  padding-bottom: 30px;
+  padding-right: 30px;
+  margin-right: 20px;
+}
+
+.comment{
+  font-size: 18px;
+  padding-bottom: 5px;
+}
+
+.navbar-input{
+  float: right;
+}

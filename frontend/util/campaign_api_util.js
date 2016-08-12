@@ -8,6 +8,30 @@ module.exports = {
     });
   },
 
+  fetchSearch (query, callback) {
+    $.ajax({
+      url: "api/campaigns",
+      data: {query: query},
+      dataType: "JSON",
+      success (campaigns) {
+        callback(campaigns);
+      }
+    });
+  },
+
+  fetchCategory (id, callback) {
+    console.log("API FETCH Category");
+    console.log(id);
+    $.ajax({
+      url: "api/campaigns",
+      data: {category_id: id},
+      dataType: "JSON",
+      success (campaigns) {
+        callback(campaigns);
+      }
+    });
+  },
+
   getCampaign (id, callback) {
     $.ajax({
       url: `api/campaigns/${id}`,

@@ -2,6 +2,7 @@ const PledgeApiUtil = require('../util/pledge_api_util.js');
 const AppDispatcher = require('../dispatcher/dispatcher.js');
 const PledgeConstants = require('../constants/pledge_constants.js');
 const ErrorActions = require('./error_actions');
+const CampaignActions = require('./campaign_actions');
 
 module.exports = {
   // fetchPledges () {
@@ -13,7 +14,7 @@ module.exports = {
   // },
 
   createPledge (data) {
-    PledgeApiUtil.createPledge(data, this.receivePledge, ErrorActions.setErrors);
+    PledgeApiUtil.createPledge(data, CampaignActions.receiveCampaign, ErrorActions.setErrors);
   },
 
   // editPledge (data, id) {

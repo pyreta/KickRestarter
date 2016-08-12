@@ -68,13 +68,12 @@ const CampaignForm = React.createClass({
     formData.append("campaign[goal]", this.state.goal);
     formData.append("campaign[description]", this.state.description);
     formData.append("campaign[end_date]", this.state.end_date);
-    formData.append("campaign[end_date]", this.state.end_date);
     formData.append("campaign[rewards]", JSON.stringify(this.state.rewards));
 
 
     e.preventDefault();
     CampaignActions.createCampaign(formData);
-    // hashHistory.push("/discover");
+    hashHistory.push("/discover");
   },
 
   changeTitle(e) {
@@ -122,8 +121,10 @@ const CampaignForm = React.createClass({
   },
 
   changeCategory(e){
-    console.log("changeCategory");
-    this.setState({categoryId: e.target.value});
+    this.setState({categoryId: parseInt(e.target.value)});
+    console.log(e.target.value);
+    console.log(this.state);
+    console.log("that was state");
   },
 
   changeFile(e){
@@ -238,8 +239,8 @@ const CampaignForm = React.createClass({
             dateState={this.state.date}
             changeDate={this.changeDate}
 
-            changeCategory={this.state.changeCategory}
-            categoryState={this.category}
+            changeCategory={this.changeCategory}
+            categoryState={this.categoryId}
 
             changeFile={this.changeFile}
 

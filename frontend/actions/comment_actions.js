@@ -14,7 +14,7 @@ module.exports = {
   // },
 
   createComment (data) {
-    CommentApiUtil.createComment(data, this.receiveCampaign, ErrorActions.setErrors);
+    CommentApiUtil.createComment(data, CampaignActions.receiveCampaign, ErrorActions.setErrors);
   },
 
   // editComment (data, id) {

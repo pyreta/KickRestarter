@@ -11,7 +11,7 @@ KickRestarter is a web application inspired by Kickstarter that will focus on fu
 
 - [x] Hosting on Heroku
 - [x] New account creation, login, and guest/demo login
-- [ ] A production README, replacing this README (**NB**: check out the [sample production README](docs/production_readme.md) -- you'll write this later)
+- [x] A production README, replacing this README ([sample production README](docs/production_readme.md))
 - [x] Campaigns
   - [x] Elegant layout displaying campaign goals and details
   - [x] Displays current state of campaign funding
@@ -19,15 +19,11 @@ KickRestarter is a web application inspired by Kickstarter that will focus on fu
 - [x] Backing campaigns & rewards
   - [x] Ability to contribute to or withdraw from a campaign
   - [x] Funds updated instantaneously
-- [ ] Search
-  - [ ] Real time search displaying top results
-  - [ ] Load more option to show all results
-- [ ] Discover
-  - [ ] Infinite Scrolling
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Animated category menu
-  - [ ] Filtering option headers
-  - [ ] Campaign recommendations
+- [x] Search
+  - [x] Real time search displaying top results
+- [x] Discover
+  - [x] Adequate seed data to demonstrate the site's features
+  - [x] Filtering option headers
 
 
 ## Design Docs
@@ -86,9 +82,9 @@ the API.
 - build out API, Flux loop, and components for:
   - [x] adding campaigns requires a category
   - [x] moving campaigns to a different category
-  - [ ] viewing campaigns by category
-- [ ] Use CSS to style new components
-- [ ] Seed categories with campaigns
+  - [x] viewing campaigns by category
+- [x] Use CSS to style new components
+- [x] Seed categories with campaigns
 
 Phase 3 adds organization to the Campaigns. Campaigns belong to a Category,
 which has its own `Index` view.
@@ -108,12 +104,12 @@ which has its own `Index` view.
 
 **Objective:** Users can create profiles and make comments.
 
-- [ ] create `comment` model and join table
+- [x] create `comment` model
 - build out API, Flux loop, and components for:
-  - [ ] fetching comments for user and/or campaign
-  - [ ] adding comments to campaign and user profile
-- [ ] Style new elements
-- [ ] Seed comments and add comments to the seeded campaigns and users
+  - [x] fetching comments for user and/or campaign
+  - [x] adding comments to campaign
+- [x] Style new elements
+- [x] Seed comments and add comments to the seeded campaigns and users
 
 
 ### Phase 6: - Pagination / infinite scroll for Notes Index (1 day, W2 F 6pm)

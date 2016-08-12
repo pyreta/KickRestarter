@@ -5,7 +5,7 @@ class Api::PledgesController < ApplicationController
   def create
     @pledge = Pledge.new(pledge_params)
     if @pledge.save
-      render json: @pledge
+      render json: @pledge.campaign
     else
       render json: @pledge.errors.full_messages, status: 422
     end

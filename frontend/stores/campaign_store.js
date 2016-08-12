@@ -5,6 +5,7 @@ const AppDispatcher = require('../dispatcher/dispatcher.js');
 const CampaignStore = new Store(AppDispatcher);
 
 let _campaigns = {};
+let _filtered = {};
 
 const resetCampaigns = function (campaigns) {
   _campaigns = {};
@@ -19,6 +20,16 @@ const setCampaign = function (campaign) {
 
 const removeCampaign = function (campaign) {
   delete _campaigns[campaign.id];
+};
+
+CampaignStore.findByCategory = function(categoryId){
+  let result = [];
+  Object.keys(_campaigns).forEach(function(el){
+    if (_campaigns[el].categoryId === categoryId){
+      result.push(_campaigns[el]);
+    }
+  });
+  return result;
 };
 
 CampaignStore.all = function () {

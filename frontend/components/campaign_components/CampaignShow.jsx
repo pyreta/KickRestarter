@@ -179,7 +179,7 @@ const CampaignShow = React.createClass({
                 <div className="about-p">{this.state.campaign.description}</div>
               </div>
 
-              <div className="all-comments">
+              <div className="all-comments hidden">
                 { commentsIndex }
               </div>
 

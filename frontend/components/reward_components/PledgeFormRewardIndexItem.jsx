@@ -21,7 +21,6 @@ const PledgeFormRewardsIndexItem = React.createClass({
   },
 
   parseDeliveryDate(){
-    // return this.props.reward.delivery_date;
     let mil = Date.parse(this.props.reward.delivery_date.toString());
     let dateObj = new Date(mil);
     let month = MethodModule.months[dateObj.getMonth()+1];
@@ -50,7 +49,7 @@ const PledgeFormRewardsIndexItem = React.createClass({
           }
       }
     );
-
+    hashHistory.push(`/campaigns/${this.props.reward.campaign_id}`);
   },
 
   changeAmount(e) {

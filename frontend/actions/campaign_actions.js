@@ -8,6 +8,14 @@ module.exports = {
     CampaignApiUtil.fetchCampaigns(this.receiveAll);
   },
 
+  fetchSearch (query) {
+    CampaignApiUtil.fetchSearch(query, this.receiveAll);
+  },
+
+  fetchCategory (id) {
+    CampaignApiUtil.fetchCategory(id, this.receiveAll);
+  },
+
   getCampaign (id) {
     CampaignApiUtil.getCampaign(id, this.receiveCampaign, ErrorActions.setErrors);
   },

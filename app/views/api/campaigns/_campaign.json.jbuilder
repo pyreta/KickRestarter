@@ -26,4 +26,3 @@ json.comments campaign.comments do |comment|
   json.author comment.author
   json.extract! comment, :body, :author_id, :campaign_id, :date
 end
-# json.comments campaign.comments

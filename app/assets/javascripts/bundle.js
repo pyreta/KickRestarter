@@ -103,10 +103,11 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
-	    React.createElement(IndexRoute, { component: HomePage }),
+	    React.createElement(IndexRoute, { component: CampaignsIndex }),
 	    React.createElement(Route, { path: '/login', component: LoginForm }),
 	    React.createElement(Route, { path: '/signup', component: SignUpForm }),
 	    React.createElement(Route, { path: '/discover', component: CampaignsIndex }),
+	    React.createElement(Route, { path: '/homepage', component: HomePage }),
 	    React.createElement(Route, { path: '/start', component: CampaignForm, onEnter: _ensureLoggedIn }),
 	    React.createElement(Route, { path: '/campaigns/:campaignId', component: CampaignShow }),
 	    React.createElement(Route, { path: '/campaigns/:campaignId/edit', component: CampaignEdit, onEnter: _ensureLoggedIn }),
@@ -34540,14 +34541,33 @@
 	var SessionStore = __webpack_require__(248);
 	var CampaignStore = __webpack_require__(272);
 	var ErrorStore = __webpack_require__(266);
+	var CampaignFormConstants = __webpack_require__(279);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var CampaignIndexItem = __webpack_require__(273);
 	
 	var CampaignsIndex = React.createClass({
 	  displayName: 'CampaignsIndex',
+	  categorySelections: function categorySelections() {
+	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
+	      return React.createElement(
+	        'option',
+	        { key: i, value: category_id },
+	        CampaignFormConstants.CATEGORIES[category_id]
+	      );
+	    });
+	    return categorySelections;
+	  },
 	  getInitialState: function getInitialState() {
-	    return { campaigns: CampaignStore.all() };
+	    return { campaigns: CampaignStore.all(), searchQuery: "", categoryId: "0" };
+	  },
+	  changeSearch: function changeSearch(e) {
+	    this.setState({ searchQuery: e.target.value });
+	    CampaignActions.fetchSearch(e.target.value);
+	  },
+	  changeCategory: function changeCategory(e) {
+	    this.setState({ categoryId: e.target.value });
+	    CampaignActions.fetchCategory(e.target.value);
 	  },
 	  onChange: function onChange() {
 	    this.setState({ campaigns: CampaignStore.all() });
@@ -34572,6 +34592,34 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'group' },
+	      React.createElement(
+	        'div',
+	        { className: 'group' },
+	        React.createElement(
+	          'div',
+	          { className: 'input campaign-input navbar-input' },
+	          React.createElement('input', {
+	            type: 'text',
+	            className: 'no-input campaign-input-field',
+	            onChange: this.changeSearch,
+	            value: this.state.searchQuery,
+	            placeholder: 'search...' })
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'input campaign-input' },
+	        React.createElement(
+	          'select',
+	          { value: this.state.categoryId, className: 'category-select campaign-input-field', onChange: this.changeCategory },
+	          React.createElement(
+	            'option',
+	            { value: '0' },
+	            'All Categories'
+	          ),
+	          this.categorySelections()
+	        )
+	      ),
 	      campaignList
 	    );
 	  }
@@ -34593,6 +34641,12 @@
 	module.exports = {
 	  fetchCampaigns: function fetchCampaigns() {
 	    CampaignApiUtil.fetchCampaigns(this.receiveAll);
+	  },
+	  fetchSearch: function fetchSearch(query) {
+	    CampaignApiUtil.fetchSearch(query, this.receiveAll);
+	  },
+	  fetchCategory: function fetchCategory(id) {
+	    CampaignApiUtil.fetchCategory(id, this.receiveAll);
 	  },
 	  getCampaign: function getCampaign(id) {
 	    CampaignApiUtil.getCampaign(id, this.receiveCampaign, ErrorActions.setErrors);
@@ -34636,6 +34690,28 @@
 	  fetchCampaigns: function fetchCampaigns(callback) {
 	    $.ajax({
 	      url: "api/campaigns",
+	      success: function success(campaigns) {
+	        callback(campaigns);
+	      }
+	    });
+	  },
+	  fetchSearch: function fetchSearch(query, callback) {
+	    $.ajax({
+	      url: "api/campaigns",
+	      data: { query: query },
+	      dataType: "JSON",
+	      success: function success(campaigns) {
+	        callback(campaigns);
+	      }
+	    });
+	  },
+	  fetchCategory: function fetchCategory(id, callback) {
+	    console.log("API FETCH Category");
+	    console.log(id);
+	    $.ajax({
+	      url: "api/campaigns",
+	      data: { category_id: id },
+	      dataType: "JSON",
 	      success: function success(campaigns) {
 	        callback(campaigns);
 	      }
@@ -34711,6 +34787,7 @@
 	var CampaignStore = new Store(AppDispatcher);
 	
 	var _campaigns = {};
+	var _filtered = {};
 	
 	var resetCampaigns = function resetCampaigns(campaigns) {
 	  _campaigns = {};
@@ -34725,6 +34802,16 @@
 	
 	var removeCampaign = function removeCampaign(campaign) {
 	  delete _campaigns[campaign.id];
+	};
+	
+	CampaignStore.findByCategory = function (categoryId) {
+	  var result = [];
+	  Object.keys(_campaigns).forEach(function (el) {
+	    if (_campaigns[el].categoryId === categoryId) {
+	      result.push(_campaigns[el]);
+	    }
+	  });
+	  return result;
 	};
 	
 	CampaignStore.all = function () {
@@ -35231,12 +35318,11 @@
 	    formData.append("campaign[goal]", this.state.goal);
 	    formData.append("campaign[description]", this.state.description);
 	    formData.append("campaign[end_date]", this.state.end_date);
-	    formData.append("campaign[end_date]", this.state.end_date);
 	    formData.append("campaign[rewards]", JSON.stringify(this.state.rewards));
 	
 	    e.preventDefault();
 	    CampaignActions.createCampaign(formData);
-	    // hashHistory.push("/discover");
+	    hashHistory.push("/discover");
 	  },
 	  changeTitle: function changeTitle(e) {
 	    console.log("changeTitle");
@@ -35275,8 +35361,10 @@
 	    console.log(this.state);
 	  },
 	  changeCategory: function changeCategory(e) {
-	    console.log("changeCategory");
-	    this.setState({ categoryId: e.target.value });
+	    this.setState({ categoryId: parseInt(e.target.value) });
+	    console.log(e.target.value);
+	    console.log(this.state);
+	    console.log("that was state");
 	  },
 	  changeFile: function changeFile(e) {
 	    console.log("changeFile");
@@ -35430,8 +35518,8 @@
 	          dateState: this.state.date,
 	          changeDate: this.changeDate,
 	
-	          changeCategory: this.state.changeCategory,
-	          categoryState: this.category,
+	          changeCategory: this.changeCategory,
+	          categoryState: this.categoryId,
 	
 	          changeFile: this.changeFile
 	
@@ -36093,7 +36181,7 @@
 	              ),
 	              React.createElement(
 	                'div',
-	                { className: 'all-comments' },
+	                { className: 'all-comments hidden' },
 	                commentsIndex
 	              )
 	            )
@@ -36513,7 +36601,6 @@
 	    };
 	  },
 	  parseDeliveryDate: function parseDeliveryDate() {
-	    // return this.props.reward.delivery_date;
 	    var mil = Date.parse(this.props.reward.delivery_date.toString());
 	    var dateObj = new Date(mil);
 	    var month = MethodModule.months[dateObj.getMonth() + 1];
@@ -36536,6 +36623,7 @@
 	        amount: parseInt(this.state.amount)
 	      }
 	    });
+	    hashHistory.push('/campaigns/' + this.props.reward.campaign_id);
 	  },
 	  changeAmount: function changeAmount(e) {
 	    console.log("changeAmount");
@@ -36851,6 +36939,7 @@
 	var AppDispatcher = __webpack_require__(240);
 	var PledgeConstants = __webpack_require__(294);
 	var ErrorActions = __webpack_require__(246);
+	var CampaignActions = __webpack_require__(269);
 	
 	module.exports = {
 	  // fetchPledges () {
@@ -36862,7 +36951,7 @@
 	  // },
 	
 	  createPledge: function createPledge(data) {
-	    PledgeApiUtil.createPledge(data, this.receivePledge, ErrorActions.setErrors);
+	    PledgeApiUtil.createPledge(data, CampaignActions.receiveCampaign, ErrorActions.setErrors);
 	  },
 	
 	
@@ -37136,87 +37225,6 @@
 	
 	var RewardForm = React.createClass({
 	  displayName: 'RewardForm',
-	
-	
-	  // redirectIfNotCurrentUser() {
-	  //   if (SessionStore.currentUser().id !== this.props.params.campaignId) {
-	  //     hashHistory.push("/");
-	  //   }
-	  // },
-	  //
-	  // onChange() {
-	  //   this.setState({campaign: CampaignStore.find(this.props.params.id)});
-	  // },
-	  //
-	  // componentDidMount() {
-	  //   this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	  //   this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
-	  //   this.campaignListener = CampaignStore.addListener(this.onChange);
-	  //   CampaignStore.fetchCampaign(this.props.params.campaignId);
-	  // },
-	  //
-	  // componentWillUnmount() {
-	  //   this.errorListener.remove();
-	  //   this.sessionListener.remove();
-	  //   this.campaignListener.remove();
-	  //
-	  // },
-	
-	  // getInitialState() {
-	  //   this.campaign = {};
-	  //   return {
-	  //     title: "",
-	  //     blurb: "",
-	  //     description: "",
-	  //     min_amount: "",
-	  //     delivery_date: "",
-	  //     campaign: {}
-	  //   };
-	  // },
-	
-	  // formSubmit(e) {
-	  //   console.log(e.target.class);
-	  //   e.preventDefault();
-	  //   let data = {reward:
-	  //     {
-	  //       campaign_id: this.props.params.campaignId,
-	  //       description: this.state.description,
-	  //       min_amount: this.state.min_amount,
-	  //       delivery_date: this.state.delivery_date,
-	  //       title: this.state.title
-	  //     }
-	  //   };
-	  //   RewardActions.createReward(data);
-	  //   hashHistory.push(`/campaigns/${this.props.params.campaignId}`);
-	  // },
-	  //
-	  //
-	  // changeTitle(e) {
-	  //   this.setState({title: e.target.value});
-	  // },
-	  //
-	  // changeDescription(e){
-	  //   this.setState({description: e.target.value});
-	  // },
-	  // // FIX DATE FORMATTING STUFF!!!
-	  // changeDate(e){
-	  //   this.setState({delivery_date: e.target.value});
-	  //   console.log(this.state);
-	  // },
-	  //
-	  // changeAmount(e){
-	  //   this.setState({min_amount: e.target.value});
-	  // },
-	  //
-	  // errors() {
-	  //   const errors = ErrorStore.errors("reward-form");
-	  //   const messages = errors.map( (errorMsg, i) => {
-	  //     return <li key={ i }>{ errorMsg }</li>;
-	  //   });
-	  //
-	  //   return <ul>{ messages }</ul>;
-	  // },
-	
 	  categorySelections: function categorySelections() {
 	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
 	      return React.createElement(
@@ -38007,6 +38015,7 @@
 	var SessionActions = __webpack_require__(239);
 	var CommentActions = __webpack_require__(304);
 	var SessionStore = __webpack_require__(248);
+	var CampaignStore = __webpack_require__(272);
 	// const CommentStore = require('../../stores/comment_store');
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
@@ -38017,13 +38026,20 @@
 	  displayName: 'CommentsIndex',
 	  submitComment: function submitComment() {
 	    var data = Object.assign({}, this.state, { author_id: SessionStore.currentUser().id, campaign_id: this.props.campaign.id });
+	    this.setState({ body: "" });
 	    CommentActions.createComment(data);
 	  },
 	  getInitialState: function getInitialState() {
 	    return { body: "" };
 	  },
+	  onChange: function onChange() {
+	    this.setState({ body: "" });
+	  },
 	  changeComment: function changeComment(e) {
 	    this.setState({ body: e.target.value });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.campaignListener = CampaignStore.addListener(this.onChange);
 	  },
 	  render: function render() {
 	    var commentList = this.props.campaign.comments.map(function (el, i) {
@@ -38036,24 +38052,28 @@
 	      { className: 'group' },
 	      React.createElement(
 	        'div',
-	        { className: 'comment-box' },
+	        { className: 'comment-form' },
 	        React.createElement(
 	          'div',
-	          { className: 'input campaign-input' },
-	          React.createElement('textarea', {
-	            maxLength: '135',
-	            className: 'no-input required textarea campaign-input-field',
-	            onChange: this.changeComment,
-	            value: this.state.body,
-	            placeholder: 'Start trolling...' })
-	        ),
-	        React.createElement(
-	          'div',
-	          { onClick: this.submitComment, id: 'submit-comment-button', className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
+	          { className: 'comment-box group' },
 	          React.createElement(
-	            'span',
-	            { className: 'reward-form-option button-text' },
-	            'Comment'
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('textarea', {
+	              maxLength: '135',
+	              className: 'no-input required textarea campaign-input-field',
+	              onChange: this.changeComment,
+	              value: this.state.body,
+	              placeholder: 'Start trolling...' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { onClick: this.submitComment, id: 'submit-comment-button', className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
+	            React.createElement(
+	              'span',
+	              { className: 'reward-form-option button-text' },
+	              'Comment'
+	            )
 	          )
 	        )
 	      ),
@@ -38085,19 +38105,42 @@
 	
 	var CommentsIndexItem = React.createClass({
 	  displayName: 'CommentsIndexItem',
+	  parseDate: function parseDate() {
+	    var mil = Date.parse(this.props.comment.date.toString());
+	    var dateObj = new Date(mil);
+	    var month = MethodModule.months[dateObj.getMonth() + 1];
+	    var year = dateObj.getFullYear();
+	    return month + " " + year.toString();
+	  },
 	  render: function render() {
 	
-	    console.log(JSON.stringify(this.props.comment.author.image_url));
+	    console.log(JSON.stringify(this.props.comment.author));
 	    return React.createElement(
 	      'div',
-	      { className: 'comment-list-item' },
-	      this.props.comment.body,
-	      this.props.comment.date,
-	      this.props.comment.author.username,
+	      { className: 'comment-list-item group' },
 	      React.createElement(
 	        'div',
-	        { className: 'profile-icon-container' },
-	        React.createElement('img', { src: this.props.comment.author.image_url })
+	        { className: 'comment-user-info-container' },
+	        React.createElement(
+	          'div',
+	          { className: 'comment-photo hidden' },
+	          React.createElement('img', { src: this.props.comment.author.image_url })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'bold-16' },
+	          this.props.comment.author.username
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reg-12' },
+	          this.parseDate()
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'comment' },
+	        this.props.comment.body
 	      )
 	    );
 	  }
@@ -38127,7 +38170,7 @@
 	  // },
 	
 	  createComment: function createComment(data) {
-	    CommentApiUtil.createComment(data, this.receiveCampaign, ErrorActions.setErrors);
+	    CommentApiUtil.createComment(data, CampaignActions.receiveCampaign, ErrorActions.setErrors);
 	  }
 	};
 

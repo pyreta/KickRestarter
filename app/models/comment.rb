@@ -15,4 +15,8 @@ class Comment < ActiveRecord::Base
     primary_key: :id
   )
 
+  def parsed_date 
+
+  end
+
 end
