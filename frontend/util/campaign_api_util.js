@@ -20,8 +20,6 @@ module.exports = {
   },
 
   fetchCategory (id, callback) {
-    console.log("API FETCH Category");
-    console.log(id);
     $.ajax({
       url: "api/campaigns",
       data: {category_id: id},

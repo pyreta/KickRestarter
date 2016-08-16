@@ -20,7 +20,6 @@ const CommentsIndexItem = React.createClass({
 
   render() {
 
-    console.log(JSON.stringify(this.props.comment.author));
     return (
       <div  className="comment-list-item group">
 

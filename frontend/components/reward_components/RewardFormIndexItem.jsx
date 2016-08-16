@@ -13,30 +13,6 @@ const RewardsIndex = require("./RewardsIndex");
 
 const RewardFormIndexItem = React.createClass({
 
-  // redirectIfNotCurrentUser() {
-  //   if (SessionStore.currentUser().id !== this.props.params.campaignId) {
-  //     hashHistory.push("/");
-  //   }
-  // },
-
-  // onChange() {
-  //   this.setState({campaign: CampaignStore.find(this.props.params.id)});
-  // },
-  //
-  // componentDidMount() {
-  //   this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-  //   this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
-  //   this.campaignListener = CampaignStore.addListener(this.onChange);
-  //   CampaignStore.fetchCampaign(this.props.params.campaignId);
-  // },
-  //
-  // componentWillUnmount() {
-  //   this.errorListener.remove();
-  //   this.sessionListener.remove();
-  //   this.campaignListener.remove();
-  //
-  // },
-  //
   getInitialState() {
     this.campaign = {};
     return {
@@ -47,22 +23,6 @@ const RewardFormIndexItem = React.createClass({
       id: this.props.rewardState.id
     };
   },
-  //
-  // formSubmit(e) {
-  //   console.log(e.target.class);
-  //   e.preventDefault();
-  //   let data = {reward:
-  //     {
-  //       // campaign_id: this.props.params.campaignId,
-  //       description: this.state.description,
-  //       min_amount: this.state.min_amount,
-  //       delivery_date: this.state.delivery_date,
-  //       title: this.state.title
-  //     }
-  //   };
-  //   RewardActions.createReward(data);
-  //   hashHistory.push(`/campaigns/${this.props.params.campaignId}`);
-  // },
 
 
   changeTitle(e) {
@@ -77,7 +37,7 @@ const RewardFormIndexItem = React.createClass({
 
     RewardFormActions.editReward(data);
   },
-  // // FIX DATE FORMATTING STUFF!!!
+
   changeDate(e){
     this.setState({delivery_date: e.target.value});
     let data = Object.assign({}, this.state, { delivery_date: e.target.value });
@@ -182,65 +142,6 @@ const RewardFormIndexItem = React.createClass({
 
 
     );
-
-    // return (
-    //   <div id="reward-form" className="input-form">
-    //     { this.errors() }
-    //     <div className="form-padding">
-    //
-    //       <div className="form-label">Create a new Reward</div>
-    //         <form onSubmit={this.formSubmit}>
-    //
-    //           <div className="input">
-    //             <input
-    //               type="text"
-    //               className="no-input"
-    //               onChange={this.changeTitle}
-    //               placeholder="Title"
-    //               value={this.state.title} />
-    //           </div>
-    //
-    //           <div className="input">
-    //             <input
-    //               type="text"
-    //               className="no-input"
-    //               onChange={this.changeAmount}
-    //               placeholder="Amount"
-    //               value={this.state.min_amount} />
-    //           </div>
-    //
-    //           <div className="input">
-    //             <input
-    //               type="date"
-    //               className="no-input"
-    //               onChange={this.changeDate}
-    //               placeholder="Delivery Date"
-    //               value={this.state.delivery_date} />
-    //           </div>
-    //
-    //           <div className="input">
-    //             <textarea
-    //               className="no-input"
-    //               onChange={this.changeDescription}
-    //               placeholder="Description"
-    //               value={this.state.password} />
-    //           </div>
-    //
-    //
-    //           <div className="submit">
-    //             <input
-    //               type="submit"
-    //               className="button"
-    //               id="login-button"
-    //               value="Create Reward"/>
-    //           </div>
-    //         </form>
-    //
-    //       </div>
-    //       <RewardsIndex campaign={this.state.campaign}/>
-    //
-    //   </div>
-    // );
   }
 });
 

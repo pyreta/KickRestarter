@@ -28,8 +28,6 @@ const RewardsIndexItem = React.createClass({
   },
 
   submitPledge(e) {
-    console.log("RsubmitPledge!");
-    console.log(e.currentTarget);
     e.preventDefault();
     PledgeActions.createPledge(
       {
@@ -45,14 +43,10 @@ const RewardsIndexItem = React.createClass({
   },
 
   changeAmount(e) {
-    console.log("changeAmount");
     this.setState({amount: e.target.value});
-    console.log(e.target);
   },
 
   clickReward(e) {
-    console.log("REWARD CLICKED!");
-    console.log(e.currentTarget);
     if (this.state.expanded) {
       this.setState({expanded: false});
     } else {

@@ -77,8 +77,6 @@ const CampaignForm = React.createClass({
   },
 
   changeTitle(e) {
-    console.log("changeTitle");
-
     this.setState({title: e.target.value});
   },
 
@@ -92,43 +90,31 @@ const CampaignForm = React.createClass({
   },
 
   changeURL(e) {
-    console.log("changeURL");
-
-
     this.setState({video_url: e.target.value});
     this.parseUrl(e.target.value);
   },
 
   changeBlurb(e){
-    console.log("changeBlurb");
     this.setState({blurb: e.target.value});
   },
 
   changeDescription(e){
-    console.log("changeDescription");
     this.setState({description: e.target.value});
   },
 
   changeGoal(e){
-    console.log("changeGoal");
     this.setState({goal: e.target.value});
   },
 
   changeDate(e){
-    console.log("changeDate");
     this.setState({end_date: e.target.value});
-    console.log(this.state);
   },
 
   changeCategory(e){
     this.setState({categoryId: parseInt(e.target.value)});
-    console.log(e.target.value);
-    console.log(this.state);
-    console.log("that was state");
   },
 
   changeFile(e){
-    console.log("changeFile");
     let file = e.currentTarget.files[0];
     let fileReader = new FileReader();
     fileReader.onloadend = function () {
@@ -250,136 +236,6 @@ const CampaignForm = React.createClass({
 
         </div>
 
-
-
-
-
-        {
-
-          // <div className="campaign-form input-form">
-          // { this.errors() }
-          // <div className="form-padding">
-          //
-          // <div className="form-label">Start a Campaign</div>
-          // <form onSubmit={this.formSubmit}>
-          //
-          // <div className="input campaign-input">
-          // <input
-          // type="text"
-          // className="no-input"
-          // onChange={this.changeTitle}
-          // placeholder="Project Title"
-          // value={this.state.title} />
-          // </div>
-          //
-          // { previewImage }
-          //
-          // <div className="input campaign-input">
-          // <input
-          // type="file"
-          // className="no-input"
-          // onChange={this.changeFile}
-          // placeholder="Upload an image" />
-          // </div>
-          //
-          // <div className="input">
-          // <textarea
-          // maxLength="135"
-          // className="no-input required textarea"
-          // onChange={this.changeBlurb}
-          // placeholder="Short Blurb"
-          // value={this.state.blurb} />
-          // </div>
-          //
-          // <div className="input">
-          // <select value={this.state.categoryId} className="category-select" onChange={this.changeCategory}>
-          // <option value="0" disabled>Choose category</option>
-          // { this.categorySelections() }
-          // </select>
-          // </div>
-          //
-          //
-          //
-          // <div className="input campaign-input">
-          // <input
-          // type="text"
-          // className="no-input"
-          // onChange={this.changeGoal}
-          // placeholder="Goal"
-          // value={this.state.goal} />
-          // </div>
-          //
-          //
-          // <div className="input campaign-input">
-          // <input
-          // type="date"
-          // className="no-input"
-          // onChange={this.changeDate}
-          // placeholder="Upload an image" />
-          // </div>
-          //
-          // <div className="input description">
-          // <textarea
-          // className="no-input required textarea"
-          // onChange={this.changeDescription}
-          // placeholder="Description"
-          // value={this.state.description} />
-          // </div>
-          //
-          // <div className="input campaign-input">
-          // <input
-          // type="text"
-          // className="no-input"
-          // onChange={this.changeURL}
-          // placeholder="Video URL"
-          // value={this.state.url} />
-          // </div>
-          //
-          // { previewVideo }
-          //
-          // <a href="#" className="forgot">Forgot your password?</a>
-          //
-          // <div className="submit">
-          // <input
-          // type="submit"
-          // className="button"
-          // id="login-button"
-          // value="Create Campaign!"/>
-          // </div>
-          //
-          //
-          // <div className="checkbox">
-          // <input
-          // type="checkbox"
-          // id="remember"
-          // value="Remember me"/>
-          // <label id="remember-label" htmlFor="remember">Remember me</label>
-          // </div>
-          // <div className="line"></div>
-          //
-          // <div className="submit" onClick={this.guestClick}>
-          // <input
-          // type="submit"
-          // id = "facebook-button"
-          // value="Create demo campaign"/>
-          // </div>
-          //
-          // <p className="never-post">
-          // We are totally going to post on Facebook
-          // <br/>
-          // without your permission.
-          // </p>
-          //
-          //
-          //
-          // </form>
-          // </div>
-          // <div className="login-footer">
-          // New to Kickrestarter?
-          // <a className="signup-link" href="#/signup">Sign Up</a>
-          // </div>
-          // </div>
-        }
       </div>
     );
   }

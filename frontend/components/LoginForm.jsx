@@ -28,7 +28,6 @@ const LoginForm = React.createClass({
   },
 
   formSubmit(e) {
-    console.log(e.target.class);
     e.preventDefault();
     SessionActions.logIn(this.state);
   },

@@ -15,17 +15,7 @@ const HomePage = React.createClass({
 
     return (
       <div className="homepage">
-
-      <Link to={"/discover"}><img style={{marginBottom:600}} src={window.placeholder}></img></Link>
-
-      {
-        // <iframe
-        // width="560"
-        // height="315"
-        // src="https://www.youtube.com/embed/Tw0B1DbPIic"
-        // frameBorder="0" allowFullScreen></iframe>
-      }
-
+        <Link to={"/discover"}><img src={window.placeholder}></img></Link>
       </div>
     );
   }

@@ -30,14 +30,10 @@ const PledgeFormRewardsIndexItem = React.createClass({
   },
 
   clickReward(e) {
-    console.log("REWARD CLICKED!");
-    console.log(e.currentTarget);
     this.props.selectedCallback(this.props.id);
   },
 
   submitPledge(e) {
-    console.log("RsubmitPledge!");
-    console.log(e.currentTarget);
     e.preventDefault();
     PledgeActions.createPledge(
       {
@@ -53,9 +49,7 @@ const PledgeFormRewardsIndexItem = React.createClass({
   },
 
   changeAmount(e) {
-    console.log("changeAmount");
     this.setState({amount: e.target.value});
-    console.log(e.target);
   },
 
   formattedComponent() {

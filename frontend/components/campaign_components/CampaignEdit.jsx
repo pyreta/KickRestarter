@@ -81,56 +81,44 @@ const CampaignForm = React.createClass({
     formData.append("campaign[description]", this.state.description);
     formData.append("campaign[days]", this.state.days);
 
-    console.log(e.target.class);
     e.preventDefault();
     CampaignActions.editCampaign(formData, this.id);
     hashHistory.push(`/campaigns/${this.id}`);
   },
 
   changeTitle(e) {
-    console.log("changeTitle");
 
     this.setState({title: e.target.value});
   },
 
   changeURL(e) {
-    console.log("changeURL");
-
     this.setState({url: e.target.value});
   },
 
   changeBlurb(e){
-    console.log("changeBlurb");
     this.setState({blurb: e.target.value});
   },
 
   changeDescription(e){
-    console.log("changeDescription");
     this.setState({description: e.target.value});
   },
 
   changeGoal(e){
-    console.log("changeGoal");
     this.setState({goal: e.target.value});
   },
 
   changeDays(e){
-    console.log("changeDays");
     this.setState({days: e.target.value});
   },
 
   changeDate(e){
-    console.log("changeDate");
-    console.log(e.target.value);
   },
 
   changeCategory(e){
-    console.log("changeCategory");
     this.setState({categoryId: e.target.value});
   },
 
   changeFile(e){
-    console.log("changeFile");
     let file = e.currentTarget.files[0];
     let fileReader = new FileReader();
     fileReader.onloadend = function () {

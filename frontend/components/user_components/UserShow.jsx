@@ -1,11 +1,4 @@
 
-
-
-
-
-
-
-
 const React = require('react');
 const Link = require('react-router').Link;
 const SessionActions = require('../../actions/session_actions');
@@ -26,7 +19,6 @@ const UserShow = React.createClass({
   componentDidMount() {
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.sessionListener = SessionStore.addListener(this.onChange);
-    console.log(SessionStore.isUserLoggedIn());
   },
 
   componentWillUnmount() {

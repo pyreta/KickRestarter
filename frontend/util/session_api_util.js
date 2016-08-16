@@ -7,7 +7,6 @@ const SessionApiUtil = {
 			success,
 			error(xhr) {
 				const errors = xhr.responseJSON;
-        console.log("LOGIN ERRROROR");
 				errorCallback("login", errors);
 			}
 		});
@@ -44,8 +43,7 @@ const SessionApiUtil = {
 			url: '/api/session',
 			method: 'GET',
 			success(resp) {
-        console.log("Successss");
-        console.log(resp);
+
       },
 			error(xhr) {
 				const errors = xhr.responseJSON;

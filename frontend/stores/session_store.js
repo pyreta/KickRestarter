@@ -7,13 +7,9 @@ let _currentUser = {};
 
 let _logIn = function (user) {
   _currentUser = user;
-  console.log(SessionStore.isUserLoggedIn());
-  console.log("You signed in son..");
-  console.log(_currentUser);
 };
 
 let _logOut = function () {
-  console.log("You logged out ma..");
   _currentUser = {};
 };
 

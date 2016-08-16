@@ -40,7 +40,6 @@ const App = React.createClass({
 });
 
 let _ensureLoggedIn = function (nextState, replace) {
-  console.log("ENSURE LOGGED IN FUNC IN ENTRY FILE TO BE FILLED OUT");
   if (!SessionStore.isUserLoggedIn()) {
     replace('/login');
   }

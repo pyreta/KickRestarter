@@ -39,7 +39,6 @@ const RewardFormIndex = React.createClass({
         <RewardFormIndexItem key={idx} rewardState={reward}/>
       );
     });
-    console.log(rewardList);
     return rewardList;
   },
 

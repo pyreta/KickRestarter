@@ -20,8 +20,6 @@ const PledgeFormRewardsIndex = React.createClass({
 
   changeSelected(selected_id){
     this.setState({selectedItem: selected_id});
-    console.log(this.state);
-    console.log("SELECTED REWARD CALLBACK CLICKED");
   },
 
 

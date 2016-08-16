@@ -57,21 +57,21 @@
 	var SignUpForm = __webpack_require__(267);
 	var CampaignsIndex = __webpack_require__(268);
 	// const RewardsIndex = require("./components/reward_components/RewardsIndex");
-	var CampaignShow = __webpack_require__(281);
-	var CampaignForm = __webpack_require__(277);
-	var CampaignEdit = __webpack_require__(280);
-	var UserShow = __webpack_require__(283);
+	var CampaignShow = __webpack_require__(276);
+	var CampaignForm = __webpack_require__(286);
+	var CampaignEdit = __webpack_require__(296);
+	var UserShow = __webpack_require__(297);
 	// const UserEdit = require("./components/user_components/UserEdit");
-	var NavBar = __webpack_require__(274);
-	var Footer = __webpack_require__(275);
-	var HomePage = __webpack_require__(276);
+	var NavBar = __webpack_require__(298);
+	var Footer = __webpack_require__(299);
+	var HomePage = __webpack_require__(300);
 	
 	var SessionActions = __webpack_require__(239);
 	var SessionStore = __webpack_require__(248);
 	
-	var PledgeForm = __webpack_require__(286);
-	var RewardForm = __webpack_require__(295);
-	var ProfileForm = __webpack_require__(306);
+	var PledgeForm = __webpack_require__(301);
+	var RewardForm = __webpack_require__(289);
+	var ProfileForm = __webpack_require__(304);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -92,7 +92,6 @@
 	});
 	
 	var _ensureLoggedIn = function _ensureLoggedIn(nextState, replace) {
-	  console.log("ENSURE LOGGED IN FUNC IN ENTRY FILE TO BE FILLED OUT");
 	  if (!SessionStore.isUserLoggedIn()) {
 	    replace('/login');
 	  }
@@ -27156,7 +27155,6 @@
 	    return { username: "", password: "" };
 	  },
 	  formSubmit: function formSubmit(e) {
-	    console.log(e.target.class);
 	    e.preventDefault();
 	    SessionActions.logIn(this.state);
 	  },
@@ -27298,11 +27296,9 @@
 	  signUp: function signUp(formData) {
 	    var newData = void 0;
 	    if (formData.email !== formData.email2) {
-	      console.log("Confirm Email!!!");
 	      ErrorActions.setErrors("signup", ["Confirm Email"]);
 	      return;
 	    } else if (formData.password !== formData.password2) {
-	      console.log("Confirm Password!!!");
 	      ErrorActions.setErrors("signup", ["Confirm Password"]);
 	      return;
 	    } else {
@@ -27684,7 +27680,6 @@
 				success: success,
 				error: function error(xhr) {
 					var errors = xhr.responseJSON;
-					console.log("LOGIN ERRROROR");
 					errorCallback("login", errors);
 				}
 			});
@@ -27717,10 +27712,7 @@
 			$.ajax({
 				url: '/api/session',
 				method: 'GET',
-				success: function success(resp) {
-					console.log("Successss");
-					console.log(resp);
-				},
+				success: function success(resp) {},
 				error: function error(xhr) {
 					var errors = xhr.responseJSON;
 					_error2("fetchUsers", errors);
@@ -27783,13 +27775,9 @@
 	
 	var _logIn = function _logIn(user) {
 	  _currentUser = user;
-	  console.log(SessionStore.isUserLoggedIn());
-	  console.log("You signed in son..");
-	  console.log(_currentUser);
 	};
 	
 	var _logOut = function _logOut() {
-	  console.log("You logged out ma..");
 	  _currentUser = {};
 	};
 	
@@ -34542,10 +34530,10 @@
 	var SessionStore = __webpack_require__(248);
 	var CampaignStore = __webpack_require__(272);
 	var ErrorStore = __webpack_require__(266);
-	var CampaignFormConstants = __webpack_require__(279);
+	var CampaignFormConstants = __webpack_require__(273);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var CampaignIndexItem = __webpack_require__(273);
+	var CampaignIndexItem = __webpack_require__(274);
 	
 	var CampaignsIndex = React.createClass({
 	  displayName: 'CampaignsIndex',
@@ -34737,8 +34725,6 @@
 	    });
 	  },
 	  fetchCategory: function fetchCategory(id, callback) {
-	    console.log("API FETCH Category");
-	    console.log(id);
 	    $.ajax({
 	      url: "api/campaigns",
 	      data: { category_id: id },
@@ -34876,6 +34862,34 @@
 
 /***/ },
 /* 273 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  CATEGORIES: {
+	    0: "All Categories",
+	    1: "Art",
+	    2: "Comics",
+	    3: "Crafts",
+	    4: "Dance",
+	    5: "Design",
+	    6: "Fashion",
+	    7: "Film & Video",
+	    8: "Food",
+	    9: "Games",
+	    10: "Journalism",
+	    11: "Music",
+	    12: "Photography",
+	    13: "Publishing",
+	    14: "Technology",
+	    15: "Theater"
+	  }
+	
+	};
+
+/***/ },
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34887,7 +34901,7 @@
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var MethodModule = __webpack_require__(282);
+	var MethodModule = __webpack_require__(275);
 	
 	var CampaignsIndexItem = React.createClass({
 	  displayName: 'CampaignsIndexItem',
@@ -35021,238 +35035,64 @@
 	module.exports = CampaignsIndexItem;
 
 /***/ },
-/* 274 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var SessionStore = __webpack_require__(248);
-	var ErrorStore = __webpack_require__(266);
-	
-	var NavBar = React.createClass({
-	  displayName: 'NavBar',
-	  sessionChanged: function sessionChanged() {
-	    var name = void 0;
-	    if (SessionStore.isUserLoggedIn()) {
-	      this.setState({ currentUser: SessionStore.currentUser().username });
-	    } else {
-	      this.setState({ currentUser: false });
-	    }
-	  },
-	  componentDidMount: function componentDidMount() {
-	    SessionStore.addListener(this.sessionChanged);
-	  },
-	  getInitialState: function getInitialState() {
-	    return { currentUser: false, search: false };
-	  },
-	  logOutClick: function logOutClick(e) {
-	    e.preventDefault();
-	    SessionActions.logOut();
-	    this.setState({ currentUser: false });
-	    hashHistory.push("/login");
-	  },
-	  toggleSearch: function toggleSearch() {
-	    // jQuery("body").addClass('background-campaign-show');
-	    console.log("SEARCH");
-	    if (this.state.search === false) {
-	      jQuery(".search-toggle").removeClass('hidden');
-	      // jQuery(".search-toggle").attr("auto-focus", "true");
-	      document.getElementById("search").focus();
-	      this.setState({ search: true });
-	    } else {
-	      jQuery(".search-toggle").addClass('hidden');
-	      this.setState({ search: false });
-	    }
-	  },
-	  render: function render() {
-	
-	    var greeting = void 0;
-	    var profileIcon = React.createElement('div', null);
-	    if (SessionStore.isUserLoggedIn()) {
-	      greeting = React.createElement(
-	        'button',
-	        { onClick: this.logOutClick },
-	        'Log Out'
-	      );
-	
-	      profileIcon = React.createElement(
-	        'div',
-	        { className: 'profile-icon-container' },
-	        React.createElement('img', { src: SessionStore.currentUser().image_url })
-	      );
-	    } else {
-	      greeting = React.createElement(
-	        'a',
-	        { href: '#/login' },
-	        'Log In'
-	      );
-	    }
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'nav-bar' },
-	      React.createElement(
-	        'header',
-	        { className: 'header' },
-	        React.createElement(
-	          'div',
-	          { className: 'header-wrap group' },
-	          React.createElement(
-	            'nav',
-	            { className: 'header-nav' },
-	            React.createElement(
-	              'ul',
-	              { className: 'group' },
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: '#/discover' },
-	                  'Discover'
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: '#/start' },
-	                  'Start a project'
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: 'http://media.mnn.com/assets/images/2015/06/octopus.jpg' },
-	                  'An Octopus'
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  Link,
-	                  { to: '/' },
-	                  React.createElement('img', { src: window.logoNavbar })
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                { onClick: this.toggleSearch },
-	                React.createElement(
-	                  'a',
-	                  { href: '#/discover' },
-	                  React.createElement('i', { className: 'fa fa-search' })
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: '#/signup' },
-	                  'Sign up'
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                greeting
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: '#', id: 'icon' },
-	                  profileIcon
-	                ),
-	                React.createElement(
-	                  'ul',
-	                  { className: 'header-nav-drop-down' },
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: '#/discover' },
-	                      'Discover'
-	                    )
-	                  ),
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: '#/start' },
-	                      'Start a project'
-	                    )
-	                  ),
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: 'http://media.mnn.com/assets/images/2015/06/octopus.jpg' },
-	                      'An Octopus'
-	                    )
-	                  ),
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: '#/profile' },
-	                      'Profile'
-	                    )
-	                  ),
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    'Log out'
-	                  )
-	                )
-	              )
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = NavBar;
-
-/***/ },
 /* 275 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var SessionStore = __webpack_require__(248);
-	var ErrorStore = __webpack_require__(266);
+	Number.prototype.formatMoney = function (c, d, t) {
+	  var n = this;
+	  c = isNaN(c = Math.abs(c)) ? 2 : c;
+	  d = d === undefined ? "." : d;
+	  t = t === undefined ? "," : t;
+	  var s = n < 0 ? "-" : "";
+	  var i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "";
+	  var j = (j = i.length) > 3 ? j % 3 : 0;
+	  return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+	};
 	
-	var Footer = React.createClass({
-	  displayName: 'Footer',
-	  getInitialState: function getInitialState() {
-	    return null;
+	var months = {
+	  1: "Jan",
+	  2: "Feb",
+	  3: "Mar",
+	  4: "Apr",
+	  5: "May",
+	  6: "Jun",
+	  7: "Jul",
+	  8: "Aug",
+	  9: "Sept",
+	  10: "Oct",
+	  11: "Nov",
+	  12: "Dec"
+	};
+	
+	var loremString = "\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla felis vitae lacinia facilisis. Curabitur rutrum posuere justo. Integer ut tortor orci. Ut rhoncus congue odio a cursus. Maecenas sapien nulla, fermentum eget eros tincidunt, condimentum tempor lacus. Vivamus pulvinar sagittis mattis. Duis diam tellus, lacinia in blandit convallis, molestie vitae enim. Nam mauris justo, mattis sit amet massa id, ultricies porta lacus. Proin velit turpis, suscipit laoreet tempor in, dignissim eget ex. Vivamus et mi quis velit faucibus porttitor.\n\nDonec semper nisl finibus ornare gravida. Phasellus porttitor sollicitudin dui vel posuere. In at ex ac ligula egestas congue. Vestibulum leo nulla, aliquet vitae suscipit eu, gravida eu ex. Nulla elementum fringilla tincidunt. Nulla facilisi. Cras porta luctus nisi at vehicula. Proin ut nisl neque. Nullam non facilisis enim. Vestibulum fermentum in lectus in rutrum.\n\nVivamus eu sapien pretium, interdum sapien vitae, tincidunt nibh. In ac turpis ac nulla laoreet iaculis a a justo. Aenean vehicula diam quis finibus gravida. Donec in metus pulvinar libero vulputate finibus. Vestibulum sit amet arcu in velit ullamcorper rhoncus consequat id tellus. Suspendisse vitae nunc efficitur, dictum sem sit amet, vestibulum risus. Cras hendrerit odio tellus, a efficitur orci bibendum at. Nullam aliquam dignissim nisl non fringilla. Sed iaculis, magna eu sagittis cursus, enim tortor dictum nulla, nec semper quam justo id ex. Aenean sed elit luctus lacus ullamcorper faucibus. Nam a imperdiet odio. Phasellus tincidunt sapien eget vestibulum malesuada. Nam in iaculis est, vel mollis ipsum.\n\nDonec vehicula venenatis pretium. Vestibulum ornare bibendum felis, in vehicula dolor luctus nec. Pellentesque ut viverra nunc, eu placerat diam. Nunc est magna, commodo id ante non, porttitor ultrices tortor. Duis scelerisque, justo quis pellentesque faucibus, mi felis vehicula sapien, non porttitor justo elit id metus. Aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut placerat lorem. Praesent finibus neque eget eros dignissim tincidunt. Nullam fringilla vitae mauris vel finibus.\n\nProin eu consequat lectus, nec interdum mi. Duis elementum augue nec dui rhoncus, et venenatis metus scelerisque. Donec quis urna nec mi sollicitudin congue. Ut rhoncus sed nisl vel blandit. Fusce aliquam magna at nunc bibendum, quis lobortis velit posuere. Curabitur accumsan et nunc commodo volutpat. Nullam velit dui, aliquam vitae placerat eget, ultricies eget neque.\n";
+	
+	var loremString2 = "\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla felis vitae lacinia facilisis. Curabitur rutrum posuere justo. Integer ut tortor orci. Ut rhoncus congue odio a cursus. Maecenas sapien nulla, fermentum eget eros tincidunt, condimentum tempor lacus. Vivamus pulvinar sagittis mattis. Duis diam tellus, lacinia in blandit convallis, molestie vitae enim. Nam mauris justo, mattis sit amet massa id, ultricies porta lacus. Proin velit turpis, suscipit laoreet tempor in, dignissim eget ex. Vivamus et mi quis velit faucibus porttitor.\n\nDonec semper nisl finibus ornare gravida. Phasellus porttitor sollicitudin dui vel posuere. In at ex ac ligula egestas congue. Vestibulum leo nulla, aliquet vitae suscipit eu, gravida eu ex. Nulla elementum fringilla tincidunt. Nulla facilisi. Cras porta luctus nisi at vehicula. Proin ut nisl neque. Nullam non facilisis enim. Vestibulum fermentum in lectus in rutrum.\n\nVivamus eu sapien pretium, interdum sapien vitae, tincidunt nibh. In ac turpis ac nulla laoreet iaculis a a justo. Aenean vehicula diam quis finibus gravida. Donec in metus pulvinar libero vulputate finibus. Vestibulum sit amet arcu in velit ullamcorper rhoncus consequat id tellus. Suspendisse vitae nunc efficitur, dictum sem sit amet, vestibulum risus. Cras hendrerit odio tellus, a efficitur orci bibendum at. Nullam aliquam dignissim nisl non fringilla. Sed iaculis, magna eu sagittis cursus, enim tortor dictum nulla, nec semper quam justo id ex. Aenean sed elit luctus lacus ullamcorper faucibus. Nam a imperdiet odio. Phasellus tincidunt sapien eget vestibulum malesuada. Nam in iaculis est, vel mollis ipsum.\n\nDonec vehicula venenatis pretium. Vestibulum ornare bibendum felis, in vehicula dolor luctus nec. Pellentesque ut viverra nunc, eu placerat diam. Nunc est magna, commodo id ante non, porttitor ultrices tortor. Duis scelerisque, justo quis pellentesque faucibus, mi felis vehicula sapien, non porttitor justo elit id metus. Aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut placerat lorem. Praesent finibus neque eget eros dignissim tincidunt. Nullam fringilla vitae mauris vel finibus.\n\nProin eu consequat lectus, nec interdum mi. Duis elementum augue nec dui rhoncus, et venenatis metus scelerisque. Donec quis urna nec mi sollicitudin congue. Ut rhoncus sed nisl vel blandit. Fusce aliquam magna at nunc bibendum, quis lobortis velit posuere. Curabitur accumsan et nunc commodo volutpat. Nullam velit dui, aliquam vitae placerat eget, ultricies eget neque.\n\nPellentesque vestibulum quis odio ut vulputate. Nullam accumsan metus sed accumsan congue. Ut euismod porttitor tortor, eget malesuada purus rutrum scelerisque. Suspendisse congue nisl a feugiat fermentum. In venenatis, dui ac scelerisque suscipit, tortor nulla feugiat enim, non aliquet diam mi eu nisl. Suspendisse venenatis tellus quam, ac placerat orci euismod in. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur facilisis pulvinar mi, eget scelerisque dolor eleifend ut. Sed consequat justo vitae mauris ornare commodo. Nunc consequat, tellus sit amet dictum faucibus, erat enim elementum nisl, et volutpat dui felis at nibh.\n\nNullam eget metus et nulla semper efficitur vitae eu mauris. Nulla aliquet eu libero sit amet dignissim. Pellentesque in venenatis sapien. Ut enim elit, blandit quis vestibulum vitae, euismod quis nisi. Mauris ac iaculis lectus. Praesent aliquet varius ex, at blandit risus viverra nec. Nullam tempor, neque efficitur scelerisque euismod, nisl eros semper nibh, quis egestas dolor lectus ac arcu. Duis lacus risus, pretium in pulvinar vel, vestibulum imperdiet eros. Nam mattis, libero in porta blandit, libero magna finibus nibh, in consectetur libero nibh eu metus. Sed porttitor id metus a vehicula. Etiam aliquet dui vel elit ullamcorper porttitor. Mauris vitae luctus sapien.\n\nPellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam massa tortor, dignissim sodales sapien placerat, convallis interdum purus. Nullam interdum id tellus non commodo. Suspendisse ut massa molestie, pretium tellus ut, placerat odio. Quisque varius efficitur enim id tristique. Integer efficitur dictum placerat. Donec eget tellus eu lacus eleifend tempor ut quis dui. Proin ligula nibh, euismod quis efficitur nec, hendrerit id sapien. Maecenas at sapien efficitur, imperdiet ex nec, iaculis leo.\n\nCurabitur a vehicula ipsum, nec faucibus ex. Quisque leo ligula, sagittis ac molestie a, fringilla accumsan augue. Vivamus ut arcu rhoncus dui interdum porta vitae nec nunc. Duis iaculis lacus eget purus laoreet, a mattis nisl consectetur. Quisque ut tempor turpis. Nulla iaculis, turpis sit amet mollis vehicula, arcu sem pretium velit, id ornare ipsum elit quis libero. Nunc sed varius dolor, sit amet finibus ante. Integer quis maximus dolor, nec pharetra diam. Vivamus sed mauris lacus. Phasellus dapibus libero elit, et aliquet purus sollicitudin sit amet. Curabitur cursus nulla eu luctus hendrerit. Sed tincidunt nec lacus non sodales. Phasellus tortor justo, egestas ac faucibus at, venenatis a massa.\n\nSed iaculis mollis justo maximus interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat dolor neque, at molestie est mollis nec. Quisque ornare nulla id justo consectetur pharetra. Praesent fringilla a tellus ac dapibus. Vivamus suscipit dolor odio, ut tempor nisl hendrerit ut. Vestibulum vitae condimentum metus, eget condimentum massa. Praesent sodales est vitae volutpat dignissim. Aliquam congue, augue id sodales mollis, tellus felis ullamcorper sem, eu aliquet augue purus ut tellus. Duis tellus libero, tincidunt semper feugiat vel, fringilla eget sapien. Sed ac urna ac leo molestie sollicitudin. Phasellus ac eleifend tortor, et dictum urna. Praesent laoreet malesuada metus, id ullamcorper ligula mollis sit amet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur ut lorem ultricies, egestas leo a, accumsan odio. Pellentesque ac diam at nulla tempus tempor vitae et quam.\n\nDuis eleifend, sem in dictum imperdiet, orci tortor lacinia nulla, a tincidunt dolor turpis finibus mi. Phasellus ullamcorper euismod dolor nec iaculis. Aliquam vehicula porttitor augue, id mollis mi cursus eget. Aliquam sem purus, sodales non semper vel, feugiat consectetur mauris. Praesent tortor augue, condimentum nec mattis eu, dictum sed metus. Curabitur nec sapien vitae nisi maximus volutpat sit amet at lorem. Donec sed eros et massa luctus efficitur. Donec eget dignissim diam. Nulla condimentum velit a ipsum finibus, a interdum arcu mattis. Sed ipsum orci, pulvinar in ipsum ac, accumsan pretium dolor. Morbi maximus tortor vel erat aliquet, eget tincidunt dui rutrum.\n\nDonec aliquam ligula sed eros sollicitudin, id semper libero faucibus. Sed dolor dui, lacinia nec faucibus eu, consequat ut neque. Aliquam dolor metus, consequat id urna scelerisque, aliquam convallis felis. Pellentesque lacinia condimentum ipsum nec lobortis. Nam libero sem, imperdiet sit amet purus quis, condimentum mattis tellus. Nulla pretium viverra libero, at ornare lectus tincidunt sed. Praesent bibendum iaculis molestie. Praesent nulla nisi, ultrices at nisi sit amet, vestibulum sagittis risus. Ut sed posuere odio, vitae interdum ligula. Curabitur nec diam eget elit hendrerit accumsan. Quisque molestie a est rhoncus dapibus. Aliquam rhoncus pharetra velit in dictum. Proin commodo lectus in justo vestibulum, a molestie sem bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.\n\nPraesent vulputate pulvinar erat, quis vulputate ante fringilla pharetra. Proin vel pulvinar ex, eget consectetur odio. Etiam commodo arcu vitae accumsan fringilla. Sed sed dignissim massa. Fusce lacus ante, vulputate vel bibendum quis, scelerisque sed risus. Donec eu augue odio. Sed viverra velit dui, a volutpat tortor fermentum ut. Sed lacinia enim velit, in pellentesque turpis mattis sed. Phasellus justo urna, ultrices et imperdiet laoreet, varius id tortor. In non aliquet purus, eu sodales ipsum. Vestibulum sit amet quam quis ipsum gravida auctor eget ac lorem. Nullam ac vestibulum risus. Nam libero nulla, pellentesque vel dolor eu, pretium dapibus lorem. Nam viverra dictum sollicitudin.\n\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent in venenatis tellus. Cras elementum felis in turpis sagittis elementum. Suspendisse sit amet purus massa. Mauris sollicitudin varius convallis. Donec finibus felis sed laoreet gravida. Cras tellus dolor, dignissim sed aliquam vitae, viverra sed ligula. Proin viverra risus in neque laoreet, sed vestibulum dolor tempor. Phasellus at maximus justo. Vestibulum rhoncus, magna vitae elementum finibus, quam dolor tincidunt ante, non vehicula orci eros quis turpis. Sed faucibus condimentum sollicitudin. Quisque placerat odio at purus ullamcorper, ut tempor ipsum ullamcorper. Aliquam quis suscipit tellus. Quisque mi magna, feugiat a odio non, interdum iaculis lorem. Integer dapibus felis nibh, in sodales mauris malesuada nec. Integer id vehicula felis.\n\nSed rhoncus magna at sollicitudin rutrum. Praesent nulla dui, vulputate quis aliquam vel, luctus non ante. Donec sem magna, mollis in interdum non, tincidunt quis ligula. Nullam sem erat, placerat ut consequat sed, mattis id arcu. Nulla congue urna at arcu pellentesque, a cursus magna semper. Cras in vestibulum lectus, in aliquet sem. Aenean in leo at nibh finibus sollicitudin a id ligula.\n\nVestibulum vel velit vitae tellus pellentesque auctor eu nec sapien. Nullam finibus purus in orci bibendum hendrerit. Etiam rutrum orci maximus facilisis blandit. Integer sit amet orci luctus, luctus erat nec, pellentesque risus. Morbi nec turpis sagittis, tristique odio in, vulputate elit. Duis nec convallis dui. Praesent vitae dictum mi. Fusce lobortis hendrerit turpis, nec laoreet urna tincidunt eu. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus scelerisque risus nulla, eu gravida lectus scelerisque et. Vivamus sit amet euismod arcu. Ut justo ante, blandit nec semper vitae, consequat sed justo. Nunc ac viverra leo. Aenean est diam, placerat sed fringilla ac, accumsan sit amet nunc.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque aliquet, diam mollis euismod pellentesque, nulla odio rhoncus ex, at scelerisque dui est at lacus. Duis elementum magna vel blandit eleifend. Sed tristique, erat nec lacinia scelerisque, purus augue mattis metus, vel dapibus nisl ligula nec metus. Proin nibh turpis, condimentum id nibh et, aliquet sodales nisi. Sed in porta eros. Cras vulputate mi orci, eu venenatis ipsum dapibus sit amet. Nam quis lacinia enim, ut convallis enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tincidunt consectetur ipsum sed bibendum. Sed et condimentum massa, a suscipit dolor. Nunc nunc nisl, pellentesque eget blandit eget, convallis ut mauris.\n\nAenean ultrices ligula sit amet ipsum suscipit pretium. Sed malesuada nec metus nec vestibulum. Cras blandit molestie leo, eu gravida eros luctus in. Proin vehicula ornare aliquam. Aliquam non eros vehicula, pretium purus a, vehicula leo. Donec tincidunt sagittis sem. Duis dui arcu, fermentum at felis non, vulputate pharetra augue.\n\nInteger non turpis leo. Donec sodales egestas ligula in egestas. Sed interdum nunc non mollis suscipit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam porttitor fermentum metus. Sed magna justo, auctor vel accumsan nec, congue ut ante. Nullam egestas felis sit amet libero aliquam aliquam. Ut finibus ipsum quis purus aliquet feugiat. Curabitur nisi turpis, malesuada id malesuada non, condimentum id mauris. Nulla vulputate, erat id viverra ornare, est enim dignissim est, eget molestie nunc lectus id justo. Cras porta justo orci, at feugiat risus ornare id. Mauris ut interdum arcu. Nam in dolor convallis, gravida tortor sed, fringilla est. Vestibulum at mi vestibulum, lobortis nulla et, aliquam neque.\n\nDonec vehicula nisl luctus metus pharetra, at bibendum diam pulvinar. Nam felis arcu, suscipit quis condimentum consectetur, posuere tempus sapien. Nam et magna ut dui egestas posuere. Etiam quis urna sollicitudin, placerat nunc sed, lacinia libero. Pellentesque accumsan ipsum in felis finibus, sit amet consequat orci euismod. Integer facilisis felis erat, non venenatis tortor finibus in. Sed dictum sed ex sit amet rutrum. Nunc id arcu non lorem euismod facilisis. Mauris sed felis ultricies, aliquet lectus ut, fringilla diam.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas gravida eros lacinia dolor bibendum porttitor. Vestibulum sodales, eros at lobortis aliquam, metus ipsum varius justo, et posuere nunc metus sit amet dolor. Curabitur vel auctor mi. In quis mi ac orci vulputate blandit nec vitae mi. Aenean vehicula tellus mattis, eleifend augue vel, tincidunt dolor. Nullam malesuada, lorem vestibulum vestibulum auctor, nunc sapien posuere quam, et malesuada velit dui pellentesque arcu. Fusce ante elit, varius et viverra sit amet, condimentum mollis eros. Sed ut dui nec nisl tempus malesuada eget ac mi. Etiam sit amet ipsum in mauris consectetur ullamcorper quis nec diam. Proin sodales pellentesque est, vel viverra odio sodales vitae. Nulla eu orci porttitor, vehicula quam sit amet, auctor elit. Phasellus eu orci sit amet dui maximus mattis sed venenatis nunc. Cras molestie rhoncus blandit. Etiam cursus diam urna, quis dignissim urna cursus scelerisque.\n\nEtiam urna lectus, commodo vitae tincidunt eu, dapibus eu justo. Duis feugiat tristique elit. Nulla velit sem, luctus in lacus a, tempus viverra purus. Integer id eros ex. Nam gravida magna ac nisl efficitur pellentesque. Vivamus eleifend ut lectus at rhoncus. Suspendisse at rhoncus metus. Vivamus elementum sapien erat, non rhoncus leo bibendum ut. Maecenas suscipit diam a euismod facilisis. Integer sit amet urna ipsum. Etiam elementum at purus id fermentum. Nunc sodales ex lorem, vitae auctor eros commodo ut. Curabitur pharetra sed libero non malesuada. Nunc facilisis sapien at eros volutpat faucibus.\n\nSed scelerisque faucibus eleifend. Suspendisse iaculis tempus nulla non sagittis. Aenean massa sem, tempus eget convallis vel, varius id elit. Ut finibus tellus eu leo congue mollis. Integer iaculis sem nibh, id mollis nisi dictum nec. Morbi vestibulum elit fermentum posuere egestas. Pellentesque nisi tellus, congue sed lorem ut, imperdiet ornare magna. In hac habitasse platea dictumst.\n\nNullam sodales odio ac odio fringilla, in tempor nibh gravida. Vestibulum eros lectus, fringilla sit amet facilisis ac, accumsan ut libero. Proin ligula nunc, interdum a ante sit amet, sagittis laoreet odio. Mauris nec tortor velit. Quisque eu ante est. In eget consectetur ipsum. Nullam ut bibendum justo. Donec nec dapibus nisi. Duis laoreet magna in erat eleifend, quis tempus risus aliquet. Donec feugiat mi suscipit lacus egestas bibendum. Nunc id dolor bibendum, viverra ipsum et, malesuada sem. Etiam quis libero ut dui accumsan maximus in vel nibh. Maecenas nisl nisi, suscipit ac metus at, dapibus malesuada erat. Nam aliquam mi id elementum ultricies.\n\nPellentesque interdum convallis feugiat. Integer ultricies eget magna quis pharetra. Aenean enim urna, molestie ut lacus vitae, sollicitudin vulputate arcu. Mauris ut ligula vel lacus dapibus mattis. Nunc massa tortor, volutpat in nisi non, mattis ullamcorper nulla. Duis commodo nulla non elementum vestibulum. Ut id venenatis lectus. Sed ultricies dictum ornare. Vivamus lacinia, urna eu vulputate blandit, sem dui semper sapien, id gravida nulla massa ac nisl. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris eu mattis leo. Aliquam erat volutpat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent sit amet vehicula nisi, eget hendrerit dolor.\n\nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec gravida finibus aliquam. Sed id ante rutrum, tempor enim non, tempus elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla ornare fringilla est, at consequat massa consequat quis. Aliquam nec arcu ac erat pharetra fringilla sed ac tortor. Nunc pellentesque quis dui in bibendum. Praesent in risus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse aliquam convallis enim, ac pulvinar purus tristique ut. Integer id efficitur ligula. Pellentesque tincidunt mauris ac magna vestibulum, non malesuada felis facilisis. Praesent volutpat, velit ut laoreet dictum, risus ante imperdiet lorem, semper congue elit erat ac ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id sodales ex. Etiam faucibus pellentesque arcu vitae cursus.\n\nPraesent convallis neque risus, a interdum nunc laoreet varius. Aenean congue libero urna, sit amet accumsan dolor ultrices sed. Integer ut neque mauris. Sed faucibus, ante sit amet pretium ultrices, velit diam imperdiet justo, eu aliquam est urna ut velit. Donec sed posuere arcu, eu bibendum velit. Duis et augue gravida, varius metus sit amet, porta est. Pellentesque condimentum imperdiet ligula, eu malesuada libero tempus eget. Nullam consequat felis sed risus fermentum luctus. Nunc commodo vitae enim eget laoreet. Phasellus convallis, neque quis volutpat ullamcorper, felis urna sodales purus, ut viverra enim eros vitae arcu. Nulla consequat varius est vitae ultrices. Donec ornare iaculis varius. Integer id tempus augue, vitae ornare quam.\n\nVestibulum interdum elementum tellus sit amet porttitor. Phasellus ultrices, orci vel gravida facilisis, elit purus vehicula massa, a commodo elit dui vitae erat. Phasellus ac malesuada justo. Etiam euismod enim nulla, quis congue nunc consectetur dictum. Praesent vitae iaculis purus. Nam ultricies, augue ut finibus molestie, est elit maximus lacus, nec pulvinar nisl arcu fringilla sem. Fusce luctus, velit quis egestas volutpat, leo tortor blandit augue, nec congue velit felis quis quam. Donec vitae nulla sed tortor tincidunt interdum ut vitae mi. Mauris id posuere justo.\n\nDonec convallis sem augue, nec lobortis tellus vulputate sed. Integer laoreet elit ut mattis pulvinar. Nunc bibendum neque eu urna condimentum laoreet. Praesent a ligula quis odio aliquam euismod vel vel lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis eros metus, fermentum at erat a, fermentum mollis ante. Quisque elementum felis ac dui dignissim, eu accumsan massa convallis. Fusce gravida felis justo, non dictum nibh rutrum non. Pellentesque sodales accumsan ligula, a sollicitudin tortor aliquam eu. Vestibulum faucibus mi nunc, sed iaculis turpis mollis id. Proin sagittis, tellus et gravida blandit, nibh nulla aliquam arcu, porta suscipit turpis risus ac nulla. Donec ut tincidunt ipsum. Duis ut nisi hendrerit nibh accumsan gravida vitae non enim. Nulla tincidunt magna hendrerit orci egestas, eget viverra tellus luctus.\n\nSed ultrices tortor a turpis dignissim porttitor. Vivamus ornare euismod libero vel accumsan. Fusce ut urna mauris. Nulla facilisi. Donec vel venenatis est, ut semper sem. Praesent pharetra in ante nec ornare. Nam feugiat volutpat faucibus. Curabitur tellus tellus, porta nec nibh a, iaculis efficitur mauris. Donec auctor efficitur urna, et pulvinar metus varius nec. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\nstrings!";
+	
+	module.exports = {
+	  parseDollarAmount: function parseDollarAmount(amount) {
+	    // if (!amount) return "$0";
+	    // return "$" + amount.formatMoney(0);
+	    return "$" + this.parseAmount(amount);
 	  },
-	  render: function render() {
+	  parseAmount: function parseAmount(amount) {
+	    if (!amount) return "0";
 	
-	    return React.createElement('div', { className: 'footer' });
-	  }
-	});
+	    return amount.formatMoney(0);
+	  },
+	  backers: function backers(amount) {
+	    return amount === 1 ? "backer" : "backers";
+	  },
+	  parseBackers: function parseBackers(amount) {
+	    return this.parseAmount(amount) + " " + this.backers(amount);
+	  },
 	
-	module.exports = Footer;
+	
+	  lorem: loremString,
+	  months: months
+	
+	};
 
 /***/ },
 /* 276 */
@@ -35265,687 +35105,13 @@
 	var SessionActions = __webpack_require__(239);
 	var SessionStore = __webpack_require__(248);
 	var ErrorStore = __webpack_require__(266);
-	
-	var HomePage = React.createClass({
-	  displayName: 'HomePage',
-	  getInitialState: function getInitialState() {
-	    return null;
-	  },
-	  render: function render() {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'homepage' },
-	      React.createElement(
-	        Link,
-	        { to: "/discover" },
-	        React.createElement('img', { style: { marginBottom: 600 }, src: window.placeholder })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = HomePage;
-
-/***/ },
-/* 277 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var CampaignActions = __webpack_require__(269);
-	var SessionStore = __webpack_require__(248);
-	var ErrorStore = __webpack_require__(266);
-	var RewardStore = __webpack_require__(300);
-	var ReactRouter = __webpack_require__(175);
-	var hashHistory = ReactRouter.hashHistory;
-	var CampaignFormConstants = __webpack_require__(279);
-	var RewardForm = __webpack_require__(295);
-	var InfoForm = __webpack_require__(296);
-	
-	var CampaignForm = React.createClass({
-	  displayName: 'CampaignForm',
-	  redirectIfLoggedIn: function redirectIfLoggedIn() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      hashHistory.push("/");
-	    }
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-	    this.rewardListener = RewardStore.addListener(this.updateRewards);
-	  },
-	  updateRewards: function updateRewards() {
-	    this.setState({ rewards: RewardStore.all() });
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
-	    this.rewardListener.remove();
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      title: "Thundercats are Loose!",
-	      blurb: "thundercats, thundercats, thundercats are loose!",
-	      categoryId: 11,
-	      video_url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
-	      goal: 1000,
-	      description: "I already told you thundercats are loose!",
-	      end_date: "2019-03-06",
-	      imageFile: null,
-	      imageUrl: null,
-	      embedUrl: null,
-	      rewards: []
-	    };
-	  },
-	  formSubmit: function formSubmit(e) {
-	    var formData = new FormData();
-	    if (this.state.imageFile) {
-	      formData.append("campaign[image]", this.state.imageFile);
-	    }
-	    formData.append("campaign[title]", this.state.title);
-	    formData.append("campaign[blurb]", this.state.blurb);
-	    formData.append("campaign[category_id]", this.state.categoryId);
-	    formData.append("campaign[video_url]", this.state.video_url);
-	    formData.append("campaign[goal]", this.state.goal);
-	    formData.append("campaign[description]", this.state.description);
-	    formData.append("campaign[end_date]", this.state.end_date);
-	    formData.append("campaign[rewards]", JSON.stringify(this.state.rewards));
-	
-	    e.preventDefault();
-	    CampaignActions.createCampaign(formData);
-	    hashHistory.push("/discover");
-	  },
-	  changeTitle: function changeTitle(e) {
-	    console.log("changeTitle");
-	
-	    this.setState({ title: e.target.value });
-	  },
-	  parseUrl: function parseUrl(url) {
-	    var urlSplit = url.split("watch?v=");
-	    if (urlSplit.length == 2) {
-	      this.setState({ embedUrl: urlSplit.join("embed/") });
-	    } else {
-	      this.setState({ embedUrl: null });
-	    }
-	  },
-	  changeURL: function changeURL(e) {
-	    console.log("changeURL");
-	
-	    this.setState({ video_url: e.target.value });
-	    this.parseUrl(e.target.value);
-	  },
-	  changeBlurb: function changeBlurb(e) {
-	    console.log("changeBlurb");
-	    this.setState({ blurb: e.target.value });
-	  },
-	  changeDescription: function changeDescription(e) {
-	    console.log("changeDescription");
-	    this.setState({ description: e.target.value });
-	  },
-	  changeGoal: function changeGoal(e) {
-	    console.log("changeGoal");
-	    this.setState({ goal: e.target.value });
-	  },
-	  changeDate: function changeDate(e) {
-	    console.log("changeDate");
-	    this.setState({ end_date: e.target.value });
-	    console.log(this.state);
-	  },
-	  changeCategory: function changeCategory(e) {
-	    this.setState({ categoryId: parseInt(e.target.value) });
-	    console.log(e.target.value);
-	    console.log(this.state);
-	    console.log("that was state");
-	  },
-	  changeFile: function changeFile(e) {
-	    console.log("changeFile");
-	    var file = e.currentTarget.files[0];
-	    var fileReader = new FileReader();
-	    fileReader.onloadend = function () {
-	      this.setState({ imageFile: file, imageUrl: fileReader.result });
-	    }.bind(this);
-	    if (file) {
-	      fileReader.readAsDataURL(file);
-	    }
-	  },
-	  errors: function errors() {
-	    var errors = ErrorStore.errors("campaign");
-	    var messages = errors.map(function (errorMsg, i) {
-	      return React.createElement(
-	        'li',
-	        { key: i },
-	        errorMsg
-	      );
-	    });
-	
-	    return React.createElement(
-	      'ul',
-	      null,
-	      messages
-	    );
-	  },
-	  categorySelections: function categorySelections() {
-	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
-	      return React.createElement(
-	        'option',
-	        { key: i, value: category_id },
-	        CampaignFormConstants.CATEGORIES[category_id]
-	      );
-	    });
-	    return categorySelections;
-	  },
-	  clickRewards: function clickRewards() {
-	    jQuery(".new-reward-form-container").removeClass('hidden');
-	    jQuery(".new-info-form-container").addClass('hidden');
-	
-	    jQuery(".reward-option").addClass('form-selected');
-	    jQuery(".info-option").removeClass('form-selected');
-	
-	    jQuery(".new-info-header").addClass('hidden');
-	    jQuery(".new-reward-header").removeClass('hidden');
-	
-	    jQuery(".new-info-header").removeClass('fade-in');
-	    jQuery(".new-reward-header").addClass('fade-in');
-	  },
-	  clickInfo: function clickInfo() {
-	    jQuery(".new-reward-form-container").addClass('hidden');
-	    jQuery(".new-info-form-container").removeClass('hidden');
-	
-	    jQuery(".reward-option").removeClass('form-selected');
-	    jQuery(".info-option").addClass('form-selected');
-	
-	    jQuery(".new-info-header").removeClass('hidden');
-	    jQuery(".new-reward-header").addClass('hidden');
-	
-	    jQuery(".new-info-header").addClass('fade-in');
-	    jQuery(".new-reward-header").removeClass('fade-in');
-	  },
-	  render: function render() {
-	
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'new-reward' },
-	        React.createElement(
-	          'div',
-	          { className: 'group new-reward-form-buttons' },
-	          React.createElement(
-	            'div',
-	            { className: 'new-reward-options-container bold-14 group' },
-	            React.createElement(
-	              'div',
-	              { onClick: this.clickInfo, className: 'reward-form-option info-option checkFont form-selected' },
-	              'Info'
-	            ),
-	            React.createElement(
-	              'span',
-	              { onClick: this.clickRewards, className: 'reward-form-option reward-option checkFont' },
-	              'Rewards'
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'spacer' },
-	            " "
-	          ),
-	          React.createElement(
-	            'div',
-	            { onClick: this.formSubmit, className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
-	            React.createElement(
-	              'span',
-	              { className: 'reward-form-option' },
-	              'Submit your campaign!'
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'new-info-header headers fade-in' },
-	          React.createElement(
-	            'span',
-	            null,
-	            'Let’s get started.'
-	          ),
-	          React.createElement(
-	            'div',
-	            null,
-	            'Make a great first impression with your project’s title and image, and set your funding goal, campaign duration, description, and project category.'
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'new-reward-header headers hidden' },
-	          React.createElement(
-	            'span',
-	            null,
-	            'Set your rewards and other junk.'
-	          ),
-	          React.createElement(
-	            'div',
-	            null,
-	            'Invite backers to be a part of the creative experience by offering rewards like a copy machine, a sack of hamburgers, or a special appearence on the Phil Donohue Show.'
-	          )
-	        ),
-	        React.createElement(InfoForm, {
-	          changeTitle: this.changeTitle,
-	          titleState: this.state.title,
-	          changeBlurb: this.changeBlurb,
-	          blurbState: this.state.blurb,
-	
-	          imageUrl: this.state.imageUrl,
-	          embedUrl: this.state.embedUrl,
-	
-	          urlState: this.state.video_url,
-	          changeURL: this.changeURL,
-	
-	          descriptionState: this.state.description,
-	          changeDescription: this.changeDescription,
-	
-	          goalState: this.state.goal,
-	          changeGoal: this.changeGoal,
-	
-	          dateState: this.state.date,
-	          changeDate: this.changeDate,
-	
-	          changeCategory: this.changeCategory,
-	          categoryState: this.categoryId,
-	
-	          changeFile: this.changeFile
-	
-	        }),
-	        React.createElement(RewardForm, null)
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = CampaignForm;
-
-/***/ },
-/* 278 */,
-/* 279 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports = {
-	  CATEGORIES: {
-	    0: "All Categories",
-	    1: "Art",
-	    2: "Comics",
-	    3: "Crafts",
-	    4: "Dance",
-	    5: "Design",
-	    6: "Fashion",
-	    7: "Film & Video",
-	    8: "Food",
-	    9: "Games",
-	    10: "Journalism",
-	    11: "Music",
-	    12: "Photography",
-	    13: "Publishing",
-	    14: "Technology",
-	    15: "Theater"
-	  }
-	
-	};
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var CampaignActions = __webpack_require__(269);
-	var SessionStore = __webpack_require__(248);
-	var CampaignStore = __webpack_require__(272);
-	var ErrorStore = __webpack_require__(266);
-	var ReactRouter = __webpack_require__(175);
-	var hashHistory = ReactRouter.hashHistory;
-	var CampaignFormConstants = __webpack_require__(279);
-	
-	var CampaignForm = React.createClass({
-	  displayName: 'CampaignForm',
-	  redirectIfLoggedIn: function redirectIfLoggedIn() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      hashHistory.push("/");
-	    }
-	  },
-	  onChange: function onChange() {
-	    this.campaign = CampaignStore.find(this.id);
-	
-	    this.setState({
-	      id: 0,
-	      title: this.campaign.title,
-	      blurb: this.campaign.blurb,
-	      categoryId: this.campaign.categoryId,
-	      url: this.campaign.video_url,
-	      goal: this.campaign.goal,
-	      description: this.campaign.description,
-	      days: this.campaign.days_to_go,
-	      imageUrl: this.campaign.image_url
-	    });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-	    this.campaignListener = CampaignStore.addListener(this.onChange);
-	    this.id = parseInt(this.props.params.campaignId);
-	    CampaignActions.getCampaign(this.id);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
-	    this.campaignListener.remove();
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      id: 0,
-	      title: "",
-	      blurb: "",
-	      categoryId: "",
-	      url: "",
-	      goal: "",
-	      description: "",
-	      days: "",
-	      imageFile: null,
-	      imageUrl: null
-	    };
-	  },
-	  formSubmit: function formSubmit(e) {
-	    var formData = new FormData();
-	    if (this.state.imageFile) {
-	      formData.append("campaign[image]", this.state.imageFile);
-	    }
-	    formData.append("campaign[title]", this.state.title);
-	    formData.append("campaign[blurb]", this.state.blurb);
-	    formData.append("campaign[categoryId]", this.state.categoryId);
-	    formData.append("campaign[video_url]", this.state.url);
-	    formData.append("campaign[goal]", this.state.goal);
-	    formData.append("campaign[description]", this.state.description);
-	    formData.append("campaign[days]", this.state.days);
-	
-	    console.log(e.target.class);
-	    e.preventDefault();
-	    CampaignActions.editCampaign(formData, this.id);
-	    hashHistory.push('/campaigns/' + this.id);
-	  },
-	  changeTitle: function changeTitle(e) {
-	    console.log("changeTitle");
-	
-	    this.setState({ title: e.target.value });
-	  },
-	  changeURL: function changeURL(e) {
-	    console.log("changeURL");
-	
-	    this.setState({ url: e.target.value });
-	  },
-	  changeBlurb: function changeBlurb(e) {
-	    console.log("changeBlurb");
-	    this.setState({ blurb: e.target.value });
-	  },
-	  changeDescription: function changeDescription(e) {
-	    console.log("changeDescription");
-	    this.setState({ description: e.target.value });
-	  },
-	  changeGoal: function changeGoal(e) {
-	    console.log("changeGoal");
-	    this.setState({ goal: e.target.value });
-	  },
-	  changeDays: function changeDays(e) {
-	    console.log("changeDays");
-	    this.setState({ days: e.target.value });
-	  },
-	  changeDate: function changeDate(e) {
-	    console.log("changeDate");
-	    console.log(e.target.value);
-	  },
-	  changeCategory: function changeCategory(e) {
-	    console.log("changeCategory");
-	    this.setState({ categoryId: e.target.value });
-	  },
-	  changeFile: function changeFile(e) {
-	    console.log("changeFile");
-	    var file = e.currentTarget.files[0];
-	    var fileReader = new FileReader();
-	    fileReader.onloadend = function () {
-	      this.setState({ imageFile: file, imageUrl: fileReader.result });
-	    }.bind(this);
-	    if (file) {
-	      fileReader.readAsDataURL(file);
-	    }
-	  },
-	  errors: function errors() {
-	    var errors = ErrorStore.errors("campaign");
-	    var messages = errors.map(function (errorMsg, i) {
-	      return React.createElement(
-	        'li',
-	        { key: i },
-	        errorMsg
-	      );
-	    });
-	
-	    return React.createElement(
-	      'ul',
-	      null,
-	      messages
-	    );
-	  },
-	  categorySelections: function categorySelections() {
-	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
-	      return React.createElement(
-	        'option',
-	        { key: i, value: category_id },
-	        CampaignFormConstants.CATEGORIES[category_id]
-	      );
-	    });
-	    return categorySelections;
-	  },
-	  render: function render() {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'campaign-form input-form' },
-	      this.errors(),
-	      React.createElement(
-	        'div',
-	        { className: 'form-padding' },
-	        React.createElement(
-	          'div',
-	          { className: 'form-label' },
-	          'Edit your Campaign'
-	        ),
-	        React.createElement(
-	          'form',
-	          { onSubmit: this.formSubmit },
-	          React.createElement(
-	            'div',
-	            { className: 'preview-image' },
-	            React.createElement('img', {
-	              alt: 'Project image',
-	              src: this.state.imageUrl,
-	              width: '100 px',
-	              height: 'auto' })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'file',
-	              className: 'no-input',
-	              onChange: this.changeFile,
-	              placeholder: 'Upload an image' })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeTitle,
-	              placeholder: 'Project Title',
-	              value: this.state.title })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input' },
-	            React.createElement('textarea', {
-	              maxLength: '135',
-	              className: 'no-input required textarea',
-	              onChange: this.changeBlurb,
-	              placeholder: 'Short Blurb',
-	              value: this.state.blurb })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input' },
-	            React.createElement(
-	              'select',
-	              { value: this.state.categoryId, className: 'category-select', onChange: this.changeCategory },
-	              React.createElement(
-	                'option',
-	                { value: '0', disabled: true },
-	                'Choose category'
-	              ),
-	              this.categorySelections()
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeGoal,
-	              placeholder: 'Goal',
-	              value: this.state.goal })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeDays,
-	              placeholder: 'Number of Days',
-	              value: this.state.days })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'date',
-	              className: 'no-input',
-	              onChange: this.changeDate,
-	              placeholder: 'Upload an image' })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input description' },
-	            React.createElement('textarea', {
-	              className: 'no-input required textarea',
-	              onChange: this.changeDescription,
-	              placeholder: 'Description',
-	              value: this.state.description })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeURL,
-	              placeholder: 'Video URL',
-	              value: this.state.url })
-	          ),
-	          React.createElement(
-	            'a',
-	            { href: '#', className: 'forgot' },
-	            'Forgot your password?'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'submit' },
-	            React.createElement('input', {
-	              type: 'submit',
-	              className: 'button',
-	              id: 'login-button',
-	              value: 'Update Campaign!' })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'checkbox' },
-	            React.createElement('input', {
-	              type: 'checkbox',
-	              id: 'remember',
-	              value: 'Remember me' }),
-	            React.createElement(
-	              'label',
-	              { id: 'remember-label', htmlFor: 'remember' },
-	              'Remember me'
-	            )
-	          ),
-	          React.createElement('div', { className: 'line' }),
-	          React.createElement(
-	            'div',
-	            { className: 'submit', onClick: this.guestClick },
-	            React.createElement('input', {
-	              type: 'submit',
-	              id: 'facebook-button',
-	              value: 'Create demo campaign' })
-	          ),
-	          React.createElement(
-	            'p',
-	            { className: 'never-post' },
-	            'We are totally going to post on Facebook',
-	            React.createElement('br', null),
-	            'without your permission.'
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'login-footer' },
-	        'New to Kickrestarter?',
-	        React.createElement(
-	          'a',
-	          { className: 'signup-link', href: '#/signup' },
-	          'Sign Up'
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = CampaignForm;
-
-/***/ },
-/* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var SessionStore = __webpack_require__(248);
-	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var CampaignStore = __webpack_require__(272);
 	var CampaignActions = __webpack_require__(269);
-	var MethodModule = __webpack_require__(282);
-	var RewardsIndex = __webpack_require__(284);
-	var CommentsIndex = __webpack_require__(302);
+	var MethodModule = __webpack_require__(275);
+	var RewardsIndex = __webpack_require__(277);
+	var CommentsIndex = __webpack_require__(282);
 	
 	var CampaignShow = React.createClass({
 	  displayName: 'CampaignShow',
@@ -36259,123 +35425,7 @@
 	module.exports = CampaignShow;
 
 /***/ },
-/* 282 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Number.prototype.formatMoney = function (c, d, t) {
-	  var n = this;
-	  c = isNaN(c = Math.abs(c)) ? 2 : c;
-	  d = d === undefined ? "." : d;
-	  t = t === undefined ? "," : t;
-	  var s = n < 0 ? "-" : "";
-	  var i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "";
-	  var j = (j = i.length) > 3 ? j % 3 : 0;
-	  return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-	};
-	
-	var months = {
-	  1: "Jan",
-	  2: "Feb",
-	  3: "Mar",
-	  4: "Apr",
-	  5: "May",
-	  6: "Jun",
-	  7: "Jul",
-	  8: "Aug",
-	  9: "Sept",
-	  10: "Oct",
-	  11: "Nov",
-	  12: "Dec"
-	};
-	
-	var loremString = "\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla felis vitae lacinia facilisis. Curabitur rutrum posuere justo. Integer ut tortor orci. Ut rhoncus congue odio a cursus. Maecenas sapien nulla, fermentum eget eros tincidunt, condimentum tempor lacus. Vivamus pulvinar sagittis mattis. Duis diam tellus, lacinia in blandit convallis, molestie vitae enim. Nam mauris justo, mattis sit amet massa id, ultricies porta lacus. Proin velit turpis, suscipit laoreet tempor in, dignissim eget ex. Vivamus et mi quis velit faucibus porttitor.\n\nDonec semper nisl finibus ornare gravida. Phasellus porttitor sollicitudin dui vel posuere. In at ex ac ligula egestas congue. Vestibulum leo nulla, aliquet vitae suscipit eu, gravida eu ex. Nulla elementum fringilla tincidunt. Nulla facilisi. Cras porta luctus nisi at vehicula. Proin ut nisl neque. Nullam non facilisis enim. Vestibulum fermentum in lectus in rutrum.\n\nVivamus eu sapien pretium, interdum sapien vitae, tincidunt nibh. In ac turpis ac nulla laoreet iaculis a a justo. Aenean vehicula diam quis finibus gravida. Donec in metus pulvinar libero vulputate finibus. Vestibulum sit amet arcu in velit ullamcorper rhoncus consequat id tellus. Suspendisse vitae nunc efficitur, dictum sem sit amet, vestibulum risus. Cras hendrerit odio tellus, a efficitur orci bibendum at. Nullam aliquam dignissim nisl non fringilla. Sed iaculis, magna eu sagittis cursus, enim tortor dictum nulla, nec semper quam justo id ex. Aenean sed elit luctus lacus ullamcorper faucibus. Nam a imperdiet odio. Phasellus tincidunt sapien eget vestibulum malesuada. Nam in iaculis est, vel mollis ipsum.\n\nDonec vehicula venenatis pretium. Vestibulum ornare bibendum felis, in vehicula dolor luctus nec. Pellentesque ut viverra nunc, eu placerat diam. Nunc est magna, commodo id ante non, porttitor ultrices tortor. Duis scelerisque, justo quis pellentesque faucibus, mi felis vehicula sapien, non porttitor justo elit id metus. Aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut placerat lorem. Praesent finibus neque eget eros dignissim tincidunt. Nullam fringilla vitae mauris vel finibus.\n\nProin eu consequat lectus, nec interdum mi. Duis elementum augue nec dui rhoncus, et venenatis metus scelerisque. Donec quis urna nec mi sollicitudin congue. Ut rhoncus sed nisl vel blandit. Fusce aliquam magna at nunc bibendum, quis lobortis velit posuere. Curabitur accumsan et nunc commodo volutpat. Nullam velit dui, aliquam vitae placerat eget, ultricies eget neque.\n";
-	
-	var loremString2 = "\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla felis vitae lacinia facilisis. Curabitur rutrum posuere justo. Integer ut tortor orci. Ut rhoncus congue odio a cursus. Maecenas sapien nulla, fermentum eget eros tincidunt, condimentum tempor lacus. Vivamus pulvinar sagittis mattis. Duis diam tellus, lacinia in blandit convallis, molestie vitae enim. Nam mauris justo, mattis sit amet massa id, ultricies porta lacus. Proin velit turpis, suscipit laoreet tempor in, dignissim eget ex. Vivamus et mi quis velit faucibus porttitor.\n\nDonec semper nisl finibus ornare gravida. Phasellus porttitor sollicitudin dui vel posuere. In at ex ac ligula egestas congue. Vestibulum leo nulla, aliquet vitae suscipit eu, gravida eu ex. Nulla elementum fringilla tincidunt. Nulla facilisi. Cras porta luctus nisi at vehicula. Proin ut nisl neque. Nullam non facilisis enim. Vestibulum fermentum in lectus in rutrum.\n\nVivamus eu sapien pretium, interdum sapien vitae, tincidunt nibh. In ac turpis ac nulla laoreet iaculis a a justo. Aenean vehicula diam quis finibus gravida. Donec in metus pulvinar libero vulputate finibus. Vestibulum sit amet arcu in velit ullamcorper rhoncus consequat id tellus. Suspendisse vitae nunc efficitur, dictum sem sit amet, vestibulum risus. Cras hendrerit odio tellus, a efficitur orci bibendum at. Nullam aliquam dignissim nisl non fringilla. Sed iaculis, magna eu sagittis cursus, enim tortor dictum nulla, nec semper quam justo id ex. Aenean sed elit luctus lacus ullamcorper faucibus. Nam a imperdiet odio. Phasellus tincidunt sapien eget vestibulum malesuada. Nam in iaculis est, vel mollis ipsum.\n\nDonec vehicula venenatis pretium. Vestibulum ornare bibendum felis, in vehicula dolor luctus nec. Pellentesque ut viverra nunc, eu placerat diam. Nunc est magna, commodo id ante non, porttitor ultrices tortor. Duis scelerisque, justo quis pellentesque faucibus, mi felis vehicula sapien, non porttitor justo elit id metus. Aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut placerat lorem. Praesent finibus neque eget eros dignissim tincidunt. Nullam fringilla vitae mauris vel finibus.\n\nProin eu consequat lectus, nec interdum mi. Duis elementum augue nec dui rhoncus, et venenatis metus scelerisque. Donec quis urna nec mi sollicitudin congue. Ut rhoncus sed nisl vel blandit. Fusce aliquam magna at nunc bibendum, quis lobortis velit posuere. Curabitur accumsan et nunc commodo volutpat. Nullam velit dui, aliquam vitae placerat eget, ultricies eget neque.\n\nPellentesque vestibulum quis odio ut vulputate. Nullam accumsan metus sed accumsan congue. Ut euismod porttitor tortor, eget malesuada purus rutrum scelerisque. Suspendisse congue nisl a feugiat fermentum. In venenatis, dui ac scelerisque suscipit, tortor nulla feugiat enim, non aliquet diam mi eu nisl. Suspendisse venenatis tellus quam, ac placerat orci euismod in. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur facilisis pulvinar mi, eget scelerisque dolor eleifend ut. Sed consequat justo vitae mauris ornare commodo. Nunc consequat, tellus sit amet dictum faucibus, erat enim elementum nisl, et volutpat dui felis at nibh.\n\nNullam eget metus et nulla semper efficitur vitae eu mauris. Nulla aliquet eu libero sit amet dignissim. Pellentesque in venenatis sapien. Ut enim elit, blandit quis vestibulum vitae, euismod quis nisi. Mauris ac iaculis lectus. Praesent aliquet varius ex, at blandit risus viverra nec. Nullam tempor, neque efficitur scelerisque euismod, nisl eros semper nibh, quis egestas dolor lectus ac arcu. Duis lacus risus, pretium in pulvinar vel, vestibulum imperdiet eros. Nam mattis, libero in porta blandit, libero magna finibus nibh, in consectetur libero nibh eu metus. Sed porttitor id metus a vehicula. Etiam aliquet dui vel elit ullamcorper porttitor. Mauris vitae luctus sapien.\n\nPellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam massa tortor, dignissim sodales sapien placerat, convallis interdum purus. Nullam interdum id tellus non commodo. Suspendisse ut massa molestie, pretium tellus ut, placerat odio. Quisque varius efficitur enim id tristique. Integer efficitur dictum placerat. Donec eget tellus eu lacus eleifend tempor ut quis dui. Proin ligula nibh, euismod quis efficitur nec, hendrerit id sapien. Maecenas at sapien efficitur, imperdiet ex nec, iaculis leo.\n\nCurabitur a vehicula ipsum, nec faucibus ex. Quisque leo ligula, sagittis ac molestie a, fringilla accumsan augue. Vivamus ut arcu rhoncus dui interdum porta vitae nec nunc. Duis iaculis lacus eget purus laoreet, a mattis nisl consectetur. Quisque ut tempor turpis. Nulla iaculis, turpis sit amet mollis vehicula, arcu sem pretium velit, id ornare ipsum elit quis libero. Nunc sed varius dolor, sit amet finibus ante. Integer quis maximus dolor, nec pharetra diam. Vivamus sed mauris lacus. Phasellus dapibus libero elit, et aliquet purus sollicitudin sit amet. Curabitur cursus nulla eu luctus hendrerit. Sed tincidunt nec lacus non sodales. Phasellus tortor justo, egestas ac faucibus at, venenatis a massa.\n\nSed iaculis mollis justo maximus interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat dolor neque, at molestie est mollis nec. Quisque ornare nulla id justo consectetur pharetra. Praesent fringilla a tellus ac dapibus. Vivamus suscipit dolor odio, ut tempor nisl hendrerit ut. Vestibulum vitae condimentum metus, eget condimentum massa. Praesent sodales est vitae volutpat dignissim. Aliquam congue, augue id sodales mollis, tellus felis ullamcorper sem, eu aliquet augue purus ut tellus. Duis tellus libero, tincidunt semper feugiat vel, fringilla eget sapien. Sed ac urna ac leo molestie sollicitudin. Phasellus ac eleifend tortor, et dictum urna. Praesent laoreet malesuada metus, id ullamcorper ligula mollis sit amet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur ut lorem ultricies, egestas leo a, accumsan odio. Pellentesque ac diam at nulla tempus tempor vitae et quam.\n\nDuis eleifend, sem in dictum imperdiet, orci tortor lacinia nulla, a tincidunt dolor turpis finibus mi. Phasellus ullamcorper euismod dolor nec iaculis. Aliquam vehicula porttitor augue, id mollis mi cursus eget. Aliquam sem purus, sodales non semper vel, feugiat consectetur mauris. Praesent tortor augue, condimentum nec mattis eu, dictum sed metus. Curabitur nec sapien vitae nisi maximus volutpat sit amet at lorem. Donec sed eros et massa luctus efficitur. Donec eget dignissim diam. Nulla condimentum velit a ipsum finibus, a interdum arcu mattis. Sed ipsum orci, pulvinar in ipsum ac, accumsan pretium dolor. Morbi maximus tortor vel erat aliquet, eget tincidunt dui rutrum.\n\nDonec aliquam ligula sed eros sollicitudin, id semper libero faucibus. Sed dolor dui, lacinia nec faucibus eu, consequat ut neque. Aliquam dolor metus, consequat id urna scelerisque, aliquam convallis felis. Pellentesque lacinia condimentum ipsum nec lobortis. Nam libero sem, imperdiet sit amet purus quis, condimentum mattis tellus. Nulla pretium viverra libero, at ornare lectus tincidunt sed. Praesent bibendum iaculis molestie. Praesent nulla nisi, ultrices at nisi sit amet, vestibulum sagittis risus. Ut sed posuere odio, vitae interdum ligula. Curabitur nec diam eget elit hendrerit accumsan. Quisque molestie a est rhoncus dapibus. Aliquam rhoncus pharetra velit in dictum. Proin commodo lectus in justo vestibulum, a molestie sem bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.\n\nPraesent vulputate pulvinar erat, quis vulputate ante fringilla pharetra. Proin vel pulvinar ex, eget consectetur odio. Etiam commodo arcu vitae accumsan fringilla. Sed sed dignissim massa. Fusce lacus ante, vulputate vel bibendum quis, scelerisque sed risus. Donec eu augue odio. Sed viverra velit dui, a volutpat tortor fermentum ut. Sed lacinia enim velit, in pellentesque turpis mattis sed. Phasellus justo urna, ultrices et imperdiet laoreet, varius id tortor. In non aliquet purus, eu sodales ipsum. Vestibulum sit amet quam quis ipsum gravida auctor eget ac lorem. Nullam ac vestibulum risus. Nam libero nulla, pellentesque vel dolor eu, pretium dapibus lorem. Nam viverra dictum sollicitudin.\n\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent in venenatis tellus. Cras elementum felis in turpis sagittis elementum. Suspendisse sit amet purus massa. Mauris sollicitudin varius convallis. Donec finibus felis sed laoreet gravida. Cras tellus dolor, dignissim sed aliquam vitae, viverra sed ligula. Proin viverra risus in neque laoreet, sed vestibulum dolor tempor. Phasellus at maximus justo. Vestibulum rhoncus, magna vitae elementum finibus, quam dolor tincidunt ante, non vehicula orci eros quis turpis. Sed faucibus condimentum sollicitudin. Quisque placerat odio at purus ullamcorper, ut tempor ipsum ullamcorper. Aliquam quis suscipit tellus. Quisque mi magna, feugiat a odio non, interdum iaculis lorem. Integer dapibus felis nibh, in sodales mauris malesuada nec. Integer id vehicula felis.\n\nSed rhoncus magna at sollicitudin rutrum. Praesent nulla dui, vulputate quis aliquam vel, luctus non ante. Donec sem magna, mollis in interdum non, tincidunt quis ligula. Nullam sem erat, placerat ut consequat sed, mattis id arcu. Nulla congue urna at arcu pellentesque, a cursus magna semper. Cras in vestibulum lectus, in aliquet sem. Aenean in leo at nibh finibus sollicitudin a id ligula.\n\nVestibulum vel velit vitae tellus pellentesque auctor eu nec sapien. Nullam finibus purus in orci bibendum hendrerit. Etiam rutrum orci maximus facilisis blandit. Integer sit amet orci luctus, luctus erat nec, pellentesque risus. Morbi nec turpis sagittis, tristique odio in, vulputate elit. Duis nec convallis dui. Praesent vitae dictum mi. Fusce lobortis hendrerit turpis, nec laoreet urna tincidunt eu. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus scelerisque risus nulla, eu gravida lectus scelerisque et. Vivamus sit amet euismod arcu. Ut justo ante, blandit nec semper vitae, consequat sed justo. Nunc ac viverra leo. Aenean est diam, placerat sed fringilla ac, accumsan sit amet nunc.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque aliquet, diam mollis euismod pellentesque, nulla odio rhoncus ex, at scelerisque dui est at lacus. Duis elementum magna vel blandit eleifend. Sed tristique, erat nec lacinia scelerisque, purus augue mattis metus, vel dapibus nisl ligula nec metus. Proin nibh turpis, condimentum id nibh et, aliquet sodales nisi. Sed in porta eros. Cras vulputate mi orci, eu venenatis ipsum dapibus sit amet. Nam quis lacinia enim, ut convallis enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tincidunt consectetur ipsum sed bibendum. Sed et condimentum massa, a suscipit dolor. Nunc nunc nisl, pellentesque eget blandit eget, convallis ut mauris.\n\nAenean ultrices ligula sit amet ipsum suscipit pretium. Sed malesuada nec metus nec vestibulum. Cras blandit molestie leo, eu gravida eros luctus in. Proin vehicula ornare aliquam. Aliquam non eros vehicula, pretium purus a, vehicula leo. Donec tincidunt sagittis sem. Duis dui arcu, fermentum at felis non, vulputate pharetra augue.\n\nInteger non turpis leo. Donec sodales egestas ligula in egestas. Sed interdum nunc non mollis suscipit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam porttitor fermentum metus. Sed magna justo, auctor vel accumsan nec, congue ut ante. Nullam egestas felis sit amet libero aliquam aliquam. Ut finibus ipsum quis purus aliquet feugiat. Curabitur nisi turpis, malesuada id malesuada non, condimentum id mauris. Nulla vulputate, erat id viverra ornare, est enim dignissim est, eget molestie nunc lectus id justo. Cras porta justo orci, at feugiat risus ornare id. Mauris ut interdum arcu. Nam in dolor convallis, gravida tortor sed, fringilla est. Vestibulum at mi vestibulum, lobortis nulla et, aliquam neque.\n\nDonec vehicula nisl luctus metus pharetra, at bibendum diam pulvinar. Nam felis arcu, suscipit quis condimentum consectetur, posuere tempus sapien. Nam et magna ut dui egestas posuere. Etiam quis urna sollicitudin, placerat nunc sed, lacinia libero. Pellentesque accumsan ipsum in felis finibus, sit amet consequat orci euismod. Integer facilisis felis erat, non venenatis tortor finibus in. Sed dictum sed ex sit amet rutrum. Nunc id arcu non lorem euismod facilisis. Mauris sed felis ultricies, aliquet lectus ut, fringilla diam.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas gravida eros lacinia dolor bibendum porttitor. Vestibulum sodales, eros at lobortis aliquam, metus ipsum varius justo, et posuere nunc metus sit amet dolor. Curabitur vel auctor mi. In quis mi ac orci vulputate blandit nec vitae mi. Aenean vehicula tellus mattis, eleifend augue vel, tincidunt dolor. Nullam malesuada, lorem vestibulum vestibulum auctor, nunc sapien posuere quam, et malesuada velit dui pellentesque arcu. Fusce ante elit, varius et viverra sit amet, condimentum mollis eros. Sed ut dui nec nisl tempus malesuada eget ac mi. Etiam sit amet ipsum in mauris consectetur ullamcorper quis nec diam. Proin sodales pellentesque est, vel viverra odio sodales vitae. Nulla eu orci porttitor, vehicula quam sit amet, auctor elit. Phasellus eu orci sit amet dui maximus mattis sed venenatis nunc. Cras molestie rhoncus blandit. Etiam cursus diam urna, quis dignissim urna cursus scelerisque.\n\nEtiam urna lectus, commodo vitae tincidunt eu, dapibus eu justo. Duis feugiat tristique elit. Nulla velit sem, luctus in lacus a, tempus viverra purus. Integer id eros ex. Nam gravida magna ac nisl efficitur pellentesque. Vivamus eleifend ut lectus at rhoncus. Suspendisse at rhoncus metus. Vivamus elementum sapien erat, non rhoncus leo bibendum ut. Maecenas suscipit diam a euismod facilisis. Integer sit amet urna ipsum. Etiam elementum at purus id fermentum. Nunc sodales ex lorem, vitae auctor eros commodo ut. Curabitur pharetra sed libero non malesuada. Nunc facilisis sapien at eros volutpat faucibus.\n\nSed scelerisque faucibus eleifend. Suspendisse iaculis tempus nulla non sagittis. Aenean massa sem, tempus eget convallis vel, varius id elit. Ut finibus tellus eu leo congue mollis. Integer iaculis sem nibh, id mollis nisi dictum nec. Morbi vestibulum elit fermentum posuere egestas. Pellentesque nisi tellus, congue sed lorem ut, imperdiet ornare magna. In hac habitasse platea dictumst.\n\nNullam sodales odio ac odio fringilla, in tempor nibh gravida. Vestibulum eros lectus, fringilla sit amet facilisis ac, accumsan ut libero. Proin ligula nunc, interdum a ante sit amet, sagittis laoreet odio. Mauris nec tortor velit. Quisque eu ante est. In eget consectetur ipsum. Nullam ut bibendum justo. Donec nec dapibus nisi. Duis laoreet magna in erat eleifend, quis tempus risus aliquet. Donec feugiat mi suscipit lacus egestas bibendum. Nunc id dolor bibendum, viverra ipsum et, malesuada sem. Etiam quis libero ut dui accumsan maximus in vel nibh. Maecenas nisl nisi, suscipit ac metus at, dapibus malesuada erat. Nam aliquam mi id elementum ultricies.\n\nPellentesque interdum convallis feugiat. Integer ultricies eget magna quis pharetra. Aenean enim urna, molestie ut lacus vitae, sollicitudin vulputate arcu. Mauris ut ligula vel lacus dapibus mattis. Nunc massa tortor, volutpat in nisi non, mattis ullamcorper nulla. Duis commodo nulla non elementum vestibulum. Ut id venenatis lectus. Sed ultricies dictum ornare. Vivamus lacinia, urna eu vulputate blandit, sem dui semper sapien, id gravida nulla massa ac nisl. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris eu mattis leo. Aliquam erat volutpat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent sit amet vehicula nisi, eget hendrerit dolor.\n\nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec gravida finibus aliquam. Sed id ante rutrum, tempor enim non, tempus elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla ornare fringilla est, at consequat massa consequat quis. Aliquam nec arcu ac erat pharetra fringilla sed ac tortor. Nunc pellentesque quis dui in bibendum. Praesent in risus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse aliquam convallis enim, ac pulvinar purus tristique ut. Integer id efficitur ligula. Pellentesque tincidunt mauris ac magna vestibulum, non malesuada felis facilisis. Praesent volutpat, velit ut laoreet dictum, risus ante imperdiet lorem, semper congue elit erat ac ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id sodales ex. Etiam faucibus pellentesque arcu vitae cursus.\n\nPraesent convallis neque risus, a interdum nunc laoreet varius. Aenean congue libero urna, sit amet accumsan dolor ultrices sed. Integer ut neque mauris. Sed faucibus, ante sit amet pretium ultrices, velit diam imperdiet justo, eu aliquam est urna ut velit. Donec sed posuere arcu, eu bibendum velit. Duis et augue gravida, varius metus sit amet, porta est. Pellentesque condimentum imperdiet ligula, eu malesuada libero tempus eget. Nullam consequat felis sed risus fermentum luctus. Nunc commodo vitae enim eget laoreet. Phasellus convallis, neque quis volutpat ullamcorper, felis urna sodales purus, ut viverra enim eros vitae arcu. Nulla consequat varius est vitae ultrices. Donec ornare iaculis varius. Integer id tempus augue, vitae ornare quam.\n\nVestibulum interdum elementum tellus sit amet porttitor. Phasellus ultrices, orci vel gravida facilisis, elit purus vehicula massa, a commodo elit dui vitae erat. Phasellus ac malesuada justo. Etiam euismod enim nulla, quis congue nunc consectetur dictum. Praesent vitae iaculis purus. Nam ultricies, augue ut finibus molestie, est elit maximus lacus, nec pulvinar nisl arcu fringilla sem. Fusce luctus, velit quis egestas volutpat, leo tortor blandit augue, nec congue velit felis quis quam. Donec vitae nulla sed tortor tincidunt interdum ut vitae mi. Mauris id posuere justo.\n\nDonec convallis sem augue, nec lobortis tellus vulputate sed. Integer laoreet elit ut mattis pulvinar. Nunc bibendum neque eu urna condimentum laoreet. Praesent a ligula quis odio aliquam euismod vel vel lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis eros metus, fermentum at erat a, fermentum mollis ante. Quisque elementum felis ac dui dignissim, eu accumsan massa convallis. Fusce gravida felis justo, non dictum nibh rutrum non. Pellentesque sodales accumsan ligula, a sollicitudin tortor aliquam eu. Vestibulum faucibus mi nunc, sed iaculis turpis mollis id. Proin sagittis, tellus et gravida blandit, nibh nulla aliquam arcu, porta suscipit turpis risus ac nulla. Donec ut tincidunt ipsum. Duis ut nisi hendrerit nibh accumsan gravida vitae non enim. Nulla tincidunt magna hendrerit orci egestas, eget viverra tellus luctus.\n\nSed ultrices tortor a turpis dignissim porttitor. Vivamus ornare euismod libero vel accumsan. Fusce ut urna mauris. Nulla facilisi. Donec vel venenatis est, ut semper sem. Praesent pharetra in ante nec ornare. Nam feugiat volutpat faucibus. Curabitur tellus tellus, porta nec nibh a, iaculis efficitur mauris. Donec auctor efficitur urna, et pulvinar metus varius nec. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\nstrings!";
-	
-	module.exports = {
-	  parseDollarAmount: function parseDollarAmount(amount) {
-	    // if (!amount) return "$0";
-	    // return "$" + amount.formatMoney(0);
-	    return "$" + this.parseAmount(amount);
-	  },
-	  parseAmount: function parseAmount(amount) {
-	    if (!amount) return "0";
-	
-	    return amount.formatMoney(0);
-	  },
-	  backers: function backers(amount) {
-	    return amount === 1 ? "backer" : "backers";
-	  },
-	  parseBackers: function parseBackers(amount) {
-	    return this.parseAmount(amount) + " " + this.backers(amount);
-	  },
-	
-	
-	  lorem: loremString,
-	  months: months
-	
-	};
-
-/***/ },
-/* 283 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var SessionStore = __webpack_require__(248);
-	var ErrorStore = __webpack_require__(266);
-	var ReactRouter = __webpack_require__(175);
-	var hashHistory = ReactRouter.hashHistory;
-	var CampaignStore = __webpack_require__(272);
-	var CampaignActions = __webpack_require__(269);
-	var MethodModule = __webpack_require__(282);
-	
-	var UserShow = React.createClass({
-	  displayName: 'UserShow',
-	  getInitialState: function getInitialState() {
-	    return { user: SessionStore.currentUser() };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.sessionListener = SessionStore.addListener(this.onChange);
-	    console.log(SessionStore.isUserLoggedIn());
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
-	  },
-	  onChange: function onChange() {
-	    this.setState({
-	      user: SessionStore.currentUser()
-	    });
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'profile-container' },
-	      React.createElement(
-	        'div',
-	        null,
-	        this.state.user.username
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'profile-picture-container' },
-	        React.createElement('img', { src: this.state.user.image_url })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = UserShow;
-
-/***/ },
-/* 284 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36389,7 +35439,7 @@
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var RewardIndexItem = __webpack_require__(285);
+	var RewardIndexItem = __webpack_require__(278);
 	
 	var RewardsIndex = React.createClass({
 	  displayName: 'RewardsIndex',
@@ -36422,7 +35472,7 @@
 	module.exports = RewardsIndex;
 
 /***/ },
-/* 285 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36434,8 +35484,8 @@
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var MethodModule = __webpack_require__(282);
-	var PledgeActions = __webpack_require__(292);
+	var MethodModule = __webpack_require__(275);
+	var PledgeActions = __webpack_require__(279);
 	var CampaignActions = __webpack_require__(269);
 	
 	var RewardsIndexItem = React.createClass({
@@ -36452,8 +35502,6 @@
 	    return month + " " + year.toString();
 	  },
 	  submitPledge: function submitPledge(e) {
-	    console.log("RsubmitPledge!");
-	    console.log(e.currentTarget);
 	    e.preventDefault();
 	    PledgeActions.createPledge({
 	      pledge: {
@@ -36465,13 +35513,9 @@
 	    CampaignActions.getCampaign(this.props.reward.campaign_id);
 	  },
 	  changeAmount: function changeAmount(e) {
-	    console.log("changeAmount");
 	    this.setState({ amount: e.target.value });
-	    console.log(e.target);
 	  },
 	  clickReward: function clickReward(e) {
-	    console.log("REWARD CLICKED!");
-	    console.log(e.currentTarget);
 	    if (this.state.expanded) {
 	      this.setState({ expanded: false });
 	    } else {
@@ -36546,486 +35590,14 @@
 	module.exports = RewardsIndexItem;
 
 /***/ },
-/* 286 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var CampaignActions = __webpack_require__(269);
-	var SessionStore = __webpack_require__(248);
-	var ErrorStore = __webpack_require__(266);
-	var CampaignStore = __webpack_require__(272);
-	var ReactRouter = __webpack_require__(175);
-	var hashHistory = ReactRouter.hashHistory;
-	var RewardIndexItem = __webpack_require__(285);
-	var RewardsIndex = __webpack_require__(284);
-	var PledgeFormRewardIndexItem = __webpack_require__(287);
-	var PledgeFormRewardsIndex = __webpack_require__(288);
-	
-	var PledgeForm = React.createClass({
-	  displayName: 'PledgeForm',
-	  getInitialState: function getInitialState() {
-	    return { campaign: {} };
-	  },
-	  onChange: function onChange() {
-	    this.setState({ campaign: CampaignStore.find(this.id) });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-	    this.campaignListener = CampaignStore.addListener(this.onChange);
-	    this.id = parseInt(this.props.params.campaignId);
-	    CampaignActions.getCampaign(this.id);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
-	    this.campaignListener.remove();
-	  },
-	  campaignRedirect: function campaignRedirect() {
-	    hashHistory.push('/campaigns/' + this.state.campaign.id);
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'pledge-form' },
-	      React.createElement(
-	        'div',
-	        { className: 'pledge-form-header' },
-	        React.createElement(
-	          'div',
-	          { className: 'campaign-title', onClick: this.campaignRedirect },
-	          this.state.campaign.title
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'campaign-author' },
-	          'by ',
-	          React.createElement(
-	            'span',
-	            { style: { "fontWeight": "bold" } },
-	            this.state.campaign.author
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'group pledge-form-body' },
-	          React.createElement(
-	            'div',
-	            { className: 'group pledge-form-container' },
-	            React.createElement(
-	              'div',
-	              { className: 'pledge-rewards-container' },
-	              React.createElement(
-	                'div',
-	                { className: 'show-description pad-bottom-28' },
-	                "Let's choose your reward!"
-	              ),
-	              React.createElement(PledgeFormRewardsIndex, { campaign: this.state.campaign })
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'pledge-sidebar-container' },
-	              React.createElement(
-	                'div',
-	                { className: 'pledge-warning-container' },
-	                React.createElement(
-	                  'div',
-	                  { className: 'bold-16 pad-bottom-3' },
-	                  "Kickrestarter is not a store"
-	                ),
-	                React.createElement(
-	                  'div',
-	                  { className: 'reg-14 pad-bottom-9' },
-	                  'It\'s a fabricated nonsenical mess of nonsense.'
-	                ),
-	                React.createElement(
-	                  'p',
-	                  { className: 'reg-12 pad-bottom-9' },
-	                  'KickRestarter does not guarantee projects or investigate a creator\'s ability to complete their project. In fact, none of these projects are even real.  So if you find yourself supporting one, and being confused as to the outcome, look inward.  The answer lies within your soul, not on Kickrestarter.'
-	                ),
-	                React.createElement(
-	                  'a',
-	                  { href: 'https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg' },
-	                  'Click here for a picture of an elephant!'
-	                )
-	              )
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = PledgeForm;
-
-/***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var RewardActions = __webpack_require__(289);
-	var PledgeActions = __webpack_require__(292);
-	var SessionStore = __webpack_require__(248);
-	var ErrorStore = __webpack_require__(266);
-	var ReactRouter = __webpack_require__(175);
-	var hashHistory = ReactRouter.hashHistory;
-	var MethodModule = __webpack_require__(282);
-	
-	var PledgeFormRewardsIndexItem = React.createClass({
-	  displayName: 'PledgeFormRewardsIndexItem',
-	  getInitialState: function getInitialState() {
-	    return {
-	      selected: false,
-	      amount: this.props.reward.min_amount
-	    };
-	  },
-	  parseDeliveryDate: function parseDeliveryDate() {
-	    var mil = Date.parse(this.props.reward.delivery_date.toString());
-	    var dateObj = new Date(mil);
-	    var month = MethodModule.months[dateObj.getMonth() + 1];
-	    var year = dateObj.getFullYear();
-	    return month + " " + year.toString();
-	  },
-	  clickReward: function clickReward(e) {
-	    console.log("REWARD CLICKED!");
-	    console.log(e.currentTarget);
-	    this.props.selectedCallback(this.props.id);
-	  },
-	  submitPledge: function submitPledge(e) {
-	    console.log("RsubmitPledge!");
-	    console.log(e.currentTarget);
-	    e.preventDefault();
-	    PledgeActions.createPledge({
-	      pledge: {
-	        pledger_id: SessionStore.currentUser().id,
-	        reward_id: this.props.reward.id,
-	        amount: parseInt(this.state.amount)
-	      }
-	    });
-	    hashHistory.push('/campaigns/' + this.props.reward.campaign_id);
-	  },
-	  changeAmount: function changeAmount(e) {
-	    console.log("changeAmount");
-	    this.setState({ amount: e.target.value });
-	    console.log(e.target);
-	  },
-	  formattedComponent: function formattedComponent() {
-	    if (this.props.selected_id === this.props.id) {
-	      return React.createElement(
-	        'div',
-	        { className: 'reward-item selected-reward-radio', onClick: this.clickReward },
-	        React.createElement(
-	          'div',
-	          { className: 'reward-radio group' },
-	          React.createElement('input', { className: 'selected-min', type: 'radio', name: 'reward', value: this.props.reward.id }),
-	          React.createElement(
-	            'div',
-	            { className: 'reward-min' },
-	            "Pledge " + MethodModule.parseDollarAmount(this.props.reward.min_amount) + " or more"
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reward-item-title pad-left' },
-	          this.props.reward.title
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reward-item-description pad-left' },
-	          this.props.reward.description
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reward-delivery-label pad-left' },
-	          'ESTIMATED DELIVERY'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'pad-left' },
-	          this.parseDeliveryDate()
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reward-backer-label pad-left' },
-	          MethodModule.parseBackers(this.props.reward.backers.length)
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reward-input' },
-	          React.createElement(
-	            'form',
-	            { onClick: this.submitPledge, className: 'pledge-form group' },
-	            React.createElement('input', {
-	              type: 'text',
-	              onChange: this.changeAmount,
-	              autoFocus: 'true',
-	              id: 'thick-input',
-	              value: this.state.amount }),
-	            React.createElement(
-	              'div',
-	              { onClick: this.formSubmit, id: 'submit-pledge-button', className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
-	              React.createElement(
-	                'span',
-	                { className: 'reward-form-option button-text' },
-	                'Submit your pledge!'
-	              )
-	            )
-	          )
-	        )
-	      );
-	    } else {
-	      return React.createElement(
-	        'div',
-	        { className: 'reward-item', onClick: this.clickReward },
-	        React.createElement(
-	          'div',
-	          { className: 'reward-radio group' },
-	          React.createElement('input', { type: 'radio', name: 'reward', value: this.props.reward.id }),
-	          React.createElement(
-	            'div',
-	            { className: 'reward-min' },
-	            "Pledge " + MethodModule.parseDollarAmount(this.props.reward.min_amount) + " or more"
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reward-item-title pad-left' },
-	          this.props.reward.title
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reward-item-description pad-left' },
-	          this.props.reward.description
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reward-delivery-label pad-left' },
-	          'ESTIMATED DELIVERY'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'pad-left' },
-	          this.parseDeliveryDate()
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reward-backer-label pad-left' },
-	          MethodModule.parseBackers(this.props.reward.backers.length)
-	        )
-	      );
-	    }
-	  },
-	  render: function render() {
-	
-	    return React.createElement(
-	      'div',
-	      null,
-	      this.formattedComponent()
-	    );
-	  }
-	});
-	
-	module.exports = PledgeFormRewardsIndexItem;
-
-/***/ },
-/* 288 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	// const RewardActions = require('../../actions/reward_actions');
-	var SessionStore = __webpack_require__(248);
-	// const RewardStore = require('../../stores/reward_store');
-	var ErrorStore = __webpack_require__(266);
-	var ReactRouter = __webpack_require__(175);
-	var hashHistory = ReactRouter.hashHistory;
-	var PledgeFormRewardIndexItem = __webpack_require__(287);
-	
-	var PledgeFormRewardsIndex = React.createClass({
-	  displayName: 'PledgeFormRewardsIndex',
-	  getInitialState: function getInitialState() {
-	    return { selectedItem: null };
-	  },
-	  changeSelected: function changeSelected(selected_id) {
-	    this.setState({ selectedItem: selected_id });
-	    console.log(this.state);
-	    console.log("SELECTED REWARD CALLBACK CLICKED");
-	  },
-	  render: function render() {
-	    var _this = this;
-	
-	    var rewardList = [];
-	
-	    if (this.props.campaign.rewards) {
-	      rewardList = this.props.campaign.rewards.map(function (reward, i) {
-	        return React.createElement(
-	          'li',
-	          { key: i },
-	          React.createElement(PledgeFormRewardIndexItem, {
-	            reward: reward,
-	            key: i,
-	            id: i,
-	            selectedCallback: _this.changeSelected,
-	            selected_id: _this.state.selectedItem })
-	        );
-	      });
-	    }
-	
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'ul',
-	        { className: 'pledge-reward-column group' },
-	        rewardList
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = PledgeFormRewardsIndex;
-
-/***/ },
-/* 289 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var RewardApiUtil = __webpack_require__(290);
+	var PledgeApiUtil = __webpack_require__(280);
 	var AppDispatcher = __webpack_require__(240);
-	var RewardConstants = __webpack_require__(291);
-	var ErrorActions = __webpack_require__(246);
-	
-	module.exports = {
-	  // fetchRewards () {
-	  //   RewardApiUtil.fetchRewards(this.receiveAll);
-	  // },
-	  //
-	  // getReward (id) {
-	  //   RewardApiUtil.getReward(id, this.receiveReward, ErrorActions.setErrors);
-	  // },
-	
-	  createReward: function createReward(data) {
-	    RewardApiUtil.createReward(data, this.receiveReward, ErrorActions.setErrors);
-	  },
-	
-	
-	  // editReward (data, id) {
-	  //   RewardApiUtil.updateReward(data, id, this.receiveReward, ErrorActions.setErrors);
-	  // },
-	  //
-	  // deleteReward (id) {
-	  //   RewardApiUtil.deleteReward(id, this.removeReward);
-	  // },
-	  //
-	  // receiveAll (rewards) {
-	  //   AppDispatcher.dispatch({
-	  //     actionType: RewardConstants.REWARDS_RECEIVED,
-	  //     rewards: rewards
-	  //   });
-	  // },
-	  //
-	  receiveReward: function receiveReward(reward) {
-	    AppDispatcher.dispatch({
-	      actionType: RewardConstants.REWARD_RECEIVED,
-	      reward: reward
-	    });
-	  }
-	};
-
-/***/ },
-/* 290 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports = {
-	  fetchRewards: function fetchRewards(callback) {
-	    $.ajax({
-	      url: "api/rewards",
-	      success: function success(rewards) {
-	        callback(rewards);
-	      }
-	    });
-	  },
-	  getReward: function getReward(id, callback) {
-	    $.ajax({
-	      url: "api/rewards/" + id,
-	      success: function success(reward) {
-	        callback(reward);
-	      }
-	    });
-	  },
-	  createReward: function createReward(formData, callback) {
-	    $.ajax({
-	      url: "api/rewards",
-	      type: "POST",
-	      data: formData,
-	      success: function success(reward) {
-	        callback(reward);
-	      }
-	    });
-	  },
-	  updateReward: function updateReward(formData, id, callback, error) {
-	    $.ajax({
-	      url: "api/rewards/" + id,
-	      type: "PATCH",
-	      data: formData,
-	      success: function success(reward) {
-	        callback(reward);
-	      },
-	
-	      error: error
-	    });
-	  },
-	  deleteReward: function deleteReward(id, callback) {
-	    $.ajax({
-	      url: "api/rewards/" + id,
-	      type: "DELETE",
-	      success: function success(reward) {
-	        callback(reward);
-	      }
-	    });
-	  }
-	};
-
-/***/ },
-/* 291 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports = {
-	  REWARDS_RECEIVED: "REWARDS_RECEIVED",
-	  REWARD_RECEIVED: "REWARD_RECEIVED",
-	  REWARD_REMOVED: "REWARD_REMOVED",
-	  REWARD_FORM_ITEMS_RECEIVED: "REWARD_FORM_ITEMS_RECEIVED",
-	  REWARD_FORM_ITEM_RECEIVED: "REWARD_FORM_ITEM_RECEIVED",
-	  REWARD_FORM_ITEM_REMOVED: "REWARD_FORM_ITEM_REMOVED",
-	  REWARD_FORM_ITEM_UPDATED: "REWARD_FORM_ITEM_UPDATED"
-	};
-
-/***/ },
-/* 292 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var PledgeApiUtil = __webpack_require__(293);
-	var AppDispatcher = __webpack_require__(240);
-	var PledgeConstants = __webpack_require__(294);
+	var PledgeConstants = __webpack_require__(281);
 	var ErrorActions = __webpack_require__(246);
 	var CampaignActions = __webpack_require__(269);
 	
@@ -37067,7 +35639,7 @@
 	};
 
 /***/ },
-/* 293 */
+/* 280 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -37123,7 +35695,7 @@
 	};
 
 /***/ },
-/* 294 */
+/* 281 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -37135,7 +35707,7 @@
 	};
 
 /***/ },
-/* 295 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37143,44 +35715,563 @@
 	var React = __webpack_require__(168);
 	var Link = __webpack_require__(175).Link;
 	var SessionActions = __webpack_require__(239);
-	var RewardFormActions = __webpack_require__(301);
+	var CommentActions = __webpack_require__(283);
+	var SessionStore = __webpack_require__(248);
+	var CampaignStore = __webpack_require__(272);
+	// const CommentStore = require('../../stores/comment_store');
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var CommentIndexItem = __webpack_require__(285);
+	var CampaignActions = __webpack_require__(269);
+	
+	var CommentsIndex = React.createClass({
+	  displayName: 'CommentsIndex',
+	  submitComment: function submitComment() {
+	    var data = Object.assign({}, this.state, { author_id: SessionStore.currentUser().id, campaign_id: this.props.campaign.id });
+	    this.setState({ body: "" });
+	    CommentActions.createComment(data);
+	    CampaignActions.getCampaign(this.props.campaign.id);
+	  },
+	  getInitialState: function getInitialState() {
+	    return { body: "" };
+	  },
+	  onChange: function onChange() {
+	    this.setState({ body: "" });
+	  },
+	  changeComment: function changeComment(e) {
+	    this.setState({ body: e.target.value });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.campaignListener = CampaignStore.addListener(this.onChange);
+	  },
+	  render: function render() {
+	    var commentList = this.props.campaign.comments.map(function (el, i) {
+	
+	      return React.createElement(CommentIndexItem, { comment: el, key: i });
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'group' },
+	      React.createElement(
+	        'div',
+	        { className: 'comment-form' },
+	        React.createElement(
+	          'div',
+	          { className: 'comment-box group' },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('textarea', {
+	              maxLength: '135',
+	              className: 'no-input required textarea campaign-input-field',
+	              onChange: this.changeComment,
+	              value: this.state.body,
+	              placeholder: 'Start trolling...' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { onClick: this.submitComment, id: 'submit-comment-button', className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
+	            React.createElement(
+	              'span',
+	              { className: 'reward-form-option button-text' },
+	              'Comment'
+	            )
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        commentList
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CommentsIndex;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var CommentApiUtil = __webpack_require__(284);
+	var AppDispatcher = __webpack_require__(240);
+	// const CampaignConstants = require('../constants/comment_constants.js');
+	var ErrorActions = __webpack_require__(246);
+	var CampaignActions = __webpack_require__(269);
+	
+	module.exports = {
+	  // fetchCampaigns () {
+	  //   CommentApiUtil.fetchComments(this.receiveAll);
+	  // },
+	  //
+	  // getComment (id) {
+	  //   CommentApiUtil.getComment(id, this.receiveComment, ErrorActions.setErrors);
+	  // },
+	
+	  createComment: function createComment(data) {
+	    CommentApiUtil.createComment(data, CampaignActions.receiveCampaign, ErrorActions.setErrors);
+	  }
+	};
+
+/***/ },
+/* 284 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  createComment: function createComment(data, callback, errorCallback) {
+	    $.ajax({
+	      url: "api/comments",
+	      type: "POST",
+	      data: { comment: data },
+	      success: function success(comment) {
+	        callback(comment);
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var MethodModule = __webpack_require__(275);
+	
+	var CommentsIndexItem = React.createClass({
+	  displayName: 'CommentsIndexItem',
+	  parseDate: function parseDate() {
+	    var mil = Date.parse(this.props.comment.date.toString());
+	    var dateObj = new Date(mil);
+	    var month = MethodModule.months[dateObj.getMonth() + 1];
+	    var year = dateObj.getFullYear();
+	    return month + " " + year.toString();
+	  },
+	  render: function render() {
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'comment-list-item group' },
+	      React.createElement(
+	        'div',
+	        { className: 'comment-user-info-container' },
+	        React.createElement(
+	          'div',
+	          { className: 'comment-photo hidden' },
+	          React.createElement('img', { src: this.props.comment.author.image_url })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'bold-16' },
+	          this.props.comment.author.username
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reg-12' },
+	          this.parseDate()
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'comment' },
+	        this.props.comment.body
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CommentsIndexItem;
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var CampaignActions = __webpack_require__(269);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	var RewardStore = __webpack_require__(287);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var CampaignFormConstants = __webpack_require__(273);
+	var RewardForm = __webpack_require__(289);
+	var InfoForm = __webpack_require__(295);
+	
+	var CampaignForm = React.createClass({
+	  displayName: 'CampaignForm',
+	  redirectIfLoggedIn: function redirectIfLoggedIn() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      hashHistory.push("/");
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	    this.rewardListener = RewardStore.addListener(this.updateRewards);
+	  },
+	  updateRewards: function updateRewards() {
+	    this.setState({ rewards: RewardStore.all() });
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	    this.rewardListener.remove();
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      title: "Thundercats are Loose!",
+	      blurb: "thundercats, thundercats, thundercats are loose!",
+	      categoryId: 11,
+	      video_url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
+	      goal: 1000,
+	      description: "I already told you thundercats are loose!",
+	      end_date: "2019-03-06",
+	      imageFile: null,
+	      imageUrl: null,
+	      embedUrl: null,
+	      rewards: []
+	    };
+	  },
+	  formSubmit: function formSubmit(e) {
+	    var formData = new FormData();
+	    if (this.state.imageFile) {
+	      formData.append("campaign[image]", this.state.imageFile);
+	    }
+	    formData.append("campaign[title]", this.state.title);
+	    formData.append("campaign[blurb]", this.state.blurb);
+	    formData.append("campaign[category_id]", this.state.categoryId);
+	    formData.append("campaign[video_url]", this.state.video_url);
+	    formData.append("campaign[goal]", this.state.goal);
+	    formData.append("campaign[description]", this.state.description);
+	    formData.append("campaign[end_date]", this.state.end_date);
+	    formData.append("campaign[rewards]", JSON.stringify(this.state.rewards));
+	
+	    e.preventDefault();
+	    CampaignActions.createCampaign(formData);
+	    hashHistory.push("/discover");
+	  },
+	  changeTitle: function changeTitle(e) {
+	    this.setState({ title: e.target.value });
+	  },
+	  parseUrl: function parseUrl(url) {
+	    var urlSplit = url.split("watch?v=");
+	    if (urlSplit.length == 2) {
+	      this.setState({ embedUrl: urlSplit.join("embed/") });
+	    } else {
+	      this.setState({ embedUrl: null });
+	    }
+	  },
+	  changeURL: function changeURL(e) {
+	    this.setState({ video_url: e.target.value });
+	    this.parseUrl(e.target.value);
+	  },
+	  changeBlurb: function changeBlurb(e) {
+	    this.setState({ blurb: e.target.value });
+	  },
+	  changeDescription: function changeDescription(e) {
+	    this.setState({ description: e.target.value });
+	  },
+	  changeGoal: function changeGoal(e) {
+	    this.setState({ goal: e.target.value });
+	  },
+	  changeDate: function changeDate(e) {
+	    this.setState({ end_date: e.target.value });
+	  },
+	  changeCategory: function changeCategory(e) {
+	    this.setState({ categoryId: parseInt(e.target.value) });
+	  },
+	  changeFile: function changeFile(e) {
+	    var file = e.currentTarget.files[0];
+	    var fileReader = new FileReader();
+	    fileReader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: fileReader.result });
+	    }.bind(this);
+	    if (file) {
+	      fileReader.readAsDataURL(file);
+	    }
+	  },
+	  errors: function errors() {
+	    var errors = ErrorStore.errors("campaign");
+	    var messages = errors.map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i },
+	        errorMsg
+	      );
+	    });
+	
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	  categorySelections: function categorySelections() {
+	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
+	      return React.createElement(
+	        'option',
+	        { key: i, value: category_id },
+	        CampaignFormConstants.CATEGORIES[category_id]
+	      );
+	    });
+	    return categorySelections;
+	  },
+	  clickRewards: function clickRewards() {
+	    jQuery(".new-reward-form-container").removeClass('hidden');
+	    jQuery(".new-info-form-container").addClass('hidden');
+	
+	    jQuery(".reward-option").addClass('form-selected');
+	    jQuery(".info-option").removeClass('form-selected');
+	
+	    jQuery(".new-info-header").addClass('hidden');
+	    jQuery(".new-reward-header").removeClass('hidden');
+	
+	    jQuery(".new-info-header").removeClass('fade-in');
+	    jQuery(".new-reward-header").addClass('fade-in');
+	  },
+	  clickInfo: function clickInfo() {
+	    jQuery(".new-reward-form-container").addClass('hidden');
+	    jQuery(".new-info-form-container").removeClass('hidden');
+	
+	    jQuery(".reward-option").removeClass('form-selected');
+	    jQuery(".info-option").addClass('form-selected');
+	
+	    jQuery(".new-info-header").removeClass('hidden');
+	    jQuery(".new-reward-header").addClass('hidden');
+	
+	    jQuery(".new-info-header").addClass('fade-in');
+	    jQuery(".new-reward-header").removeClass('fade-in');
+	  },
+	  render: function render() {
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'new-reward' },
+	        React.createElement(
+	          'div',
+	          { className: 'group new-reward-form-buttons' },
+	          React.createElement(
+	            'div',
+	            { className: 'new-reward-options-container bold-14 group' },
+	            React.createElement(
+	              'div',
+	              { onClick: this.clickInfo, className: 'reward-form-option info-option checkFont form-selected' },
+	              'Info'
+	            ),
+	            React.createElement(
+	              'span',
+	              { onClick: this.clickRewards, className: 'reward-form-option reward-option checkFont' },
+	              'Rewards'
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'spacer' },
+	            " "
+	          ),
+	          React.createElement(
+	            'div',
+	            { onClick: this.formSubmit, className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
+	            React.createElement(
+	              'span',
+	              { className: 'reward-form-option' },
+	              'Submit your campaign!'
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'new-info-header headers fade-in' },
+	          React.createElement(
+	            'span',
+	            null,
+	            'Let’s get started.'
+	          ),
+	          React.createElement(
+	            'div',
+	            null,
+	            'Make a great first impression with your project’s title and image, and set your funding goal, campaign duration, description, and project category.'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'new-reward-header headers hidden' },
+	          React.createElement(
+	            'span',
+	            null,
+	            'Set your rewards and other junk.'
+	          ),
+	          React.createElement(
+	            'div',
+	            null,
+	            'Invite backers to be a part of the creative experience by offering rewards like a copy machine, a sack of hamburgers, or a special appearence on the Phil Donohue Show.'
+	          )
+	        ),
+	        React.createElement(InfoForm, {
+	          changeTitle: this.changeTitle,
+	          titleState: this.state.title,
+	          changeBlurb: this.changeBlurb,
+	          blurbState: this.state.blurb,
+	
+	          imageUrl: this.state.imageUrl,
+	          embedUrl: this.state.embedUrl,
+	
+	          urlState: this.state.video_url,
+	          changeURL: this.changeURL,
+	
+	          descriptionState: this.state.description,
+	          changeDescription: this.changeDescription,
+	
+	          goalState: this.state.goal,
+	          changeGoal: this.changeGoal,
+	
+	          dateState: this.state.date,
+	          changeDate: this.changeDate,
+	
+	          changeCategory: this.changeCategory,
+	          categoryState: this.categoryId,
+	
+	          changeFile: this.changeFile
+	
+	        }),
+	        React.createElement(RewardForm, null)
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CampaignForm;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(249).Store;
+	var RewardConstants = __webpack_require__(288);
+	var AppDispatcher = __webpack_require__(240);
+	
+	var RewardStore = new Store(AppDispatcher);
+	
+	var _rewards = {
+	  1: { min_amount: 0, title: "", description: "", delivery_date: "2017-08-30", id: 1 }
+	};
+	
+	var resetRewards = function resetRewards(rewards) {
+	  _rewards = {};
+	  rewards.forEach(function (reward) {
+	    _rewards[reward.id] = reward;
+	  });
+	};
+	
+	RewardStore.nextId = function () {
+	  function getMaxOfArray(numArray) {
+	    return Math.max.apply(null, numArray);
+	  }
+	  if (Object.keys(_rewards).length === 0) return 1;
+	  return getMaxOfArray(Object.keys(_rewards)) + 1;
+	};
+	
+	var setReward = function setReward(reward) {
+	  _rewards[reward.id] = reward;
+	};
+	
+	var removeReward = function removeReward(id) {
+	  delete _rewards[id];
+	};
+	
+	RewardStore.all = function () {
+	  return Object.keys(_rewards).map(function (rewardId) {
+	    return _rewards[rewardId];
+	  });
+	};
+	
+	RewardStore.find = function (id) {
+	  return _rewards[id];
+	};
+	
+	RewardStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case RewardConstants.REWARD_FORM_ITEMS_RECEIVED:
+	      resetRewards(payload.rewards);
+	      RewardStore.__emitChange();
+	      break;
+	    case RewardConstants.REWARD_FORM_ITEM_RECEIVED:
+	      setReward(payload.reward);
+	      RewardStore.__emitChange();
+	      break;
+	    case RewardConstants.REWARD_FORM_ITEM_UPDATED:
+	      setReward(payload.reward);
+	      RewardStore.__emitChange();
+	      break;
+	    case RewardConstants.REWARD_FORM_ITEM_REMOVED:
+	      removeReward(payload.id);
+	      RewardStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = RewardStore;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  REWARDS_RECEIVED: "REWARDS_RECEIVED",
+	  REWARD_RECEIVED: "REWARD_RECEIVED",
+	  REWARD_REMOVED: "REWARD_REMOVED",
+	  REWARD_FORM_ITEMS_RECEIVED: "REWARD_FORM_ITEMS_RECEIVED",
+	  REWARD_FORM_ITEM_RECEIVED: "REWARD_FORM_ITEM_RECEIVED",
+	  REWARD_FORM_ITEM_REMOVED: "REWARD_FORM_ITEM_REMOVED",
+	  REWARD_FORM_ITEM_UPDATED: "REWARD_FORM_ITEM_UPDATED"
+	};
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var RewardFormActions = __webpack_require__(290);
 	var SessionStore = __webpack_require__(248);
 	var CampaignStore = __webpack_require__(272);
 	var ErrorStore = __webpack_require__(266);
-	var RewardStore = __webpack_require__(300);
+	var RewardStore = __webpack_require__(287);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var RewardsIndex = __webpack_require__(284);
-	var RewardFormIndex = __webpack_require__(298);
+	var RewardsIndex = __webpack_require__(277);
+	var RewardFormIndex = __webpack_require__(292);
 	
 	var RewardForm = React.createClass({
 	  displayName: 'RewardForm',
-	
-	
-	  // redirectIfNotCurrentUser() {
-	  //   if (SessionStore.currentUser().id !== this.props.params.campaignId) {
-	  //     hashHistory.push("/");
-	  //   }
-	  // },
-	
-	  // onChange() {
-	  //   this.setState({campaign: CampaignStore.find(this.props.params.id)});
-	  // },
-	  //
-	  // componentDidMount() {
-	  //   this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	  //   this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
-	  //   this.campaignListener = CampaignStore.addListener(this.onChange);
-	  //   CampaignStore.fetchCampaign(this.props.params.campaignId);
-	  // },
-	  //
-	  // componentWillUnmount() {
-	  //   this.errorListener.remove();
-	  //   this.sessionListener.remove();
-	  //   this.campaignListener.remove();
-	  //
-	  // },
-	  //
 	  getInitialState: function getInitialState() {
 	    this.campaign = {};
 	    return {
@@ -37191,52 +36282,7 @@
 	      campaign: {}
 	    };
 	  },
-	
-	  //
-	  // formSubmit(e) {
-	  //   console.log(e.target.class);
-	  //   e.preventDefault();
-	  //   let data = {reward:
-	  //     {
-	  //       // campaign_id: this.props.params.campaignId,
-	  //       description: this.state.description,
-	  //       min_amount: this.state.min_amount,
-	  //       delivery_date: this.state.delivery_date,
-	  //       title: this.state.title
-	  //     }
-	  //   };
-	  //   RewardFormActions.createReward(data);
-	  //   hashHistory.push(`/campaigns/${this.props.params.campaignId}`);
-	  // },
-	  //
-	  //
-	  // changeTitle(e) {
-	  //   this.setState({title: e.target.value});
-	  // },
-	  //
-	  // changeDescription(e){
-	  //   this.setState({description: e.target.value});
-	  // },
-	  // // FIX DATE FORMATTING STUFF!!!
-	  // changeDate(e){
-	  //   this.setState({delivery_date: e.target.value});
-	  //   console.log(this.state);
-	  // },
-	  //
-	  // changeAmount(e){
-	  //   this.setState({min_amount: e.target.value});
-	  // },
-	  //
-	  // errors() {
-	  //   const errors = ErrorStore.errors("reward-form");
-	  //   const messages = errors.map( (errorMsg, i) => {
-	  //     return <li key={ i }>{ errorMsg }</li>;
-	  //   });
-	  //
-	  //   return <ul>{ messages }</ul>;
-	  // },
 	  addReward: function addReward() {
-	    console.log("ADd REWARD");
 	    RewardFormActions.createReward({
 	      min_amount: 0,
 	      title: "",
@@ -37294,7 +36340,101 @@
 	module.exports = RewardForm;
 
 /***/ },
-/* 296 */
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var RewardApiUtil = __webpack_require__(291);
+	var AppDispatcher = __webpack_require__(240);
+	var RewardConstants = __webpack_require__(288);
+	var ErrorActions = __webpack_require__(246);
+	
+	module.exports = {
+	  fetchRewards: function fetchRewards(rewards) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_FORM_ITEMS_RECEIVED,
+	      rewards: rewards
+	    });
+	  },
+	  createReward: function createReward(reward) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_FORM_ITEM_RECEIVED,
+	      reward: reward
+	    });
+	  },
+	  editReward: function editReward(reward) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_FORM_ITEM_UPDATED,
+	      reward: reward
+	    });
+	  },
+	  removeReward: function removeReward(id) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_FORM_ITEM_REMOVED,
+	      id: id
+	    });
+	  }
+	};
+
+/***/ },
+/* 291 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  fetchRewards: function fetchRewards(callback) {
+	    $.ajax({
+	      url: "api/rewards",
+	      success: function success(rewards) {
+	        callback(rewards);
+	      }
+	    });
+	  },
+	  getReward: function getReward(id, callback) {
+	    $.ajax({
+	      url: "api/rewards/" + id,
+	      success: function success(reward) {
+	        callback(reward);
+	      }
+	    });
+	  },
+	  createReward: function createReward(formData, callback) {
+	    $.ajax({
+	      url: "api/rewards",
+	      type: "POST",
+	      data: formData,
+	      success: function success(reward) {
+	        callback(reward);
+	      }
+	    });
+	  },
+	  updateReward: function updateReward(formData, id, callback, error) {
+	    $.ajax({
+	      url: "api/rewards/" + id,
+	      type: "PATCH",
+	      data: formData,
+	      success: function success(reward) {
+	        callback(reward);
+	      },
+	
+	      error: error
+	    });
+	  },
+	  deleteReward: function deleteReward(id, callback) {
+	    $.ajax({
+	      url: "api/rewards/" + id,
+	      type: "DELETE",
+	      success: function success(reward) {
+	        callback(reward);
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37302,14 +36442,311 @@
 	var React = __webpack_require__(168);
 	var Link = __webpack_require__(175).Link;
 	var SessionActions = __webpack_require__(239);
-	var RewardActions = __webpack_require__(289);
+	var RewardActions = __webpack_require__(293);
 	var SessionStore = __webpack_require__(248);
 	var CampaignStore = __webpack_require__(272);
-	var CampaignFormConstants = __webpack_require__(279);
+	var ErrorStore = __webpack_require__(266);
+	var RewardStore = __webpack_require__(287);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var RewardsIndex = __webpack_require__(277);
+	var RewardFormIndexItem = __webpack_require__(294);
+	
+	var RewardFormIndex = React.createClass({
+	  displayName: 'RewardFormIndex',
+	  componentDidMount: function componentDidMount() {
+	    this.rewardListener = RewardStore.addListener(this.onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.rewardListener.remove();
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      rewards: RewardStore.all()
+	    };
+	  },
+	  onChange: function onChange() {
+	    this.setState({ rewards: RewardStore.all() });
+	  },
+	  rewards: function rewards() {
+	    var rewardList = this.state.rewards.map(function (reward, idx) {
+	
+	      return React.createElement(RewardFormIndexItem, { key: idx, rewardState: reward });
+	    });
+	    return rewardList;
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      this.rewards()
+	    );
+	  }
+	});
+	
+	module.exports = RewardFormIndex;
+
+/***/ },
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var RewardApiUtil = __webpack_require__(291);
+	var AppDispatcher = __webpack_require__(240);
+	var RewardConstants = __webpack_require__(288);
+	var ErrorActions = __webpack_require__(246);
+	
+	module.exports = {
+	  // fetchRewards () {
+	  //   RewardApiUtil.fetchRewards(this.receiveAll);
+	  // },
+	  //
+	  // getReward (id) {
+	  //   RewardApiUtil.getReward(id, this.receiveReward, ErrorActions.setErrors);
+	  // },
+	
+	  createReward: function createReward(data) {
+	    RewardApiUtil.createReward(data, this.receiveReward, ErrorActions.setErrors);
+	  },
+	
+	
+	  // editReward (data, id) {
+	  //   RewardApiUtil.updateReward(data, id, this.receiveReward, ErrorActions.setErrors);
+	  // },
+	  //
+	  // deleteReward (id) {
+	  //   RewardApiUtil.deleteReward(id, this.removeReward);
+	  // },
+	  //
+	  // receiveAll (rewards) {
+	  //   AppDispatcher.dispatch({
+	  //     actionType: RewardConstants.REWARDS_RECEIVED,
+	  //     rewards: rewards
+	  //   });
+	  // },
+	  //
+	  receiveReward: function receiveReward(reward) {
+	    AppDispatcher.dispatch({
+	      actionType: RewardConstants.REWARD_RECEIVED,
+	      reward: reward
+	    });
+	  }
+	};
+
+/***/ },
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var RewardFormActions = __webpack_require__(290);
+	var SessionStore = __webpack_require__(248);
+	var CampaignStore = __webpack_require__(272);
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var RewardsIndex = __webpack_require__(284);
+	var RewardsIndex = __webpack_require__(277);
+	
+	var RewardFormIndexItem = React.createClass({
+	  displayName: 'RewardFormIndexItem',
+	  getInitialState: function getInitialState() {
+	    this.campaign = {};
+	    return {
+	      title: this.props.rewardState.title,
+	      description: this.props.rewardState.description,
+	      min_amount: this.props.rewardState.min_amount,
+	      delivery_date: this.props.rewardState.delivery_date,
+	      id: this.props.rewardState.id
+	    };
+	  },
+	  changeTitle: function changeTitle(e) {
+	    this.setState({ title: e.target.value });
+	    var data = Object.assign({}, this.state, { title: e.target.value });
+	    RewardFormActions.editReward(data);
+	  },
+	  changeDescription: function changeDescription(e) {
+	    this.setState({ description: e.target.value });
+	    var data = Object.assign({}, this.state, { description: e.target.value });
+	
+	    RewardFormActions.editReward(data);
+	  },
+	  changeDate: function changeDate(e) {
+	    this.setState({ delivery_date: e.target.value });
+	    var data = Object.assign({}, this.state, { delivery_date: e.target.value });
+	    RewardFormActions.editReward(data);
+	  },
+	  changeAmount: function changeAmount(e) {
+	    this.setState({ min_amount: e.target.value });
+	    var data = Object.assign({}, this.state, { min_amount: e.target.value });
+	    RewardFormActions.editReward(data);
+	  },
+	  errors: function errors() {
+	    var errors = ErrorStore.errors("reward-form");
+	    var messages = errors.map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i },
+	        errorMsg
+	      );
+	    });
+	
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	  deleteReward: function deleteReward() {
+	    RewardFormActions.removeReward(this.props.rewardState.id);
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'form-field-container group reward-form-item' },
+	      React.createElement(
+	        'div',
+	        { className: 'form-field-container group' },
+	        React.createElement(
+	          'div',
+	          { className: 'field-label' },
+	          'Reward title'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-input-container' },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input campaign-input-field',
+	              onChange: this.changeTitle,
+	              value: this.state.title,
+	              placeholder: 'Title' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'reg-12 input-field-description' },
+	            "Call your reward something cool so people think they're getting something of value"
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-field-container group' },
+	        React.createElement(
+	          'div',
+	          { className: 'field-label' },
+	          'Pledge amount'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-input-container' },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input campaign-input-field',
+	              onChange: this.changeAmount,
+	              value: this.state.min_amount,
+	              placeholder: 'Amount' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'reg-12 input-field-description' },
+	            "This is the minimum amount of money a backer needs to fork over in order to actually get this thing."
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-field-container group' },
+	        React.createElement(
+	          'div',
+	          { className: 'field-label' },
+	          'Reward Description'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-input-container' },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('textarea', {
+	              maxLength: '135',
+	              className: 'no-input required textarea campaign-input-field',
+	              onChange: this.changeDescription,
+	              placeholder: 'Reward Description',
+	              value: this.state.description })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'reg-12 input-field-description' },
+	            "Go ahead, let us in.  What's this about?  Anything?"
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-field-container group' },
+	        React.createElement(
+	          'div',
+	          { className: 'field-label' },
+	          'Delivery date'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-input-container' },
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'date',
+	              className: 'no-input campaign-input-field',
+	              onChange: this.changeDate,
+	              value: this.state.delivery_date,
+	              placeholder: 'Upload an image' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'reg-12 input-field-description' },
+	            "Here's a chance to really quanitfy your false promises!"
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'h1',
+	        { onClick: this.deleteReward },
+	        'Delete Reward ' + this.props.rewardState.id
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = RewardFormIndexItem;
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var RewardActions = __webpack_require__(293);
+	var SessionStore = __webpack_require__(248);
+	var CampaignStore = __webpack_require__(272);
+	var CampaignFormConstants = __webpack_require__(273);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var RewardsIndex = __webpack_require__(277);
 	
 	var RewardForm = React.createClass({
 	  displayName: 'RewardForm',
@@ -37626,8 +37063,7 @@
 	module.exports = RewardForm;
 
 /***/ },
-/* 297 */,
-/* 298 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37635,150 +37071,114 @@
 	var React = __webpack_require__(168);
 	var Link = __webpack_require__(175).Link;
 	var SessionActions = __webpack_require__(239);
-	var RewardActions = __webpack_require__(289);
+	var CampaignActions = __webpack_require__(269);
 	var SessionStore = __webpack_require__(248);
 	var CampaignStore = __webpack_require__(272);
 	var ErrorStore = __webpack_require__(266);
-	var RewardStore = __webpack_require__(300);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var RewardsIndex = __webpack_require__(284);
-	var RewardFormIndexItem = __webpack_require__(299);
+	var CampaignFormConstants = __webpack_require__(273);
 	
-	var RewardFormIndex = React.createClass({
-	  displayName: 'RewardFormIndex',
-	  componentDidMount: function componentDidMount() {
-	    this.rewardListener = RewardStore.addListener(this.onChange);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.rewardListener.remove();
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      rewards: RewardStore.all()
-	    };
+	var CampaignForm = React.createClass({
+	  displayName: 'CampaignForm',
+	  redirectIfLoggedIn: function redirectIfLoggedIn() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      hashHistory.push("/");
+	    }
 	  },
 	  onChange: function onChange() {
-	    this.setState({ rewards: RewardStore.all() });
-	  },
-	  rewards: function rewards() {
-	    var rewardList = this.state.rewards.map(function (reward, idx) {
+	    this.campaign = CampaignStore.find(this.id);
 	
-	      return React.createElement(RewardFormIndexItem, { key: idx, rewardState: reward });
+	    this.setState({
+	      id: 0,
+	      title: this.campaign.title,
+	      blurb: this.campaign.blurb,
+	      categoryId: this.campaign.categoryId,
+	      url: this.campaign.video_url,
+	      goal: this.campaign.goal,
+	      description: this.campaign.description,
+	      days: this.campaign.days_to_go,
+	      imageUrl: this.campaign.image_url
 	    });
-	    console.log(rewardList);
-	    return rewardList;
 	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      this.rewards()
-	    );
-	  }
-	});
-	
-	module.exports = RewardFormIndex;
-
-/***/ },
-/* 299 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(168);
-	var Link = __webpack_require__(175).Link;
-	var SessionActions = __webpack_require__(239);
-	var RewardFormActions = __webpack_require__(301);
-	var SessionStore = __webpack_require__(248);
-	var CampaignStore = __webpack_require__(272);
-	var ErrorStore = __webpack_require__(266);
-	var ReactRouter = __webpack_require__(175);
-	var hashHistory = ReactRouter.hashHistory;
-	var RewardsIndex = __webpack_require__(284);
-	
-	var RewardFormIndexItem = React.createClass({
-	  displayName: 'RewardFormIndexItem',
-	
-	
-	  // redirectIfNotCurrentUser() {
-	  //   if (SessionStore.currentUser().id !== this.props.params.campaignId) {
-	  //     hashHistory.push("/");
-	  //   }
-	  // },
-	
-	  // onChange() {
-	  //   this.setState({campaign: CampaignStore.find(this.props.params.id)});
-	  // },
-	  //
-	  // componentDidMount() {
-	  //   this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	  //   this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
-	  //   this.campaignListener = CampaignStore.addListener(this.onChange);
-	  //   CampaignStore.fetchCampaign(this.props.params.campaignId);
-	  // },
-	  //
-	  // componentWillUnmount() {
-	  //   this.errorListener.remove();
-	  //   this.sessionListener.remove();
-	  //   this.campaignListener.remove();
-	  //
-	  // },
-	  //
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	    this.campaignListener = CampaignStore.addListener(this.onChange);
+	    this.id = parseInt(this.props.params.campaignId);
+	    CampaignActions.getCampaign(this.id);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	    this.campaignListener.remove();
+	  },
 	  getInitialState: function getInitialState() {
-	    this.campaign = {};
 	    return {
-	      title: this.props.rewardState.title,
-	      description: this.props.rewardState.description,
-	      min_amount: this.props.rewardState.min_amount,
-	      delivery_date: this.props.rewardState.delivery_date,
-	      id: this.props.rewardState.id
+	      id: 0,
+	      title: "",
+	      blurb: "",
+	      categoryId: "",
+	      url: "",
+	      goal: "",
+	      description: "",
+	      days: "",
+	      imageFile: null,
+	      imageUrl: null
 	    };
 	  },
+	  formSubmit: function formSubmit(e) {
+	    var formData = new FormData();
+	    if (this.state.imageFile) {
+	      formData.append("campaign[image]", this.state.imageFile);
+	    }
+	    formData.append("campaign[title]", this.state.title);
+	    formData.append("campaign[blurb]", this.state.blurb);
+	    formData.append("campaign[categoryId]", this.state.categoryId);
+	    formData.append("campaign[video_url]", this.state.url);
+	    formData.append("campaign[goal]", this.state.goal);
+	    formData.append("campaign[description]", this.state.description);
+	    formData.append("campaign[days]", this.state.days);
 	
-	  //
-	  // formSubmit(e) {
-	  //   console.log(e.target.class);
-	  //   e.preventDefault();
-	  //   let data = {reward:
-	  //     {
-	  //       // campaign_id: this.props.params.campaignId,
-	  //       description: this.state.description,
-	  //       min_amount: this.state.min_amount,
-	  //       delivery_date: this.state.delivery_date,
-	  //       title: this.state.title
-	  //     }
-	  //   };
-	  //   RewardActions.createReward(data);
-	  //   hashHistory.push(`/campaigns/${this.props.params.campaignId}`);
-	  // },
-	
-	
+	    e.preventDefault();
+	    CampaignActions.editCampaign(formData, this.id);
+	    hashHistory.push('/campaigns/' + this.id);
+	  },
 	  changeTitle: function changeTitle(e) {
+	
 	    this.setState({ title: e.target.value });
-	    var data = Object.assign({}, this.state, { title: e.target.value });
-	    RewardFormActions.editReward(data);
+	  },
+	  changeURL: function changeURL(e) {
+	    this.setState({ url: e.target.value });
+	  },
+	  changeBlurb: function changeBlurb(e) {
+	    this.setState({ blurb: e.target.value });
 	  },
 	  changeDescription: function changeDescription(e) {
 	    this.setState({ description: e.target.value });
-	    var data = Object.assign({}, this.state, { description: e.target.value });
-	
-	    RewardFormActions.editReward(data);
 	  },
-	
-	  // // FIX DATE FORMATTING STUFF!!!
-	  changeDate: function changeDate(e) {
-	    this.setState({ delivery_date: e.target.value });
-	    var data = Object.assign({}, this.state, { delivery_date: e.target.value });
-	    RewardFormActions.editReward(data);
+	  changeGoal: function changeGoal(e) {
+	    this.setState({ goal: e.target.value });
 	  },
-	  changeAmount: function changeAmount(e) {
-	    this.setState({ min_amount: e.target.value });
-	    var data = Object.assign({}, this.state, { min_amount: e.target.value });
-	    RewardFormActions.editReward(data);
+	  changeDays: function changeDays(e) {
+	    this.setState({ days: e.target.value });
+	  },
+	  changeDate: function changeDate(e) {},
+	  changeCategory: function changeCategory(e) {
+	    this.setState({ categoryId: e.target.value });
+	  },
+	  changeFile: function changeFile(e) {
+	    var file = e.currentTarget.files[0];
+	    var fileReader = new FileReader();
+	    fileReader.onloadend = function () {
+	      this.setState({ imageFile: file, imageUrl: fileReader.result });
+	    }.bind(this);
+	    if (file) {
+	      fileReader.readAsDataURL(file);
+	    }
 	  },
 	  errors: function errors() {
-	    var errors = ErrorStore.errors("reward-form");
+	    var errors = ErrorStore.errors("campaign");
 	    var messages = errors.map(function (errorMsg, i) {
 	      return React.createElement(
 	        'li',
@@ -37793,194 +37193,481 @@
 	      messages
 	    );
 	  },
-	  deleteReward: function deleteReward() {
-	    RewardFormActions.removeReward(this.props.rewardState.id);
+	  categorySelections: function categorySelections() {
+	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
+	      return React.createElement(
+	        'option',
+	        { key: i, value: category_id },
+	        CampaignFormConstants.CATEGORIES[category_id]
+	      );
+	    });
+	    return categorySelections;
 	  },
 	  render: function render() {
+	
 	    return React.createElement(
 	      'div',
-	      { className: 'form-field-container group reward-form-item' },
+	      { className: 'campaign-form input-form' },
+	      this.errors(),
 	      React.createElement(
 	        'div',
-	        { className: 'form-field-container group' },
+	        { className: 'form-padding' },
 	        React.createElement(
 	          'div',
-	          { className: 'field-label' },
-	          'Reward title'
+	          { className: 'form-label' },
+	          'Edit your Campaign'
 	        ),
 	        React.createElement(
-	          'div',
-	          { className: 'campaign-input-container' },
+	          'form',
+	          { onSubmit: this.formSubmit },
+	          React.createElement(
+	            'div',
+	            { className: 'preview-image' },
+	            React.createElement('img', {
+	              alt: 'Project image',
+	              src: this.state.imageUrl,
+	              width: '100 px',
+	              height: 'auto' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'file',
+	              className: 'no-input',
+	              onChange: this.changeFile,
+	              placeholder: 'Upload an image' })
+	          ),
 	          React.createElement(
 	            'div',
 	            { className: 'input campaign-input' },
 	            React.createElement('input', {
 	              type: 'text',
-	              className: 'no-input campaign-input-field',
+	              className: 'no-input',
 	              onChange: this.changeTitle,
-	              value: this.state.title,
-	              placeholder: 'Title' })
+	              placeholder: 'Project Title',
+	              value: this.state.title })
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'reg-12 input-field-description' },
-	            "Call your reward something cool so people think they're getting something of value"
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'form-field-container group' },
-	        React.createElement(
-	          'div',
-	          { className: 'field-label' },
-	          'Pledge amount'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'campaign-input-container' },
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input campaign-input-field',
-	              onChange: this.changeAmount,
-	              value: this.state.min_amount,
-	              placeholder: 'Amount' })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'reg-12 input-field-description' },
-	            "This is the minimum amount of money a backer needs to fork over in order to actually get this thing."
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'form-field-container group' },
-	        React.createElement(
-	          'div',
-	          { className: 'field-label' },
-	          'Reward Description'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'campaign-input-container' },
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
+	            { className: 'input' },
 	            React.createElement('textarea', {
 	              maxLength: '135',
-	              className: 'no-input required textarea campaign-input-field',
-	              onChange: this.changeDescription,
-	              placeholder: 'Reward Description',
-	              value: this.state.description })
+	              className: 'no-input required textarea',
+	              onChange: this.changeBlurb,
+	              placeholder: 'Short Blurb',
+	              value: this.state.blurb })
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'reg-12 input-field-description' },
-	            "Go ahead, let us in.  What's this about?  Anything?"
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'form-field-container group' },
-	        React.createElement(
-	          'div',
-	          { className: 'field-label' },
-	          'Delivery date'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'campaign-input-container' },
+	            { className: 'input' },
+	            React.createElement(
+	              'select',
+	              { value: this.state.categoryId, className: 'category-select', onChange: this.changeCategory },
+	              React.createElement(
+	                'option',
+	                { value: '0', disabled: true },
+	                'Choose category'
+	              ),
+	              this.categorySelections()
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeGoal,
+	              placeholder: 'Goal',
+	              value: this.state.goal })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeDays,
+	              placeholder: 'Number of Days',
+	              value: this.state.days })
+	          ),
 	          React.createElement(
 	            'div',
 	            { className: 'input campaign-input' },
 	            React.createElement('input', {
 	              type: 'date',
-	              className: 'no-input campaign-input-field',
+	              className: 'no-input',
 	              onChange: this.changeDate,
-	              value: this.state.delivery_date,
 	              placeholder: 'Upload an image' })
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'reg-12 input-field-description' },
-	            "Here's a chance to really quanitfy your false promises!"
+	            { className: 'input description' },
+	            React.createElement('textarea', {
+	              className: 'no-input required textarea',
+	              onChange: this.changeDescription,
+	              placeholder: 'Description',
+	              value: this.state.description })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'input campaign-input' },
+	            React.createElement('input', {
+	              type: 'text',
+	              className: 'no-input',
+	              onChange: this.changeURL,
+	              placeholder: 'Video URL',
+	              value: this.state.url })
+	          ),
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'forgot' },
+	            'Forgot your password?'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'submit' },
+	            React.createElement('input', {
+	              type: 'submit',
+	              className: 'button',
+	              id: 'login-button',
+	              value: 'Update Campaign!' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'checkbox' },
+	            React.createElement('input', {
+	              type: 'checkbox',
+	              id: 'remember',
+	              value: 'Remember me' }),
+	            React.createElement(
+	              'label',
+	              { id: 'remember-label', htmlFor: 'remember' },
+	              'Remember me'
+	            )
+	          ),
+	          React.createElement('div', { className: 'line' }),
+	          React.createElement(
+	            'div',
+	            { className: 'submit', onClick: this.guestClick },
+	            React.createElement('input', {
+	              type: 'submit',
+	              id: 'facebook-button',
+	              value: 'Create demo campaign' })
+	          ),
+	          React.createElement(
+	            'p',
+	            { className: 'never-post' },
+	            'We are totally going to post on Facebook',
+	            React.createElement('br', null),
+	            'without your permission.'
 	          )
 	        )
 	      ),
 	      React.createElement(
-	        'h1',
-	        { onClick: this.deleteReward },
-	        'Delete Reward ' + this.props.rewardState.id
+	        'div',
+	        { className: 'login-footer' },
+	        'New to Kickrestarter?',
+	        React.createElement(
+	          'a',
+	          { className: 'signup-link', href: '#/signup' },
+	          'Sign Up'
+	        )
 	      )
 	    );
-	
-	    // return (
-	    //   <div id="reward-form" className="input-form">
-	    //     { this.errors() }
-	    //     <div className="form-padding">
-	    //
-	    //       <div className="form-label">Create a new Reward</div>
-	    //         <form onSubmit={this.formSubmit}>
-	    //
-	    //           <div className="input">
-	    //             <input
-	    //               type="text"
-	    //               className="no-input"
-	    //               onChange={this.changeTitle}
-	    //               placeholder="Title"
-	    //               value={this.state.title} />
-	    //           </div>
-	    //
-	    //           <div className="input">
-	    //             <input
-	    //               type="text"
-	    //               className="no-input"
-	    //               onChange={this.changeAmount}
-	    //               placeholder="Amount"
-	    //               value={this.state.min_amount} />
-	    //           </div>
-	    //
-	    //           <div className="input">
-	    //             <input
-	    //               type="date"
-	    //               className="no-input"
-	    //               onChange={this.changeDate}
-	    //               placeholder="Delivery Date"
-	    //               value={this.state.delivery_date} />
-	    //           </div>
-	    //
-	    //           <div className="input">
-	    //             <textarea
-	    //               className="no-input"
-	    //               onChange={this.changeDescription}
-	    //               placeholder="Description"
-	    //               value={this.state.password} />
-	    //           </div>
-	    //
-	    //
-	    //           <div className="submit">
-	    //             <input
-	    //               type="submit"
-	    //               className="button"
-	    //               id="login-button"
-	    //               value="Create Reward"/>
-	    //           </div>
-	    //         </form>
-	    //
-	    //       </div>
-	    //       <RewardsIndex campaign={this.state.campaign}/>
-	    //
-	    //   </div>
-	    // );
 	  }
 	});
 	
-	module.exports = RewardFormIndexItem;
+	module.exports = CampaignForm;
+
+/***/ },
+/* 297 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var CampaignStore = __webpack_require__(272);
+	var CampaignActions = __webpack_require__(269);
+	var MethodModule = __webpack_require__(275);
+	
+	var UserShow = React.createClass({
+	  displayName: 'UserShow',
+	  getInitialState: function getInitialState() {
+	    return { user: SessionStore.currentUser() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.sessionListener = SessionStore.addListener(this.onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	  },
+	  onChange: function onChange() {
+	    this.setState({
+	      user: SessionStore.currentUser()
+	    });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'profile-container' },
+	      React.createElement(
+	        'div',
+	        null,
+	        this.state.user.username
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'profile-picture-container' },
+	        React.createElement('img', { src: this.state.user.image_url })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = UserShow;
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	
+	var NavBar = React.createClass({
+	  displayName: 'NavBar',
+	  sessionChanged: function sessionChanged() {
+	    var name = void 0;
+	    if (SessionStore.isUserLoggedIn()) {
+	      this.setState({ currentUser: SessionStore.currentUser().username });
+	    } else {
+	      this.setState({ currentUser: false });
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    SessionStore.addListener(this.sessionChanged);
+	  },
+	  getInitialState: function getInitialState() {
+	    return { currentUser: false, search: false };
+	  },
+	  logOutClick: function logOutClick(e) {
+	    e.preventDefault();
+	    SessionActions.logOut();
+	    this.setState({ currentUser: false });
+	    hashHistory.push("/login");
+	  },
+	  toggleSearch: function toggleSearch() {
+	    // jQuery("body").addClass('background-campaign-show');
+	    if (this.state.search === false) {
+	      jQuery(".search-toggle").removeClass('hidden');
+	      // jQuery(".search-toggle").attr("auto-focus", "true");
+	      document.getElementById("search").focus();
+	      this.setState({ search: true });
+	    } else {
+	      jQuery(".search-toggle").addClass('hidden');
+	      this.setState({ search: false });
+	    }
+	  },
+	  render: function render() {
+	
+	    var greeting = void 0;
+	    var profileIcon = React.createElement('div', null);
+	    if (SessionStore.isUserLoggedIn()) {
+	      greeting = React.createElement(
+	        'button',
+	        { onClick: this.logOutClick },
+	        'Log Out'
+	      );
+	
+	      profileIcon = React.createElement(
+	        'div',
+	        { className: 'profile-icon-container' },
+	        React.createElement('img', { src: SessionStore.currentUser().image_url })
+	      );
+	    } else {
+	      greeting = React.createElement(
+	        'a',
+	        { href: '#/login' },
+	        'Log In'
+	      );
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'nav-bar' },
+	      React.createElement(
+	        'header',
+	        { className: 'header' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-wrap group' },
+	          React.createElement(
+	            'nav',
+	            { className: 'header-nav' },
+	            React.createElement(
+	              'ul',
+	              { className: 'group' },
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#/discover' },
+	                  'Discover'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#/start' },
+	                  'Start a project'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: 'http://media.mnn.com/assets/images/2015/06/octopus.jpg' },
+	                  'An Octopus'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  Link,
+	                  { to: '/' },
+	                  React.createElement('img', { src: window.logoNavbar })
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                { onClick: this.toggleSearch },
+	                React.createElement(
+	                  'a',
+	                  { href: '#/discover' },
+	                  React.createElement('i', { className: 'fa fa-search' })
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#/signup' },
+	                  'Sign up'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                greeting
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#', id: 'icon' },
+	                  profileIcon
+	                ),
+	                React.createElement(
+	                  'ul',
+	                  { className: 'header-nav-drop-down' },
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#/discover' },
+	                      'Discover'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#/start' },
+	                      'Start a project'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: 'http://media.mnn.com/assets/images/2015/06/octopus.jpg' },
+	                      'An Octopus'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#/profile' },
+	                      'Profile'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'li',
+	                    null,
+	                    'Log out'
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = NavBar;
+
+/***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	
+	var Footer = React.createClass({
+	  displayName: 'Footer',
+	  getInitialState: function getInitialState() {
+	    return null;
+	  },
+	  render: function render() {
+	
+	    return React.createElement('div', { className: 'footer' });
+	  }
+	});
+	
+	module.exports = Footer;
 
 /***/ },
 /* 300 */
@@ -37988,71 +37675,32 @@
 
 	'use strict';
 	
-	var Store = __webpack_require__(249).Store;
-	var RewardConstants = __webpack_require__(291);
-	var AppDispatcher = __webpack_require__(240);
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
 	
-	var RewardStore = new Store(AppDispatcher);
+	var HomePage = React.createClass({
+	  displayName: 'HomePage',
+	  getInitialState: function getInitialState() {
+	    return null;
+	  },
+	  render: function render() {
 	
-	var _rewards = {
-	  1: { min_amount: 0, title: "", description: "", delivery_date: "2017-08-30", id: 1 }
-	};
-	
-	var resetRewards = function resetRewards(rewards) {
-	  _rewards = {};
-	  rewards.forEach(function (reward) {
-	    _rewards[reward.id] = reward;
-	  });
-	};
-	
-	RewardStore.nextId = function () {
-	  function getMaxOfArray(numArray) {
-	    return Math.max.apply(null, numArray);
+	    return React.createElement(
+	      'div',
+	      { className: 'homepage' },
+	      React.createElement(
+	        Link,
+	        { to: "/discover" },
+	        React.createElement('img', { style: { marginBottom: 600 }, src: window.placeholder })
+	      )
+	    );
 	  }
-	  if (Object.keys(_rewards).length === 0) return 1;
-	  return getMaxOfArray(Object.keys(_rewards)) + 1;
-	};
+	});
 	
-	var setReward = function setReward(reward) {
-	  _rewards[reward.id] = reward;
-	};
-	
-	var removeReward = function removeReward(id) {
-	  delete _rewards[id];
-	};
-	
-	RewardStore.all = function () {
-	  return Object.keys(_rewards).map(function (rewardId) {
-	    return _rewards[rewardId];
-	  });
-	};
-	
-	RewardStore.find = function (id) {
-	  return _rewards[id];
-	};
-	
-	RewardStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case RewardConstants.REWARD_FORM_ITEMS_RECEIVED:
-	      resetRewards(payload.rewards);
-	      RewardStore.__emitChange();
-	      break;
-	    case RewardConstants.REWARD_FORM_ITEM_RECEIVED:
-	      setReward(payload.reward);
-	      RewardStore.__emitChange();
-	      break;
-	    case RewardConstants.REWARD_FORM_ITEM_UPDATED:
-	      setReward(payload.reward);
-	      RewardStore.__emitChange();
-	      break;
-	    case RewardConstants.REWARD_FORM_ITEM_REMOVED:
-	      removeReward(payload.id);
-	      RewardStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = RewardStore;
+	module.exports = HomePage;
 
 /***/ },
 /* 301 */
@@ -38060,37 +37708,117 @@
 
 	'use strict';
 	
-	var RewardApiUtil = __webpack_require__(290);
-	var AppDispatcher = __webpack_require__(240);
-	var RewardConstants = __webpack_require__(291);
-	var ErrorActions = __webpack_require__(246);
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var CampaignActions = __webpack_require__(269);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	var CampaignStore = __webpack_require__(272);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var RewardIndexItem = __webpack_require__(278);
+	var RewardsIndex = __webpack_require__(277);
+	var PledgeFormRewardIndexItem = __webpack_require__(302);
+	var PledgeFormRewardsIndex = __webpack_require__(303);
 	
-	module.exports = {
-	  fetchRewards: function fetchRewards(rewards) {
-	    AppDispatcher.dispatch({
-	      actionType: RewardConstants.REWARD_FORM_ITEMS_RECEIVED,
-	      rewards: rewards
-	    });
+	var PledgeForm = React.createClass({
+	  displayName: 'PledgeForm',
+	  getInitialState: function getInitialState() {
+	    return { campaign: {} };
 	  },
-	  createReward: function createReward(reward) {
-	    AppDispatcher.dispatch({
-	      actionType: RewardConstants.REWARD_FORM_ITEM_RECEIVED,
-	      reward: reward
-	    });
+	  onChange: function onChange() {
+	    this.setState({ campaign: CampaignStore.find(this.id) });
 	  },
-	  editReward: function editReward(reward) {
-	    AppDispatcher.dispatch({
-	      actionType: RewardConstants.REWARD_FORM_ITEM_UPDATED,
-	      reward: reward
-	    });
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	    this.campaignListener = CampaignStore.addListener(this.onChange);
+	    this.id = parseInt(this.props.params.campaignId);
+	    CampaignActions.getCampaign(this.id);
 	  },
-	  removeReward: function removeReward(id) {
-	    AppDispatcher.dispatch({
-	      actionType: RewardConstants.REWARD_FORM_ITEM_REMOVED,
-	      id: id
-	    });
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	    this.campaignListener.remove();
+	  },
+	  campaignRedirect: function campaignRedirect() {
+	    hashHistory.push('/campaigns/' + this.state.campaign.id);
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'pledge-form' },
+	      React.createElement(
+	        'div',
+	        { className: 'pledge-form-header' },
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-title', onClick: this.campaignRedirect },
+	          this.state.campaign.title
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'campaign-author' },
+	          'by ',
+	          React.createElement(
+	            'span',
+	            { style: { "fontWeight": "bold" } },
+	            this.state.campaign.author
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'group pledge-form-body' },
+	          React.createElement(
+	            'div',
+	            { className: 'group pledge-form-container' },
+	            React.createElement(
+	              'div',
+	              { className: 'pledge-rewards-container' },
+	              React.createElement(
+	                'div',
+	                { className: 'show-description pad-bottom-28' },
+	                "Let's choose your reward!"
+	              ),
+	              React.createElement(PledgeFormRewardsIndex, { campaign: this.state.campaign })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'pledge-sidebar-container' },
+	              React.createElement(
+	                'div',
+	                { className: 'pledge-warning-container' },
+	                React.createElement(
+	                  'div',
+	                  { className: 'bold-16 pad-bottom-3' },
+	                  "Kickrestarter is not a store"
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'reg-14 pad-bottom-9' },
+	                  'It\'s a fabricated nonsenical mess of nonsense.'
+	                ),
+	                React.createElement(
+	                  'p',
+	                  { className: 'reg-12 pad-bottom-9' },
+	                  'KickRestarter does not guarantee projects or investigate a creator\'s ability to complete their project. In fact, none of these projects are even real.  So if you find yourself supporting one, and being confused as to the outcome, look inward.  The answer lies within your soul, not on Kickrestarter.'
+	                ),
+	                React.createElement(
+	                  'a',
+	                  { href: 'https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg' },
+	                  'Click here for a picture of an elephant!'
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
 	  }
-	};
+	});
+	
+	module.exports = PledgeForm;
 
 /***/ },
 /* 302 */
@@ -38101,82 +37829,163 @@
 	var React = __webpack_require__(168);
 	var Link = __webpack_require__(175).Link;
 	var SessionActions = __webpack_require__(239);
-	var CommentActions = __webpack_require__(304);
+	var RewardActions = __webpack_require__(293);
+	var PledgeActions = __webpack_require__(279);
 	var SessionStore = __webpack_require__(248);
-	var CampaignStore = __webpack_require__(272);
-	// const CommentStore = require('../../stores/comment_store');
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var CommentIndexItem = __webpack_require__(303);
-	var CampaignActions = __webpack_require__(269);
+	var MethodModule = __webpack_require__(275);
 	
-	var CommentsIndex = React.createClass({
-	  displayName: 'CommentsIndex',
-	  submitComment: function submitComment() {
-	    var data = Object.assign({}, this.state, { author_id: SessionStore.currentUser().id, campaign_id: this.props.campaign.id });
-	    this.setState({ body: "" });
-	    CommentActions.createComment(data);
-	    CampaignActions.getCampaign(this.props.campaign.id);
-	  },
+	var PledgeFormRewardsIndexItem = React.createClass({
+	  displayName: 'PledgeFormRewardsIndexItem',
 	  getInitialState: function getInitialState() {
-	    return { body: "" };
+	    return {
+	      selected: false,
+	      amount: this.props.reward.min_amount
+	    };
 	  },
-	  onChange: function onChange() {
-	    this.setState({ body: "" });
+	  parseDeliveryDate: function parseDeliveryDate() {
+	    var mil = Date.parse(this.props.reward.delivery_date.toString());
+	    var dateObj = new Date(mil);
+	    var month = MethodModule.months[dateObj.getMonth() + 1];
+	    var year = dateObj.getFullYear();
+	    return month + " " + year.toString();
 	  },
-	  changeComment: function changeComment(e) {
-	    this.setState({ body: e.target.value });
+	  clickReward: function clickReward(e) {
+	    this.props.selectedCallback(this.props.id);
 	  },
-	  componentDidMount: function componentDidMount() {
-	    this.campaignListener = CampaignStore.addListener(this.onChange);
-	  },
-	  render: function render() {
-	    var commentList = this.props.campaign.comments.map(function (el, i) {
-	
-	      return React.createElement(CommentIndexItem, { comment: el, key: i });
+	  submitPledge: function submitPledge(e) {
+	    e.preventDefault();
+	    PledgeActions.createPledge({
+	      pledge: {
+	        pledger_id: SessionStore.currentUser().id,
+	        reward_id: this.props.reward.id,
+	        amount: parseInt(this.state.amount)
+	      }
 	    });
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'group' },
-	      React.createElement(
+	    hashHistory.push('/campaigns/' + this.props.reward.campaign_id);
+	  },
+	  changeAmount: function changeAmount(e) {
+	    this.setState({ amount: e.target.value });
+	  },
+	  formattedComponent: function formattedComponent() {
+	    if (this.props.selected_id === this.props.id) {
+	      return React.createElement(
 	        'div',
-	        { className: 'comment-form' },
+	        { className: 'reward-item selected-reward-radio', onClick: this.clickReward },
 	        React.createElement(
 	          'div',
-	          { className: 'comment-box group' },
+	          { className: 'reward-radio group' },
+	          React.createElement('input', { className: 'selected-min', type: 'radio', name: 'reward', value: this.props.reward.id }),
 	          React.createElement(
 	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('textarea', {
-	              maxLength: '135',
-	              className: 'no-input required textarea campaign-input-field',
-	              onChange: this.changeComment,
-	              value: this.state.body,
-	              placeholder: 'Start trolling...' })
-	          ),
+	            { className: 'reward-min' },
+	            "Pledge " + MethodModule.parseDollarAmount(this.props.reward.min_amount) + " or more"
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-item-title pad-left' },
+	          this.props.reward.title
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-item-description pad-left' },
+	          this.props.reward.description
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-delivery-label pad-left' },
+	          'ESTIMATED DELIVERY'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'pad-left' },
+	          this.parseDeliveryDate()
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-backer-label pad-left' },
+	          MethodModule.parseBackers(this.props.reward.backers.length)
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-input' },
 	          React.createElement(
-	            'div',
-	            { onClick: this.submitComment, id: 'submit-comment-button', className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
+	            'form',
+	            { onClick: this.submitPledge, className: 'pledge-form group' },
+	            React.createElement('input', {
+	              type: 'text',
+	              onChange: this.changeAmount,
+	              autoFocus: 'true',
+	              id: 'thick-input',
+	              value: this.state.amount }),
 	            React.createElement(
-	              'span',
-	              { className: 'reward-form-option button-text' },
-	              'Comment'
+	              'div',
+	              { onClick: this.formSubmit, id: 'submit-pledge-button', className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
+	              React.createElement(
+	                'span',
+	                { className: 'reward-form-option button-text' },
+	                'Submit your pledge!'
+	              )
 	            )
 	          )
 	        )
-	      ),
-	      React.createElement(
+	      );
+	    } else {
+	      return React.createElement(
 	        'div',
-	        null,
-	        commentList
-	      )
+	        { className: 'reward-item', onClick: this.clickReward },
+	        React.createElement(
+	          'div',
+	          { className: 'reward-radio group' },
+	          React.createElement('input', { type: 'radio', name: 'reward', value: this.props.reward.id }),
+	          React.createElement(
+	            'div',
+	            { className: 'reward-min' },
+	            "Pledge " + MethodModule.parseDollarAmount(this.props.reward.min_amount) + " or more"
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-item-title pad-left' },
+	          this.props.reward.title
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-item-description pad-left' },
+	          this.props.reward.description
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-delivery-label pad-left' },
+	          'ESTIMATED DELIVERY'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'pad-left' },
+	          this.parseDeliveryDate()
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reward-backer-label pad-left' },
+	          MethodModule.parseBackers(this.props.reward.backers.length)
+	        )
+	      );
+	    }
+	  },
+	  render: function render() {
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      this.formattedComponent()
 	    );
 	  }
 	});
 	
-	module.exports = CommentsIndex;
+	module.exports = PledgeFormRewardsIndexItem;
 
 /***/ },
 /* 303 */
@@ -38187,56 +37996,55 @@
 	var React = __webpack_require__(168);
 	var Link = __webpack_require__(175).Link;
 	var SessionActions = __webpack_require__(239);
+	// const RewardActions = require('../../actions/reward_actions');
 	var SessionStore = __webpack_require__(248);
+	// const RewardStore = require('../../stores/reward_store');
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var MethodModule = __webpack_require__(282);
+	var PledgeFormRewardIndexItem = __webpack_require__(302);
 	
-	var CommentsIndexItem = React.createClass({
-	  displayName: 'CommentsIndexItem',
-	  parseDate: function parseDate() {
-	    var mil = Date.parse(this.props.comment.date.toString());
-	    var dateObj = new Date(mil);
-	    var month = MethodModule.months[dateObj.getMonth() + 1];
-	    var year = dateObj.getFullYear();
-	    return month + " " + year.toString();
+	var PledgeFormRewardsIndex = React.createClass({
+	  displayName: 'PledgeFormRewardsIndex',
+	  getInitialState: function getInitialState() {
+	    return { selectedItem: null };
+	  },
+	  changeSelected: function changeSelected(selected_id) {
+	    this.setState({ selectedItem: selected_id });
 	  },
 	  render: function render() {
+	    var _this = this;
 	
-	    console.log(JSON.stringify(this.props.comment.author));
+	    var rewardList = [];
+	
+	    if (this.props.campaign.rewards) {
+	      rewardList = this.props.campaign.rewards.map(function (reward, i) {
+	        return React.createElement(
+	          'li',
+	          { key: i },
+	          React.createElement(PledgeFormRewardIndexItem, {
+	            reward: reward,
+	            key: i,
+	            id: i,
+	            selectedCallback: _this.changeSelected,
+	            selected_id: _this.state.selectedItem })
+	        );
+	      });
+	    }
+	
 	    return React.createElement(
 	      'div',
-	      { className: 'comment-list-item group' },
+	      null,
 	      React.createElement(
-	        'div',
-	        { className: 'comment-user-info-container' },
-	        React.createElement(
-	          'div',
-	          { className: 'comment-photo hidden' },
-	          React.createElement('img', { src: this.props.comment.author.image_url })
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'bold-16' },
-	          this.props.comment.author.username
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'reg-12' },
-	          this.parseDate()
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'comment' },
-	        this.props.comment.body
+	        'ul',
+	        { className: 'pledge-reward-column group' },
+	        rewardList
 	      )
 	    );
 	  }
 	});
 	
-	module.exports = CommentsIndexItem;
+	module.exports = PledgeFormRewardsIndex;
 
 /***/ },
 /* 304 */
@@ -38244,80 +38052,16 @@
 
 	'use strict';
 	
-	var CommentApiUtil = __webpack_require__(305);
-	var AppDispatcher = __webpack_require__(240);
-	// const CampaignConstants = require('../constants/comment_constants.js');
-	var ErrorActions = __webpack_require__(246);
-	var CampaignActions = __webpack_require__(269);
-	
-	module.exports = {
-	  // fetchCampaigns () {
-	  //   CommentApiUtil.fetchComments(this.receiveAll);
-	  // },
-	  //
-	  // getComment (id) {
-	  //   CommentApiUtil.getComment(id, this.receiveComment, ErrorActions.setErrors);
-	  // },
-	
-	  createComment: function createComment(data) {
-	    CommentApiUtil.createComment(data, CampaignActions.receiveCampaign, ErrorActions.setErrors);
-	  }
-	};
-
-/***/ },
-/* 305 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports = {
-	  // fetchComments (callback) {
-	  //   $.ajax({
-	  //     url: "api/comments",
-	  //     success (comments) {
-	  //       callback(comments);
-	  //     }
-	  //   });
-	  // },
-	  //
-	  // getComment (id, callback) {
-	  //   $.ajax({
-	  //     url: `api/comments/${id}`,
-	  //     success (comment) {
-	  //       callback(comment);
-	  //     }
-	  //   });
-	  // },
-	
-	  createComment: function createComment(data, callback, errorCallback) {
-	    $.ajax({
-	      url: "api/comments",
-	      type: "POST",
-	      data: { comment: data },
-	      success: function success(comment) {
-	        console.log("yeahh comment!");
-	        callback(comment);
-	      }
-	    });
-	  }
-	};
-
-/***/ },
-/* 306 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
 	var React = __webpack_require__(168);
 	var Link = __webpack_require__(175).Link;
 	var SessionActions = __webpack_require__(239);
-	var RewardActions = __webpack_require__(289);
-	var PledgeActions = __webpack_require__(292);
+	var RewardActions = __webpack_require__(293);
+	var PledgeActions = __webpack_require__(279);
 	var SessionStore = __webpack_require__(248);
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
-	var MethodModule = __webpack_require__(282);
+	var MethodModule = __webpack_require__(275);
 	
 	var ProfileForm = React.createClass({
 	  displayName: 'ProfileForm',

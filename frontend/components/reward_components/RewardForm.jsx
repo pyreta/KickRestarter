@@ -15,30 +15,6 @@ const RewardFormIndex = require("./RewardFormIndex");
 
 const RewardForm = React.createClass({
 
-  // redirectIfNotCurrentUser() {
-  //   if (SessionStore.currentUser().id !== this.props.params.campaignId) {
-  //     hashHistory.push("/");
-  //   }
-  // },
-
-  // onChange() {
-  //   this.setState({campaign: CampaignStore.find(this.props.params.id)});
-  // },
-  //
-  // componentDidMount() {
-  //   this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-  //   this.sessionListener = SessionStore.addListener(this.redirectIfNotCurrentUser);
-  //   this.campaignListener = CampaignStore.addListener(this.onChange);
-  //   CampaignStore.fetchCampaign(this.props.params.campaignId);
-  // },
-  //
-  // componentWillUnmount() {
-  //   this.errorListener.remove();
-  //   this.sessionListener.remove();
-  //   this.campaignListener.remove();
-  //
-  // },
-  //
   getInitialState() {
     this.campaign = {};
     return {
@@ -49,51 +25,8 @@ const RewardForm = React.createClass({
       campaign: {}
     };
   },
-  //
-  // formSubmit(e) {
-  //   console.log(e.target.class);
-  //   e.preventDefault();
-  //   let data = {reward:
-  //     {
-  //       // campaign_id: this.props.params.campaignId,
-  //       description: this.state.description,
-  //       min_amount: this.state.min_amount,
-  //       delivery_date: this.state.delivery_date,
-  //       title: this.state.title
-  //     }
-  //   };
-  //   RewardFormActions.createReward(data);
-  //   hashHistory.push(`/campaigns/${this.props.params.campaignId}`);
-  // },
-  //
-  //
-  // changeTitle(e) {
-  //   this.setState({title: e.target.value});
-  // },
-  //
-  // changeDescription(e){
-  //   this.setState({description: e.target.value});
-  // },
-  // // FIX DATE FORMATTING STUFF!!!
-  // changeDate(e){
-  //   this.setState({delivery_date: e.target.value});
-  //   console.log(this.state);
-  // },
-  //
-  // changeAmount(e){
-  //   this.setState({min_amount: e.target.value});
-  // },
-  //
-  // errors() {
-  //   const errors = ErrorStore.errors("reward-form");
-  //   const messages = errors.map( (errorMsg, i) => {
-  //     return <li key={ i }>{ errorMsg }</li>;
-  //   });
-  //
-  //   return <ul>{ messages }</ul>;
-  // },
+
   addReward(){
-    console.log("ADd REWARD");
     RewardFormActions.createReward({
       min_amount: 0,
       title: "",

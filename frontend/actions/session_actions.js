@@ -10,11 +10,9 @@ const SessionActions = {
   signUp(formData){
     let newData;
     if (formData.email !== formData.email2) {
-      console.log("Confirm Email!!!");
       ErrorActions.setErrors("signup", ["Confirm Email"]);
       return;
     } else if (formData.password !== formData.password2) {
-      console.log("Confirm Password!!!");
       ErrorActions.setErrors("signup", ["Confirm Password"]);
       return;
     } else {
