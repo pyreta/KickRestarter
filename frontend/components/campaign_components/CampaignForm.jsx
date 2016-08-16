@@ -42,13 +42,13 @@ const CampaignForm = React.createClass({
 
   getInitialState() {
     return {
-      title: "Thundercats are Loose!",
-      blurb: "thundercats, thundercats, thundercats are loose!",
+      title: "",
+      blurb: "",
       categoryId: 11,
-      video_url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
-      goal: 1000,
-      description: "I already told you thundercats are loose!",
-      end_date: "2019-03-06",
+      video_url: "",
+      goal: 0,
+      description: "",
+      end_date: "2025-03-06",
       imageFile: null,
       imageUrl: null,
       embedUrl: null,

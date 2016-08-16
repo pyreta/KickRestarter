@@ -33,7 +33,8 @@ const CampaignForm = React.createClass({
       url: this.campaign.video_url,
       goal: this.campaign.goal,
       description: this.campaign.description,
-      days: this.campaign.days_to_go,
+      // days: this.campaign.days_to_go,
+      end_date: this.campaign.end_date,
       imageUrl: this.campaign.image_url
     });
   },
@@ -62,7 +63,8 @@ const CampaignForm = React.createClass({
       url: "",
       goal: "",
       description: "",
-      days: "",
+      end_date: "2025-03-06",
+      // days: "",
       imageFile: null,
       imageUrl: null
     };
@@ -79,7 +81,8 @@ const CampaignForm = React.createClass({
     formData.append("campaign[video_url]", this.state.url);
     formData.append("campaign[goal]", this.state.goal);
     formData.append("campaign[description]", this.state.description);
-    formData.append("campaign[days]", this.state.days);
+    // formData.append("campaign[days]", this.state.days);
+    formData.append("campaign[end_date]", this.state.end_date);
 
     e.preventDefault();
     CampaignActions.editCampaign(formData, this.id);
@@ -110,9 +113,11 @@ const CampaignForm = React.createClass({
   changeDays(e){
     this.setState({days: e.target.value});
   },
+  //
+  // changeDate(e){
+  //   this.setState({end_date: e.target.value});
+  // },
 
-  changeDate(e){
-  },
 
   changeCategory(e){
     this.setState({categoryId: e.target.value});
@@ -213,19 +218,10 @@ const CampaignForm = React.createClass({
 
               <div className="input campaign-input">
                 <input
-                  type="text"
-                  className="no-input"
-                  onChange={this.changeDays}
-                  placeholder="Number of Days"
-                  value={this.state.days} />
-              </div>
-
-              <div className="input campaign-input">
-                <input
                 type="date"
                 className="no-input"
                 onChange={this.changeDate}
-                placeholder="Upload an image" />
+                value = {this.state.date} />
               </div>
 
               <div className="input description">
@@ -255,37 +251,14 @@ const CampaignForm = React.createClass({
                   value="Update Campaign!"/>
               </div>
 
-
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  value="Remember me"/>
-                  <label id="remember-label" htmlFor="remember">Remember me</label>
-              </div>
               <div className="line"></div>
 
-              <div className="submit" onClick={this.guestClick}>
-                <input
-                  type="submit"
-                  id = "facebook-button"
-                  value="Create demo campaign"/>
-              </div>
-
-              <p className="never-post">
-                We are totally going to post on Facebook
-                <br/>
-                without your permission.
-              </p>
 
 
 
             </form>
           </div>
-          <div className="login-footer">
-          New to Kickrestarter?
-          <a className="signup-link" href="#/signup">Sign Up</a>
-          </div>
+
       </div>
     );
   }

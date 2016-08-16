@@ -35745,6 +35745,9 @@
 	  componentDidMount: function componentDidMount() {
 	    this.campaignListener = CampaignStore.addListener(this.onChange);
 	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.campaignListener.remove();
+	  },
 	  render: function render() {
 	    var commentList = this.props.campaign.comments.map(function (el, i) {
 	
@@ -35937,13 +35940,13 @@
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      title: "Thundercats are Loose!",
-	      blurb: "thundercats, thundercats, thundercats are loose!",
+	      title: "",
+	      blurb: "",
 	      categoryId: 11,
-	      video_url: "https://www.youtube.com/watch?v=JVAnIFYFKSM",
-	      goal: 1000,
-	      description: "I already told you thundercats are loose!",
-	      end_date: "2019-03-06",
+	      video_url: "",
+	      goal: 0,
+	      description: "",
+	      end_date: "2025-03-06",
 	      imageFile: null,
 	      imageUrl: null,
 	      embedUrl: null,
@@ -37097,7 +37100,8 @@
 	      url: this.campaign.video_url,
 	      goal: this.campaign.goal,
 	      description: this.campaign.description,
-	      days: this.campaign.days_to_go,
+	      // days: this.campaign.days_to_go,
+	      end_date: this.campaign.end_date,
 	      imageUrl: this.campaign.image_url
 	    });
 	  },
@@ -37122,7 +37126,8 @@
 	      url: "",
 	      goal: "",
 	      description: "",
-	      days: "",
+	      end_date: "2025-03-06",
+	      // days: "",
 	      imageFile: null,
 	      imageUrl: null
 	    };
@@ -37138,7 +37143,8 @@
 	    formData.append("campaign[video_url]", this.state.url);
 	    formData.append("campaign[goal]", this.state.goal);
 	    formData.append("campaign[description]", this.state.description);
-	    formData.append("campaign[days]", this.state.days);
+	    // formData.append("campaign[days]", this.state.days);
+	    formData.append("campaign[end_date]", this.state.end_date);
 	
 	    e.preventDefault();
 	    CampaignActions.editCampaign(formData, this.id);
@@ -37163,7 +37169,13 @@
 	  changeDays: function changeDays(e) {
 	    this.setState({ days: e.target.value });
 	  },
-	  changeDate: function changeDate(e) {},
+	
+	  //
+	  // changeDate(e){
+	  //   this.setState({end_date: e.target.value});
+	  // },
+	
+	
 	  changeCategory: function changeCategory(e) {
 	    this.setState({ categoryId: e.target.value });
 	  },
@@ -37286,20 +37298,10 @@
 	            'div',
 	            { className: 'input campaign-input' },
 	            React.createElement('input', {
-	              type: 'text',
-	              className: 'no-input',
-	              onChange: this.changeDays,
-	              placeholder: 'Number of Days',
-	              value: this.state.days })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'input campaign-input' },
-	            React.createElement('input', {
 	              type: 'date',
 	              className: 'no-input',
 	              onChange: this.changeDate,
-	              placeholder: 'Upload an image' })
+	              value: this.state.date })
 	          ),
 	          React.createElement(
 	            'div',
@@ -37334,45 +37336,7 @@
 	              id: 'login-button',
 	              value: 'Update Campaign!' })
 	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'checkbox' },
-	            React.createElement('input', {
-	              type: 'checkbox',
-	              id: 'remember',
-	              value: 'Remember me' }),
-	            React.createElement(
-	              'label',
-	              { id: 'remember-label', htmlFor: 'remember' },
-	              'Remember me'
-	            )
-	          ),
-	          React.createElement('div', { className: 'line' }),
-	          React.createElement(
-	            'div',
-	            { className: 'submit', onClick: this.guestClick },
-	            React.createElement('input', {
-	              type: 'submit',
-	              id: 'facebook-button',
-	              value: 'Create demo campaign' })
-	          ),
-	          React.createElement(
-	            'p',
-	            { className: 'never-post' },
-	            'We are totally going to post on Facebook',
-	            React.createElement('br', null),
-	            'without your permission.'
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'login-footer' },
-	        'New to Kickrestarter?',
-	        React.createElement(
-	          'a',
-	          { className: 'signup-link', href: '#/signup' },
-	          'Sign Up'
+	          React.createElement('div', { className: 'line' })
 	        )
 	      )
 	    );
@@ -37694,7 +37658,7 @@
 	      React.createElement(
 	        Link,
 	        { to: "/discover" },
-	        React.createElement('img', { style: { marginBottom: 600 }, src: window.placeholder })
+	        React.createElement('img', { src: window.placeholder })
 	      )
 	    );
 	  }

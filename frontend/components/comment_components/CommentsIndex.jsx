@@ -39,6 +39,10 @@ const CommentsIndex = React.createClass({
     this.campaignListener=CampaignStore.addListener(this.onChange);
   },
 
+  componentWillUnmount(){
+    this.campaignListener.remove();
+  },
+
   render() {
     let commentList = this.props.campaign.comments.map(function(el, i){
 
