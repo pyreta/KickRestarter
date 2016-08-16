@@ -37411,6 +37411,8 @@
 	var SessionActions = __webpack_require__(239);
 	var SessionStore = __webpack_require__(248);
 	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
 	
 	var NavBar = React.createClass({
 	  displayName: 'NavBar',

@@ -3,6 +3,8 @@ const Link = require('react-router').Link;
 const SessionActions = require('../actions/session_actions');
 const SessionStore = require('../stores/session_store');
 const ErrorStore = require('../stores/error_store');
+const ReactRouter = require('react-router');
+const hashHistory = ReactRouter.hashHistory;
 
 const NavBar = React.createClass({
 
