@@ -50,10 +50,6 @@ const RewardForm = React.createClass({
               <h3>Add a reward</h3>
             </div>
 
-
-
-
-
           </div>
 
 

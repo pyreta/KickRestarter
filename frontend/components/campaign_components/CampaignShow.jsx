@@ -204,24 +204,6 @@ const CampaignShow = React.createClass({
         </div>
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </div>
     );
   }

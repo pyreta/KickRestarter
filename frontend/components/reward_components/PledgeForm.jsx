@@ -59,15 +59,6 @@ const PledgeForm = React.createClass({
                 <PledgeFormRewardsIndex campaign={this.state.campaign}/>
               </div>
 
-
-
-
-
-
-
-
-
-
               <div className="pledge-sidebar-container">
                 <div className="pledge-warning-container">
                   <div className="bold-16 pad-bottom-3">{"Kickrestarter is not a store"}</div>

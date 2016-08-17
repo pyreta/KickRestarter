@@ -34,10 +34,8 @@ const NavBar = React.createClass({
   },
 
   toggleSearch(){
-    // jQuery("body").addClass('background-campaign-show');
     if (this.state.search === false){
       jQuery(".search-toggle").removeClass('hidden');
-      // jQuery(".search-toggle").attr("auto-focus", "true");
       document.getElementById("search").focus();
       this.setState({search: true});
     } else {

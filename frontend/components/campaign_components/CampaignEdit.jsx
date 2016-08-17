@@ -113,10 +113,10 @@ const CampaignForm = React.createClass({
   changeDays(e){
     this.setState({days: e.target.value});
   },
-  //
-  // changeDate(e){
-  //   this.setState({end_date: e.target.value});
-  // },
+
+  changeDate(e){
+    this.setState({end_date: e.target.value});
+  },
 
 
   changeCategory(e){

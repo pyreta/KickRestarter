@@ -4,7 +4,6 @@ const SessionActions = require('../../actions/session_actions');
 const CommentActions = require('../../actions/comment_actions');
 const SessionStore = require('../../stores/session_store');
 const CampaignStore = require('../../stores/campaign_store');
-// const CommentStore = require('../../stores/comment_store');
 const ErrorStore = require('../../stores/error_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;

@@ -13,7 +13,6 @@ const CampaignsIndexItem = React.createClass({
   percentPledged() {
     let pDec = this.props.campaign.amount_pledged/this.props.campaign.goal;
     return (Math.floor(pDec*100)).toString() + "%";
-    // return '20%';
   },
 
   totalPledged() {
