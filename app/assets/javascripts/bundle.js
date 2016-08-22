@@ -56,12 +56,10 @@
 	var LoginForm = __webpack_require__(238);
 	var SignUpForm = __webpack_require__(267);
 	var CampaignsIndex = __webpack_require__(268);
-	// const RewardsIndex = require("./components/reward_components/RewardsIndex");
 	var CampaignShow = __webpack_require__(276);
 	var CampaignForm = __webpack_require__(286);
 	var CampaignEdit = __webpack_require__(296);
 	var UserShow = __webpack_require__(297);
-	// const UserEdit = require("./components/user_components/UserEdit");
 	var NavBar = __webpack_require__(298);
 	var Footer = __webpack_require__(299);
 	var HomePage = __webpack_require__(300);
@@ -103,7 +101,7 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
-	    React.createElement(IndexRoute, { component: HomePage }),
+	    React.createElement(IndexRoute, { component: CampaignsIndex }),
 	    React.createElement(Route, { path: '/login', component: LoginForm }),
 	    React.createElement(Route, { path: '/signup', component: SignUpForm }),
 	    React.createElement(Route, { path: '/profile', component: ProfileForm }),
@@ -34908,7 +34906,6 @@
 	  percentPledged: function percentPledged() {
 	    var pDec = this.props.campaign.amount_pledged / this.props.campaign.goal;
 	    return Math.floor(pDec * 100).toString() + "%";
-	    // return '20%';
 	  },
 	  totalPledged: function totalPledged() {
 	    return MethodModule.parseDollarAmount(this.props.campaign.amount_pledged);
@@ -35433,9 +35430,7 @@
 	var React = __webpack_require__(168);
 	var Link = __webpack_require__(175).Link;
 	var SessionActions = __webpack_require__(239);
-	// const RewardActions = require('../../actions/reward_actions');
 	var SessionStore = __webpack_require__(248);
-	// const RewardStore = require('../../stores/reward_store');
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
@@ -35494,7 +35489,6 @@
 	    return { expanded: false, amount: this.props.reward.min_amount };
 	  },
 	  parseDeliveryDate: function parseDeliveryDate() {
-	    // return this.props.reward.delivery_date;
 	    var mil = Date.parse(this.props.reward.delivery_date.toString());
 	    var dateObj = new Date(mil);
 	    var month = MethodModule.months[dateObj.getMonth() + 1];
@@ -35602,34 +35596,9 @@
 	var CampaignActions = __webpack_require__(269);
 	
 	module.exports = {
-	  // fetchPledges () {
-	  //   PledgeApiUtil.fetchPledges(this.receiveAll);
-	  // },
-	  //
-	  // getPledge (id) {
-	  //   PledgeApiUtil.getPledge(id, this.receivePledge, ErrorActions.setErrors);
-	  // },
-	
 	  createPledge: function createPledge(data) {
 	    PledgeApiUtil.createPledge(data, CampaignActions.receiveCampaign, ErrorActions.setErrors);
 	  },
-	
-	
-	  // editPledge (data, id) {
-	  //   PledgeApiUtil.updatePledge(data, id, this.receivePledge, ErrorActions.setErrors);
-	  // },
-	  //
-	  // deletePledge (id) {
-	  //   PledgeApiUtil.deletePledge(id, this.removePledge);
-	  // },
-	  //
-	  // receiveAll (pledges) {
-	  //   AppDispatcher.dispatch({
-	  //     actionType: PledgeConstants.PLEDGES_RECEIVED,
-	  //     pledges: pledges
-	  //   });
-	  // },
-	  //
 	  receivePledge: function receivePledge(pledge) {
 	    AppDispatcher.dispatch({
 	      actionType: PledgeConstants.PLEDGE_RECEIVED,
@@ -35718,7 +35687,6 @@
 	var CommentActions = __webpack_require__(283);
 	var SessionStore = __webpack_require__(248);
 	var CampaignStore = __webpack_require__(272);
-	// const CommentStore = require('../../stores/comment_store');
 	var ErrorStore = __webpack_require__(266);
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
@@ -35808,14 +35776,6 @@
 	var CampaignActions = __webpack_require__(269);
 	
 	module.exports = {
-	  // fetchCampaigns () {
-	  //   CommentApiUtil.fetchComments(this.receiveAll);
-	  // },
-	  //
-	  // getComment (id) {
-	  //   CommentApiUtil.getComment(id, this.receiveComment, ErrorActions.setErrors);
-	  // },
-	
 	  createComment: function createComment(data) {
 	    CommentApiUtil.createComment(data, CampaignActions.receiveCampaign, ErrorActions.setErrors);
 	  }
@@ -36501,34 +36461,9 @@
 	var ErrorActions = __webpack_require__(246);
 	
 	module.exports = {
-	  // fetchRewards () {
-	  //   RewardApiUtil.fetchRewards(this.receiveAll);
-	  // },
-	  //
-	  // getReward (id) {
-	  //   RewardApiUtil.getReward(id, this.receiveReward, ErrorActions.setErrors);
-	  // },
-	
 	  createReward: function createReward(data) {
 	    RewardApiUtil.createReward(data, this.receiveReward, ErrorActions.setErrors);
 	  },
-	
-	
-	  // editReward (data, id) {
-	  //   RewardApiUtil.updateReward(data, id, this.receiveReward, ErrorActions.setErrors);
-	  // },
-	  //
-	  // deleteReward (id) {
-	  //   RewardApiUtil.deleteReward(id, this.removeReward);
-	  // },
-	  //
-	  // receiveAll (rewards) {
-	  //   AppDispatcher.dispatch({
-	  //     actionType: RewardConstants.REWARDS_RECEIVED,
-	  //     rewards: rewards
-	  //   });
-	  // },
-	  //
 	  receiveReward: function receiveReward(reward) {
 	    AppDispatcher.dispatch({
 	      actionType: RewardConstants.REWARD_RECEIVED,
@@ -37169,13 +37104,9 @@
 	  changeDays: function changeDays(e) {
 	    this.setState({ days: e.target.value });
 	  },
-	
-	  //
-	  // changeDate(e){
-	  //   this.setState({end_date: e.target.value});
-	  // },
-	
-	
+	  changeDate: function changeDate(e) {
+	    this.setState({ end_date: e.target.value });
+	  },
 	  changeCategory: function changeCategory(e) {
 	    this.setState({ categoryId: e.target.value });
 	  },
@@ -37437,10 +37368,8 @@
 	    hashHistory.push("/login");
 	  },
 	  toggleSearch: function toggleSearch() {
-	    // jQuery("body").addClass('background-campaign-show');
 	    if (this.state.search === false) {
 	      jQuery(".search-toggle").removeClass('hidden');
-	      // jQuery(".search-toggle").attr("auto-focus", "true");
 	      document.getElementById("search").focus();
 	      this.setState({ search: true });
 	    } else {
@@ -37471,6 +37400,16 @@
 	        'Log In'
 	      );
 	    }
+	
+	    var signUpNav = SessionStore.isUserLoggedIn() ? React.createElement(
+	      'a',
+	      { href: '#/profile' },
+	      'Profile'
+	    ) : React.createElement(
+	      'a',
+	      { href: '#/signup' },
+	      'Sign up'
+	    );
 	
 	    return React.createElement(
 	      'div',
@@ -37535,11 +37474,7 @@
 	              React.createElement(
 	                'li',
 	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: '#/signup' },
-	                  'Sign up'
-	                )
+	                signUpNav
 	              ),
 	              React.createElement(
 	                'li',
