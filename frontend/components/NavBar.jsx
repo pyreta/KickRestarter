@@ -64,6 +64,7 @@ const NavBar = React.createClass({
       greeting = (<a href="#/login">Log In</a>);
     }
 
+    let signUpNav = SessionStore.isUserLoggedIn() ? <a href="#/profile">Profile</a>: <a href="#/signup">Sign up</a>;
 
     return (
       <div className="nav-bar">
@@ -82,7 +83,7 @@ const NavBar = React.createClass({
                   <Link to="/"><img src={window.logoNavbar}></img></Link>
                 </li>
                 <li onClick={this.toggleSearch}><a href="#/discover"><i className="fa fa-search"></i></a></li>
-                <li><a href="#/signup">Sign up</a></li>
+                <li>{ signUpNav }</li>
                 <li>{ greeting }</li>
                <li>
                  <a href="#" id="icon" >{ profileIcon }</a>

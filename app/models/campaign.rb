@@ -1,6 +1,6 @@
 class Campaign < ActiveRecord::Base
 
-  has_attached_file :image, default_url: "urkel-default.jpg"
+  has_attached_file :image, styles: { medium: "890x500>"}, default_url: "urkel-default.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
   belongs_to(
