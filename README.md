@@ -17,11 +17,11 @@ KickRestarter is a full-stack web application inspired by Kickstarter.  It utili
 
   `Campaign`s are stored in the database as belonging to a `creator`, and having many `rewards`.  Upon rendering the `Campaign` show page, rewards are collected through a non n+1 SQL call to join the `rewards` and `campaigns` tables.  Unlimited `reward`s may be created at the same time the `campaign` is created, and then all the information is sent to the database together.
 
-  [image of campaign form](docs/kickrestarter.png)
+  ![image of campaign form](docs/kickrestarter.png)
 
   `Campaign`index items dynamically reflect the percent pledged through a progress bar with a width calculated in real time:
 
-  [image of progress-bar code](docs/progress-bar.png)
+  ![image of progress-bar code](docs/progress-bar.png)
 
 
 ### Pledges
