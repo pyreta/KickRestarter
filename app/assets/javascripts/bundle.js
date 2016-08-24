@@ -37963,6 +37963,7 @@
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var MethodModule = __webpack_require__(275);
+	var CampaignIndexItem = __webpack_require__(274);
 	
 	var ProfileForm = React.createClass({
 	  displayName: 'ProfileForm',
@@ -37970,19 +37971,142 @@
 	    return { image: null, imageUrl: null };
 	  },
 	  componentDidMount: function componentDidMount() {
-	    this.user = SessionStore.currentUser();
 	    this.setState({ image: this.user.image, imageUrl: this.user.image_url });
 	  },
+	  componentWillMount: function componentWillMount() {
+	    this.user = SessionStore.currentUser();
+	  },
+	
+	
+	  // render() {
+	  //
+	  //   return (
+	  //     <div className="group">
+	  //       { SessionStore.currentUser().username }
+	  //       <div className="profile-picture-container group">
+	  //       <img src={ this.state.imageUrl } />
+	  //       </div>
+	  //       <br/>
+	  //       { SessionStore.currentUser().biography }
+	  //       <br/>
+	  //       { JSON.stringify(SessionStore.currentUser().pledges) }
+	  //       <br/>
+	  //       { SessionStore.currentUser().url }
+	  //       { SessionStore.currentUser().email }
+	  //
+	  //     </div>
+	  //   );
+	  // }
+	  changeFile: function changeFile() {},
+	  changeUrl: function changeUrl() {},
 	  render: function render() {
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'group' },
-	      SessionStore.currentUser().username,
+	      { className: 'profile-container' },
 	      React.createElement(
 	        'div',
-	        { className: 'profile-picture-container group' },
-	        React.createElement('img', { src: this.state.imageUrl })
+	        { className: 'new-info-form-container new-form-container group' },
+	        React.createElement(
+	          'div',
+	          { className: 'form-field-containers' },
+	          React.createElement(
+	            'div',
+	            { className: 'form-field-container group' },
+	            React.createElement(
+	              'div',
+	              { className: 'field-label' },
+	              'username'
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'campaign-input-container' },
+	              React.createElement(
+	                'div',
+	                { className: 'input campaign-input' },
+	                React.createElement('input', {
+	                  type: 'text',
+	                  className: 'no-input campaign-input-field',
+	                  onChange: this.props.changeTitle,
+	                  value: this.user.username,
+	                  placeholder: 'username' })
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'form-field-container group' },
+	            React.createElement(
+	              'div',
+	              { className: 'field-label' },
+	              'website'
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'campaign-input-container' },
+	              React.createElement(
+	                'div',
+	                { className: 'input campaign-input' },
+	                React.createElement('input', {
+	                  type: 'text',
+	                  className: 'no-input campaign-input-field',
+	                  onChange: this.props.changeURL,
+	                  value: this.user.url,
+	                  placeholder: 'www.yourwebsite.com' })
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'form-field-container group' },
+	            React.createElement(
+	              'div',
+	              { className: 'field-label' },
+	              'email'
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'campaign-input-container' },
+	              React.createElement(
+	                'div',
+	                { className: 'input campaign-input' },
+	                React.createElement('input', {
+	                  type: 'text',
+	                  className: 'no-input campaign-input-field',
+	                  onChange: this.props.changeURL,
+	                  value: this.user.email,
+	                  placeholder: 'you@yourdomain.com' })
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'form-field-container group' },
+	            React.createElement(
+	              'div',
+	              { className: 'field-label' },
+	              'About'
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'campaign-input-container' },
+	              React.createElement(
+	                'div',
+	                { className: 'input campaign-input' },
+	                React.createElement('textarea', {
+	                  className: 'no-input required textarea campaign-input-field textarea-big',
+	                  onChange: this.props.changeDescription,
+	                  placeholder: 'Description',
+	                  value: this.user.biography })
+	              )
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'profile-picture-container group' },
+	          React.createElement('img', { src: this.state.imageUrl })
+	        )
 	      )
 	    );
 	  }
