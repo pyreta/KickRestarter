@@ -35604,6 +35604,15 @@
 	      actionType: PledgeConstants.PLEDGE_RECEIVED,
 	      pledge: pledge
 	    });
+	  },
+	  deletePledge: function deletePledge(id) {
+	    PledgeApiUtil.deletePledge(id, CampaignActions.receiveCampaign, ErrorActions.setErrors);
+	  },
+	  removePledge: function removePledge(pledge) {
+	    AppDispatcher.dispatch({
+	      actionType: PledgeConstants.PLEDGE_REMOVED,
+	      pledge: pledge
+	    });
 	  }
 	};
 
@@ -37964,6 +37973,7 @@
 	var hashHistory = ReactRouter.hashHistory;
 	var MethodModule = __webpack_require__(275);
 	var CampaignIndexItem = __webpack_require__(274);
+	var UserPledgeIndexItem = __webpack_require__(305);
 	
 	var ProfileForm = React.createClass({
 	  displayName: 'ProfileForm',
@@ -37976,30 +37986,16 @@
 	  componentWillMount: function componentWillMount() {
 	    this.user = SessionStore.currentUser();
 	  },
-	
-	
-	  // render() {
-	  //
-	  //   return (
-	  //     <div className="group">
-	  //       { SessionStore.currentUser().username }
-	  //       <div className="profile-picture-container group">
-	  //       <img src={ this.state.imageUrl } />
-	  //       </div>
-	  //       <br/>
-	  //       { SessionStore.currentUser().biography }
-	  //       <br/>
-	  //       { JSON.stringify(SessionStore.currentUser().pledges) }
-	  //       <br/>
-	  //       { SessionStore.currentUser().url }
-	  //       { SessionStore.currentUser().email }
-	  //
-	  //     </div>
-	  //   );
-	  // }
-	  changeFile: function changeFile() {},
+	  changeUsername: function changeUsername() {},
 	  changeUrl: function changeUrl() {},
 	  render: function render() {
+	    var pledges = this.user.pledges.map(function (pledge, i) {
+	      return React.createElement(UserPledgeIndexItem, { key: i, pledge: pledge });
+	    });
+	
+	    // let pledges = this.user.pledges.map((pledge, i)=>{
+	    //   return (<Link key={i} to={`/campaigns/${pledge.campaign_id}`}><UserPledgeIndexItem key={i} pledge={pledge}/></Link>);
+	    // });
 	
 	    return React.createElement(
 	      'div',
@@ -38027,7 +38023,7 @@
 	                React.createElement('input', {
 	                  type: 'text',
 	                  className: 'no-input campaign-input-field',
-	                  onChange: this.props.changeTitle,
+	                  onChange: this.props.changeUsername,
 	                  value: this.user.username,
 	                  placeholder: 'username' })
 	              )
@@ -38050,7 +38046,7 @@
 	                React.createElement('input', {
 	                  type: 'text',
 	                  className: 'no-input campaign-input-field',
-	                  onChange: this.props.changeURL,
+	                  onChange: this.changeUsername,
 	                  value: this.user.url,
 	                  placeholder: 'www.yourwebsite.com' })
 	              )
@@ -38073,7 +38069,7 @@
 	                React.createElement('input', {
 	                  type: 'text',
 	                  className: 'no-input campaign-input-field',
-	                  onChange: this.props.changeURL,
+	                  onChange: this.changeUsername,
 	                  value: this.user.email,
 	                  placeholder: 'you@yourdomain.com' })
 	              )
@@ -38095,7 +38091,7 @@
 	                { className: 'input campaign-input' },
 	                React.createElement('textarea', {
 	                  className: 'no-input required textarea campaign-input-field textarea-big',
-	                  onChange: this.props.changeDescription,
+	                  onChange: this.changeUsername,
 	                  placeholder: 'Description',
 	                  value: this.user.biography })
 	              )
@@ -38106,6 +38102,11 @@
 	          'div',
 	          { className: 'profile-picture-container group' },
 	          React.createElement('img', { src: this.state.imageUrl })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'profile-pledge-index' },
+	          pledges
 	        )
 	      )
 	    );
@@ -38113,6 +38114,53 @@
 	});
 	
 	module.exports = ProfileForm;
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(168);
+	var Link = __webpack_require__(175).Link;
+	var SessionActions = __webpack_require__(239);
+	var RewardActions = __webpack_require__(293);
+	var PledgeActions = __webpack_require__(279);
+	var SessionStore = __webpack_require__(248);
+	var ErrorStore = __webpack_require__(266);
+	var ReactRouter = __webpack_require__(175);
+	var hashHistory = ReactRouter.hashHistory;
+	var MethodModule = __webpack_require__(275);
+	
+	var UserPledgeIndexItem = React.createClass({
+	  displayName: 'UserPledgeIndexItem',
+	  deletePledge: function deletePledge() {
+	    console.log("Delete Pledge");
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'user-pledge' },
+	      React.createElement(
+	        'div',
+	        null,
+	        this.props.pledge.campaign
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        MethodModule.parseDollarAmount(this.props.pledge.amount)
+	      ),
+	      React.createElement(
+	        'div',
+	        { onClick: this.deletePledge },
+	        'Delete'
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = UserPledgeIndexItem;
 
 /***/ }
 /******/ ]);

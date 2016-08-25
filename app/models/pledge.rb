@@ -13,5 +13,5 @@ class Pledge < ActiveRecord::Base
     primary_key: :id
   )
 
-  validates :pledger_id, uniqueness: { scope: :reward_id, message: "only one pledge per campaign, bro" }
+  # validates :pledger_id, uniqueness: { scope: :reward_id, message: "only one pledge per campaign, bro" }
 end

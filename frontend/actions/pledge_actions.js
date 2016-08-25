@@ -17,4 +17,15 @@ module.exports = {
     });
   },
 
+  deletePledge (id) {
+    PledgeApiUtil.deletePledge(id, CampaignActions.receiveCampaign, ErrorActions.setErrors);
+  },
+
+  removePledge (pledge) {
+    AppDispatcher.dispatch({
+      actionType: PledgeConstants.PLEDGE_REMOVED,
+      pledge: pledge
+    });
+  },
+
 };

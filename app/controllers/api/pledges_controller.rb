@@ -12,12 +12,16 @@ class Api::PledgesController < ApplicationController
   end
 
   def destroy
+    @pledge = Pledge.includes(:campaign).find(params[:pledge][:id])
+    @campaign = @pledge.campaign
+    @pledge.destroy
+    render json: @campaign
   end
 
   def update
   end
 
   def pledge_params
-    params.require(:pledge).permit(:pledger_id, :reward_id, :amount)
+    params.require(:pledge).permit(:id, :pledger_id, :reward_id, :amount)
   end
 end
