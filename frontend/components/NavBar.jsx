@@ -67,13 +67,12 @@ const NavBar = React.createClass({
     let signUpNav = SessionStore.isUserLoggedIn() ? <a href="#/profile">Profile</a>: <a href="#/signup">Sign up</a>;
 
     return (
-      <div className="nav-bar">
-      <header className="header">
+      <div className="nav-bar group">
          <div className="header-wrap group">
 
 
 
-           <nav className="header-nav">
+
 
              <ul className="group">
                <li><a href="#/discover">Discover</a></li>
@@ -85,24 +84,51 @@ const NavBar = React.createClass({
                 <li onClick={this.toggleSearch}><a href="#/discover"><i className="fa fa-search"></i></a></li>
                 <li>{ signUpNav }</li>
                 <li>{ greeting }</li>
-               <li>
-                 <a href="#" id="icon" >{ profileIcon }</a>
-                 <ul className="header-nav-drop-down">
-                   <li><a href="#/discover">Discover</a></li>
-                   <li><a href="#/start">Start a project</a></li>
-                   <li><a href="http://media.mnn.com/assets/images/2015/06/octopus.jpg">An Octopus</a></li>
-                   <li><a href="#/profile">Profile</a></li>
-                   <li>Log out</li>
-                 </ul>
-               </li>
+                 <a href="#/profile" >{ profileIcon }</a>
              </ul>
-           </nav>
+
 
          </div>
-       </header>
       </div>
     );
   }
+  //   return (
+  //     <div className="nav-bar">
+  //     <header className="header">
+  //        <div className="header-wrap group">
+  //
+  //
+  //
+  //          <nav className="header-nav">
+  //
+  //            <ul className="group">
+  //              <li><a href="#/discover">Discover</a></li>
+  //              <li><a href="#/start">Start a project</a></li>
+  //              <li><a href="http://media.mnn.com/assets/images/2015/06/octopus.jpg">An Octopus</a></li>
+  //              <li>
+  //                 <Link to="/"><img src={window.logoNavbar}></img></Link>
+  //               </li>
+  //               <li onClick={this.toggleSearch}><a href="#/discover"><i className="fa fa-search"></i></a></li>
+  //               <li>{ signUpNav }</li>
+  //               <li>{ greeting }</li>
+  //              <li>
+  //                <a href="#" id="icon" >{ profileIcon }</a>
+  //                <ul className="header-nav-drop-down">
+  //                  <li><a href="#/discover">Discover</a></li>
+  //                  <li><a href="#/start">Start a project</a></li>
+  //                  <li><a href="http://media.mnn.com/assets/images/2015/06/octopus.jpg">An Octopus</a></li>
+  //                  <li><a href="#/profile">Profile</a></li>
+  //                  <li>Log out</li>
+  //                </ul>
+  //              </li>
+  //            </ul>
+  //          </nav>
+  //
+  //        </div>
+  //      </header>
+  //     </div>
+  //   );
+  // }
 });
 
 module.exports = NavBar;

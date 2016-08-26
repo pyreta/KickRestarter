@@ -37422,134 +37422,115 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'nav-bar' },
+	      { className: 'nav-bar group' },
 	      React.createElement(
-	        'header',
-	        { className: 'header' },
+	        'div',
+	        { className: 'header-wrap group' },
 	        React.createElement(
-	          'div',
-	          { className: 'header-wrap group' },
+	          'ul',
+	          { className: 'group' },
 	          React.createElement(
-	            'nav',
-	            { className: 'header-nav' },
+	            'li',
+	            null,
 	            React.createElement(
-	              'ul',
-	              { className: 'group' },
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: '#/discover' },
-	                  'Discover'
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: '#/start' },
-	                  'Start a project'
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: 'http://media.mnn.com/assets/images/2015/06/octopus.jpg' },
-	                  'An Octopus'
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  Link,
-	                  { to: '/' },
-	                  React.createElement('img', { src: window.logoNavbar })
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                { onClick: this.toggleSearch },
-	                React.createElement(
-	                  'a',
-	                  { href: '#/discover' },
-	                  React.createElement('i', { className: 'fa fa-search' })
-	                )
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                signUpNav
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                greeting
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                React.createElement(
-	                  'a',
-	                  { href: '#', id: 'icon' },
-	                  profileIcon
-	                ),
-	                React.createElement(
-	                  'ul',
-	                  { className: 'header-nav-drop-down' },
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: '#/discover' },
-	                      'Discover'
-	                    )
-	                  ),
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: '#/start' },
-	                      'Start a project'
-	                    )
-	                  ),
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: 'http://media.mnn.com/assets/images/2015/06/octopus.jpg' },
-	                      'An Octopus'
-	                    )
-	                  ),
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                      'a',
-	                      { href: '#/profile' },
-	                      'Profile'
-	                    )
-	                  ),
-	                  React.createElement(
-	                    'li',
-	                    null,
-	                    'Log out'
-	                  )
-	                )
-	              )
+	              'a',
+	              { href: '#/discover' },
+	              'Discover'
 	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: '#/start' },
+	              'Start a project'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: 'http://media.mnn.com/assets/images/2015/06/octopus.jpg' },
+	              'An Octopus'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/' },
+	              React.createElement('img', { src: window.logoNavbar })
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            { onClick: this.toggleSearch },
+	            React.createElement(
+	              'a',
+	              { href: '#/discover' },
+	              React.createElement('i', { className: 'fa fa-search' })
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            signUpNav
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            greeting
+	          ),
+	          React.createElement(
+	            'a',
+	            { href: '#/profile' },
+	            profileIcon
 	          )
 	        )
 	      )
 	    );
 	  }
+	  //   return (
+	  //     <div className="nav-bar">
+	  //     <header className="header">
+	  //        <div className="header-wrap group">
+	  //
+	  //
+	  //
+	  //          <nav className="header-nav">
+	  //
+	  //            <ul className="group">
+	  //              <li><a href="#/discover">Discover</a></li>
+	  //              <li><a href="#/start">Start a project</a></li>
+	  //              <li><a href="http://media.mnn.com/assets/images/2015/06/octopus.jpg">An Octopus</a></li>
+	  //              <li>
+	  //                 <Link to="/"><img src={window.logoNavbar}></img></Link>
+	  //               </li>
+	  //               <li onClick={this.toggleSearch}><a href="#/discover"><i className="fa fa-search"></i></a></li>
+	  //               <li>{ signUpNav }</li>
+	  //               <li>{ greeting }</li>
+	  //              <li>
+	  //                <a href="#" id="icon" >{ profileIcon }</a>
+	  //                <ul className="header-nav-drop-down">
+	  //                  <li><a href="#/discover">Discover</a></li>
+	  //                  <li><a href="#/start">Start a project</a></li>
+	  //                  <li><a href="http://media.mnn.com/assets/images/2015/06/octopus.jpg">An Octopus</a></li>
+	  //                  <li><a href="#/profile">Profile</a></li>
+	  //                  <li>Log out</li>
+	  //                </ul>
+	  //              </li>
+	  //            </ul>
+	  //          </nav>
+	  //
+	  //        </div>
+	  //      </header>
+	  //     </div>
+	  //   );
+	  // }
+	
 	});
 	
 	module.exports = NavBar;

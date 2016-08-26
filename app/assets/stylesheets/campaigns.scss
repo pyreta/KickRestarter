@@ -10,6 +10,9 @@
   border: 1px solid #f1eeea;
   margin: 20px;
   float: left;
+  box-shadow: 2px 2px 20px black;
+  -webkit-box-shadow: 2px 2px 20px black;
+  -moz-box-shadow: 2px 2px 20px black;
 }
 
 .project-thumbnail-img {
