@@ -69,4 +69,5 @@ document.addEventListener("DOMContentLoaded", function () {
     SessionActions.receiveCurrentUser({});
   }
   ReactDOM.render(appRouter, document.querySelector("#content"));
+
 });

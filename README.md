@@ -2,7 +2,7 @@
 
 [KickRestarter live][heroku]
 
-[heroku]: https://kickrestarter.herokuapp.com/
+[heroku]: https://kickrestarter.louisabramson.com/
 
 KickRestarter is a full-stack web application inspired by Kickstarter.  It utilizes Ruby on Rails on the backend, a PostgreSQL database, and React.js with a Flux architectural framework on the frontend.  
 

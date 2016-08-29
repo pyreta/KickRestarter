@@ -65,7 +65,7 @@ const CampaignsIndex = React.createClass({
 
     return (
 
-              <div className="group">
+              <div className="group hidden-overflow">
 
 
 
