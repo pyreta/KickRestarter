@@ -456,3 +456,18 @@ input[type="radio"]{
   font-size: 22px;
   padding-left: 19px;
 }
+
+#search{
+  border: 0;
+  height: 19px;
+  font-size: 21px;
+  background-color: #3f3f84;
+  border-radius: 10px;
+  -webkit-box-shadow: 2px 2px 20px black;
+  color: white;
+  &::before{
+    font-family: "FontAwesome";
+    content: "\f00d";
+    color: black;
+  }
+}

@@ -34553,11 +34553,19 @@
 	    CampaignActions.fetchSearch(e.target.value);
 	  },
 	  changeCategory: function changeCategory(e) {
+	    this.lastCategory = this.state.categoryId;
 	    this.setState({ categoryId: e.target.value });
 	    CampaignActions.fetchCategory(e.target.value);
 	  },
 	  onChange: function onChange() {
-	    this.setState({ campaigns: CampaignStore.all() });
+	    if (CampaignStore.all().length === 0) {
+	      console.log("Empty braa");
+	      jQuery(".category-modal").removeClass('hidden');
+	      this.emptyCategory = this.state.categoryId;
+	      this.setState({ categoryId: this.lastCategory });
+	    } else {
+	      this.setState({ campaigns: CampaignStore.all() });
+	    }
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.listener = CampaignStore.addListener(this.onChange);
@@ -34568,6 +34576,12 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.listener.remove();
 	    jQuery("body").removeClass('background-campaign-show');
+	  },
+	  sortCategory: function sortCategory() {
+	    return this.state.categoryId;
+	  },
+	  createCategoryCampaign: function createCategoryCampaign() {
+	    hashHistory.push('/start?category=' + this.emptyCategory);
 	  },
 	  render: function render() {
 	
@@ -34584,13 +34598,26 @@
 	      { className: 'group hidden-overflow' },
 	      React.createElement(
 	        'div',
-	        null,
+	        { style: { "position": "relative" } },
+	        React.createElement(
+	          'div',
+	          { onClick: this.createCategoryCampaign,
+	            className: 'animated flipInY category-modal hidden' },
+	          'No ',
+	          CampaignFormConstants.CATEGORIES[this.emptyCategory],
+	          ' Campaigns yet',
+	          React.createElement(
+	            'div',
+	            null,
+	            'Click to make one'
+	          )
+	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'search-container' },
 	          React.createElement(
 	            'div',
-	            { className: 'group search-toggle hidden' },
+	            { className: 'group search-toggle hidden animated flipInY' },
 	            React.createElement(
 	              'div',
 	              { className: 'input campaign-input navbar-input' },
@@ -36105,7 +36132,7 @@
 	          titleState: this.state.title,
 	          changeBlurb: this.changeBlurb,
 	          blurbState: this.state.blurb,
-	
+	          query: this.props.location.query,
 	          imageUrl: this.state.imageUrl,
 	          embedUrl: this.state.embedUrl,
 	
@@ -36695,8 +36722,8 @@
 	var hashHistory = ReactRouter.hashHistory;
 	var RewardsIndex = __webpack_require__(277);
 	
-	var RewardForm = React.createClass({
-	  displayName: 'RewardForm',
+	var InfoForm = React.createClass({
+	  displayName: 'InfoForm',
 	  categorySelections: function categorySelections() {
 	    var categorySelections = Object.keys(CampaignFormConstants.CATEGORIES).map(function (category_id, i) {
 	      return React.createElement(
@@ -36706,6 +36733,9 @@
 	      );
 	    });
 	    return categorySelections;
+	  },
+	  componentDidMount: function componentDidMount() {
+	    console.log(this.props.query.category);
 	  },
 	  render: function render() {
 	    var previewImage = void 0;
@@ -36737,6 +36767,11 @@
 	      );
 	    } else {
 	      previewVideo = React.createElement('div', null);
+	    }
+	
+	    var category = 0;
+	    if (this.props.query.category) {
+	      category = parseInt(this.props.query.category);
 	    }
 	    return React.createElement(
 	      'div',
@@ -36791,7 +36826,7 @@
 	                className: 'no-input campaign-input-field',
 	                onChange: this.props.changeTitle,
 	                value: this.props.titleState,
-	                placeholder: 'Title' })
+	                placeholder: JSON.stringify(this.props.location) })
 	            ),
 	            React.createElement(
 	              'div',
@@ -36850,7 +36885,7 @@
 	              { className: 'input campaign-input' },
 	              React.createElement(
 	                'select',
-	                { value: this.props.categoryState, className: 'category-select campaign-input-field', onChange: this.props.changeCategory },
+	                { value: category, className: 'category-select campaign-input-field', onChange: this.props.changeCategory },
 	                React.createElement(
 	                  'option',
 	                  { value: '0', disabled: true },
@@ -37007,7 +37042,7 @@
 	  }
 	});
 	
-	module.exports = RewardForm;
+	module.exports = InfoForm;
 
 /***/ },
 /* 296 */
@@ -37365,12 +37400,16 @@
 	    }
 	  },
 	  componentDidMount: function componentDidMount() {
+	    var _this = this;
+	
 	    SessionStore.addListener(this.sessionChanged);
 	    var search = document.getElementById("search");
-	    search.addEventListener("blur", function () {
-	      // jQuery(".search-toggle").addClass('hidden');
-	      // this.setState( {search:false});
-	    });
+	    if (jQuery(".search-toggle").length > 0) {
+	      this.searchListener = search.addEventListener("blur", function () {
+	        jQuery(".search-toggle").addClass('hidden');
+	        _this.setState({ search: false });
+	      });
+	    }
 	  },
 	  getInitialState: function getInitialState() {
 	    return { currentUser: false, search: false };

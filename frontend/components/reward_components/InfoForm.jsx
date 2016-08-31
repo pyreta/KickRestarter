@@ -12,7 +12,7 @@ const RewardsIndex = require("./RewardsIndex");
 
 
 
-const RewardForm = React.createClass({
+const InfoForm = React.createClass({
 
 
   categorySelections() {
@@ -22,6 +22,10 @@ const RewardForm = React.createClass({
       );
     });
     return categorySelections;
+  },
+
+  componentDidMount(){
+    console.log(this.props.query.category);
   },
 
 
@@ -57,6 +61,11 @@ const RewardForm = React.createClass({
     } else {
       previewVideo = (<div></div>);
     }
+
+    let category = 0;
+    if (this.props.query.category){
+      category = parseInt(this.props.query.category);
+    }
     return (
 
         <div className="new-info-form-container new-form-container group">
@@ -90,7 +99,7 @@ const RewardForm = React.createClass({
                   className="no-input campaign-input-field"
                   onChange={this.props.changeTitle}
                   value={this.props.titleState}
-                  placeholder="Title" />
+                  placeholder={JSON.stringify(this.props.location)} />
                 </div>
                 <div className="reg-12 input-field-description">
                   Your project title and blurb should be simple, specific, and memorable. Our search tools run through these sections of your project, so be sure to incorporate any key words here!                </div>
@@ -119,7 +128,7 @@ const RewardForm = React.createClass({
               <div className="field-label">Category</div>
               <div className="campaign-input-container">
                 <div className="input campaign-input">
-                  <select value={this.props.categoryState} className="category-select campaign-input-field" onChange={this.props.changeCategory}>
+                  <select value={category} className="category-select campaign-input-field" onChange={this.props.changeCategory}>
                   <option value="0" disabled>Choose category</option>
                   { this.categorySelections() }
                   </select>
@@ -218,4 +227,4 @@ const RewardForm = React.createClass({
   }
 });
 
-module.exports = RewardForm;
+module.exports = InfoForm;

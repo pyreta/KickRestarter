@@ -658,3 +658,19 @@ logical
 .small-blurb{
   overflow: hidden;
 }
+
+.category-modal{
+  position: absolute;
+  left: 38%;
+  top: 43%;
+  border: 1px solid #adb1ca;
+  background-color: #e6f9f9;
+  height: 600px;
+  border-radius: 6px;
+  width: 400px;
+  padding:20px;
+  text-align: center;
+  box-shadow: -7px 13px 29px gray;
+  font-size: 30px;
+  cursor: pointer;
+}

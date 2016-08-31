@@ -34,12 +34,20 @@ const CampaignsIndex = React.createClass({
   },
 
   changeCategory(e){
+    this.lastCategory = this.state.categoryId;
     this.setState({ categoryId: e.target.value });
     CampaignActions.fetchCategory(e.target.value);
   },
 
   onChange() {
-    this.setState({campaigns: CampaignStore.all()});
+    if (CampaignStore.all().length === 0){
+      console.log("Empty braa");
+      jQuery(".category-modal").removeClass('hidden');
+      this.emptyCategory = this.state.categoryId;
+      this.setState({categoryId: this.lastCategory});
+    } else {
+      this.setState({campaigns: CampaignStore.all()});
+    }
   },
 
   componentDidMount() {
@@ -55,6 +63,14 @@ const CampaignsIndex = React.createClass({
     jQuery("body").removeClass('background-campaign-show');
   },
 
+  sortCategory(){
+    return this.state.categoryId;
+  },
+
+  createCategoryCampaign(){
+    hashHistory.push(`/start?category=${this.emptyCategory}`);
+  },
+
   render() {
 
     let campaignList = this.state.campaigns.map(function(el, i){
@@ -67,15 +83,14 @@ const CampaignsIndex = React.createClass({
 
               <div className="group hidden-overflow">
 
-
-
-
-              {
-                <div>
+                <div style={{"position":"relative"}}>
+                  <div onClick={this.createCategoryCampaign}
+                    className="animated flipInY category-modal hidden">No {CampaignFormConstants.CATEGORIES[this.emptyCategory]} Campaigns yet
+                    <div>Click to make one</div>
+                    </div>
 
                 <div className="search-container">
-
-                  <div className="group search-toggle hidden">
+                  <div className="group search-toggle hidden animated flipInY">
                     <div className="input campaign-input navbar-input">
                       <input
                       type="text"
@@ -101,7 +116,6 @@ const CampaignsIndex = React.createClass({
                   </div>
                 </div>
               </div>
-              }
 
                 <div className={"campaign-index-container"}>
                   <div className={"index-title"}>{"Discover campaigns in " + CampaignFormConstants.CATEGORIES[parseInt(this.state.categoryId)]}</div>

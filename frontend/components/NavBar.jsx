@@ -21,10 +21,12 @@ const NavBar = React.createClass({
   componentDidMount() {
     SessionStore.addListener(this.sessionChanged);
     let search = document.getElementById("search");
-    search.addEventListener("blur",()=>{
-      // jQuery(".search-toggle").addClass('hidden');
-      // this.setState( {search:false});
-    });
+    if (jQuery(".search-toggle").length > 0){
+      this.searchListener = search.addEventListener("blur",()=>{
+        jQuery(".search-toggle").addClass('hidden');
+        this.setState( {search:false});
+      });
+    }
   },
 
   getInitialState() {
@@ -85,9 +87,6 @@ const NavBar = React.createClass({
                 <li>{ signUpNav }</li>
                 <li>{ greeting }</li>
                 <a href="#/profile" >{ profileIcon }</a>
-                {
-                  // <div className="dropdown animated fadeInDown"></div>
-                }
              </ul>
 
 

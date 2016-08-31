@@ -209,7 +209,7 @@ const CampaignForm = React.createClass({
             titleState={this.state.title}
             changeBlurb={this.changeBlurb}
             blurbState={this.state.blurb}
-
+            query={this.props.location.query}
             imageUrl={this.state.imageUrl}
             embedUrl={this.state.embedUrl}
 
