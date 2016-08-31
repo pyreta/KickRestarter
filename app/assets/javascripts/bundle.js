@@ -34583,6 +34583,9 @@
 	  createCategoryCampaign: function createCategoryCampaign() {
 	    hashHistory.push('/start?category=' + this.emptyCategory);
 	  },
+	  closeModal: function closeModal() {
+	    jQuery(".category-modal").addClass('hidden');
+	  },
 	  render: function render() {
 	
 	    var campaignList = this.state.campaigns.map(function (el, i) {
@@ -34601,15 +34604,20 @@
 	        { style: { "position": "relative" } },
 	        React.createElement(
 	          'div',
-	          { onClick: this.createCategoryCampaign,
+	          {
 	            className: 'animated flipInY category-modal hidden' },
 	          'No ',
 	          CampaignFormConstants.CATEGORIES[this.emptyCategory],
 	          ' Campaigns yet',
 	          React.createElement(
 	            'div',
-	            null,
-	            'Click to make one'
+	            { className: 'modal-button', onClick: this.createCategoryCampaign },
+	            'I want to make one'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'modal-button', onClick: this.closeModal },
+	            'Who cares?'
 	          )
 	        ),
 	        React.createElement(

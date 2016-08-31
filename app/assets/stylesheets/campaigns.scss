@@ -663,14 +663,26 @@ logical
   position: absolute;
   left: 38%;
   top: 43%;
-  border: 1px solid #adb1ca;
-  background-color: #e6f9f9;
-  height: 600px;
+  border: 1px solid #dfdcda;
+  background-color: #f8f9fd;
   border-radius: 6px;
   width: 400px;
   padding:20px;
   text-align: center;
   box-shadow: -7px 13px 29px gray;
-  font-size: 30px;
+  font-size: 20px;
+}
+
+.modal-button{
+  border: 1px solid #dfdcda;
+  background-color: #26d06a;
+  font-size: 23px;
+  border-radius: 4px;
   cursor: pointer;
+  padding: 10px;
+  margin: 10px;
+  color: white;
+  &:hover{
+    background-color: black;
+  }
 }

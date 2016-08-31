@@ -71,6 +71,10 @@ const CampaignsIndex = React.createClass({
     hashHistory.push(`/start?category=${this.emptyCategory}`);
   },
 
+  closeModal(){
+    jQuery(".category-modal").addClass('hidden');
+  },
+
   render() {
 
     let campaignList = this.state.campaigns.map(function(el, i){
@@ -84,9 +88,10 @@ const CampaignsIndex = React.createClass({
               <div className="group hidden-overflow">
 
                 <div style={{"position":"relative"}}>
-                  <div onClick={this.createCategoryCampaign}
+                  <div
                     className="animated flipInY category-modal hidden">No {CampaignFormConstants.CATEGORIES[this.emptyCategory]} Campaigns yet
-                    <div>Click to make one</div>
+                    <div className="modal-button" onClick={this.createCategoryCampaign}>I want to make one</div>
+                    <div className="modal-button" onClick={this.closeModal}>Who cares?</div>
                     </div>
 
                 <div className="search-container">
