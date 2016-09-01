@@ -36,7 +36,9 @@ const CampaignShow = React.createClass({
   },
 
   daysToGo() {
-    return this.state.campaign.days_to_go;
+    let days = this.state.campaign.days_to_go;
+    days = days < 0 ? 0 : days;
+    return days;
   },
 
   getInitialState() {
@@ -124,7 +126,7 @@ const CampaignShow = React.createClass({
 
             <div>
               <span className="big-stats">
-              {MethodModule.parseAmount(this.state.campaign.days_to_go)}
+              {MethodModule.parseAmount(this.daysToGo())}
               </span>
               <span className="small-stat-labels">
               {days +" to go"}

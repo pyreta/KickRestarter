@@ -10,7 +10,7 @@ const hashHistory = ReactRouter.hashHistory;
 const CampaignFormConstants = require('../../constants/campaign_form_constants');
 const RewardForm = require('../reward_components/RewardForm');
 const InfoForm = require('../reward_components/InfoForm');
-
+const MethodModule = require('../../constants/method_module');
 
 
 
@@ -103,7 +103,7 @@ const CampaignForm = React.createClass({
   },
 
   changeGoal(e){
-    this.setState({goal: e.target.value});
+    this.setState({goal: MethodModule.unParse(e.target.value)});
   },
 
   changeDate(e){

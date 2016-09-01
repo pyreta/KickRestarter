@@ -49,7 +49,7 @@ const PledgeFormRewardsIndexItem = React.createClass({
   },
 
   changeAmount(e) {
-    this.setState({amount: e.target.value});
+    this.setState({amount: MethodModule.unParse(e.target.value)});
   },
 
   formattedComponent() {
@@ -74,7 +74,7 @@ const PledgeFormRewardsIndexItem = React.createClass({
                 onChange={this.changeAmount}
                 autoFocus="true"
                 id="thick-input"
-                value={this.state.amount} />
+                value={MethodModule.parseDollarAmount(this.state.amount)} />
 
                 <div onClick={this.formSubmit} id="submit-pledge-button" className="new-reward-options-container bold-14 group reward-form-submit submit-campaign">
                     <span className="reward-form-option button-text">Submit your pledge!</span>

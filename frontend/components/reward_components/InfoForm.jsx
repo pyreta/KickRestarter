@@ -9,6 +9,7 @@ const ErrorStore = require('../../stores/error_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
 const RewardsIndex = require("./RewardsIndex");
+const MethodModule = require('../../constants/method_module');
 
 
 
@@ -181,7 +182,7 @@ const InfoForm = React.createClass({
                   type="text"
                   className="no-input campaign-input-field"
                   onChange={this.props.changeGoal}
-                  value={this.props.goalState}
+                  value={MethodModule.parseDollarAmount(this.props.goalState)}
                   placeholder="Number between one and a zillion" />
                 </div>
                 <div className="reg-12 input-field-description">

@@ -34946,7 +34946,9 @@
 	    return MethodModule.parseDollarAmount(this.props.campaign.amount_pledged);
 	  },
 	  daysToGo: function daysToGo() {
-	    return this.props.campaign.days_to_go;
+	    var days = this.props.campaign.days_to_go;
+	    days = days < 0 ? 0 : days;
+	    return days;
 	  },
 	  render: function render() {
 	
@@ -35111,7 +35113,10 @@
 	  parseAmount: function parseAmount(amount) {
 	    if (!amount) return "0";
 	
-	    return amount.formatMoney(0);
+	    return parseInt(amount).formatMoney(0);
+	  },
+	  unParse: function unParse(amount) {
+	    return amount.split(/\D+/).join("");
 	  },
 	  backers: function backers(amount) {
 	    return amount === 1 ? "backer" : "backers";
@@ -35165,7 +35170,9 @@
 	    });
 	  },
 	  daysToGo: function daysToGo() {
-	    return this.state.campaign.days_to_go;
+	    var days = this.state.campaign.days_to_go;
+	    days = days < 0 ? 0 : days;
+	    return days;
 	  },
 	  getInitialState: function getInitialState() {
 	    var potentialCampaign = CampaignStore.find(this.props.params.campaignId);
@@ -35291,7 +35298,7 @@
 	              React.createElement(
 	                'span',
 	                { className: 'big-stats' },
-	                MethodModule.parseAmount(this.state.campaign.days_to_go)
+	                MethodModule.parseAmount(this.daysToGo())
 	              ),
 	              React.createElement(
 	                'span',
@@ -35542,7 +35549,7 @@
 	    CampaignActions.getCampaign(this.props.reward.campaign_id);
 	  },
 	  changeAmount: function changeAmount(e) {
-	    this.setState({ amount: e.target.value });
+	    this.setState({ amount: MethodModule.unParse(e.target.value) });
 	  },
 	  clickReward: function clickReward(e) {
 	    if (this.state.expanded) {
@@ -35565,7 +35572,7 @@
 	            onChange: this.changeAmount,
 	            autoFocus: 'true',
 	            id: 'thick-input',
-	            value: this.state.amount }),
+	            value: MethodModule.parseDollarAmount(this.state.amount) }),
 	          React.createElement(
 	            'div',
 	            { onClick: this.formSubmit, id: 'submit-pledge-button', className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },
@@ -35921,6 +35928,7 @@
 	var CampaignFormConstants = __webpack_require__(273);
 	var RewardForm = __webpack_require__(289);
 	var InfoForm = __webpack_require__(295);
+	var MethodModule = __webpack_require__(275);
 	
 	var CampaignForm = React.createClass({
 	  displayName: 'CampaignForm',
@@ -35997,7 +36005,7 @@
 	    this.setState({ description: e.target.value });
 	  },
 	  changeGoal: function changeGoal(e) {
-	    this.setState({ goal: e.target.value });
+	    this.setState({ goal: MethodModule.unParse(e.target.value) });
 	  },
 	  changeDate: function changeDate(e) {
 	    this.setState({ end_date: e.target.value });
@@ -36532,6 +36540,7 @@
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var RewardsIndex = __webpack_require__(277);
+	var MethodModule = __webpack_require__(275);
 	
 	var RewardFormIndexItem = React.createClass({
 	  displayName: 'RewardFormIndexItem',
@@ -36562,8 +36571,8 @@
 	    RewardFormActions.editReward(data);
 	  },
 	  changeAmount: function changeAmount(e) {
-	    this.setState({ min_amount: e.target.value });
-	    var data = Object.assign({}, this.state, { min_amount: e.target.value });
+	    this.setState({ min_amount: MethodModule.unParse(e.target.value) });
+	    var data = Object.assign({}, this.state, { min_amount: MethodModule.unParse(e.target.value) });
 	    RewardFormActions.editReward(data);
 	  },
 	  errors: function errors() {
@@ -36635,7 +36644,7 @@
 	              type: 'text',
 	              className: 'no-input campaign-input-field',
 	              onChange: this.changeAmount,
-	              value: this.state.min_amount,
+	              value: MethodModule.parseDollarAmount(this.state.min_amount),
 	              placeholder: 'Amount' })
 	          ),
 	          React.createElement(
@@ -36729,6 +36738,7 @@
 	var ReactRouter = __webpack_require__(175);
 	var hashHistory = ReactRouter.hashHistory;
 	var RewardsIndex = __webpack_require__(277);
+	var MethodModule = __webpack_require__(275);
 	
 	var InfoForm = React.createClass({
 	  displayName: 'InfoForm',
@@ -36982,7 +36992,7 @@
 	                type: 'text',
 	                className: 'no-input campaign-input-field',
 	                onChange: this.props.changeGoal,
-	                value: this.props.goalState,
+	                value: MethodModule.parseDollarAmount(this.props.goalState),
 	                placeholder: 'Number between one and a zillion' })
 	            ),
 	            React.createElement(
@@ -37772,7 +37782,7 @@
 	    hashHistory.push('/campaigns/' + this.props.reward.campaign_id);
 	  },
 	  changeAmount: function changeAmount(e) {
-	    this.setState({ amount: e.target.value });
+	    this.setState({ amount: MethodModule.unParse(e.target.value) });
 	  },
 	  formattedComponent: function formattedComponent() {
 	    if (this.props.selected_id === this.props.id) {
@@ -37825,7 +37835,7 @@
 	              onChange: this.changeAmount,
 	              autoFocus: 'true',
 	              id: 'thick-input',
-	              value: this.state.amount }),
+	              value: MethodModule.parseDollarAmount(this.state.amount) }),
 	            React.createElement(
 	              'div',
 	              { onClick: this.formSubmit, id: 'submit-pledge-button', className: 'new-reward-options-container bold-14 group reward-form-submit submit-campaign' },

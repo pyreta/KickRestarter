@@ -20,7 +20,9 @@ const CampaignsIndexItem = React.createClass({
   },
 
   daysToGo() {
-    return this.props.campaign.days_to_go;
+    let days = this.props.campaign.days_to_go;
+    days = days < 0 ? 0 : days;
+    return days;
   },
 
   render() {

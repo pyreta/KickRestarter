@@ -8,6 +8,7 @@ const ErrorStore = require('../../stores/error_store');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
 const RewardsIndex = require("./RewardsIndex");
+const MethodModule = require('../../constants/method_module');
 
 
 
@@ -45,8 +46,8 @@ const RewardFormIndexItem = React.createClass({
   },
 
   changeAmount(e){
-    this.setState({min_amount: e.target.value});
-    let data = Object.assign({}, this.state, { min_amount: e.target.value });
+    this.setState({min_amount: MethodModule.unParse(e.target.value)});
+    let data = Object.assign({}, this.state, { min_amount: MethodModule.unParse(e.target.value) });
     RewardFormActions.editReward(data);
   },
 
@@ -91,7 +92,7 @@ const RewardFormIndexItem = React.createClass({
                   type="text"
                   className="no-input campaign-input-field"
                   onChange={this.changeAmount}
-                  value={this.state.min_amount}
+                  value={MethodModule.parseDollarAmount(this.state.min_amount)}
                   placeholder="Amount" />
                 </div>
                 <div className="reg-12 input-field-description">

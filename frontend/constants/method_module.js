@@ -109,7 +109,11 @@ module.exports = {
     if (!amount) return "0";
 
 
-    return amount.formatMoney(0);
+    return parseInt(amount).formatMoney(0);
+  },
+
+  unParse(amount){
+    return amount.split(/\D+/).join("");
   },
 
   backers(amount) {
