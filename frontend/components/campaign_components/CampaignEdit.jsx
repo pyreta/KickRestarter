@@ -33,7 +33,6 @@ const CampaignForm = React.createClass({
       url: this.campaign.video_url,
       goal: this.campaign.goal,
       description: this.campaign.description,
-      // days: this.campaign.days_to_go,
       end_date: this.campaign.end_date,
       imageUrl: this.campaign.image_url
     });
@@ -81,7 +80,6 @@ const CampaignForm = React.createClass({
     formData.append("campaign[video_url]", this.state.url);
     formData.append("campaign[goal]", this.state.goal);
     formData.append("campaign[description]", this.state.description);
-    // formData.append("campaign[days]", this.state.days);
     formData.append("campaign[end_date]", this.state.end_date);
 
     e.preventDefault();

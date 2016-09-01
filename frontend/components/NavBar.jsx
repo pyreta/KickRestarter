@@ -41,7 +41,7 @@ const NavBar = React.createClass({
   },
 
   toggleSearch(){
-    if (this.state.search === false){
+    if (this.state.search === false && document.getElementById("search")){
       jQuery(".search-toggle").removeClass('hidden');
       document.getElementById("search").focus();
       this.setState({search: true});

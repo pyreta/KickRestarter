@@ -34,14 +34,18 @@ const ProfileForm = React.createClass({
 
   },
 
+  changeAbout(){
+
+  },
+
+  changeEmail(){
+
+  },
+
   render() {
     let pledges = this.user.pledges.map((pledge, i)=>{
       return (<UserPledgeIndexItem key={i} pledge={pledge}/>);
     });
-
-    // let pledges = this.user.pledges.map((pledge, i)=>{
-    //   return (<Link key={i} to={`/campaigns/${pledge.campaign_id}`}><UserPledgeIndexItem key={i} pledge={pledge}/></Link>);
-    // });
 
     return (
 
@@ -72,7 +76,7 @@ const ProfileForm = React.createClass({
                   <input
                   type="text"
                   className="no-input campaign-input-field"
-                  onChange={this.changeUsername}
+                  onChange={this.changeUrl}
                   value={this.user.url}
                   placeholder="www.yourwebsite.com" />
                 </div>
@@ -86,7 +90,7 @@ const ProfileForm = React.createClass({
                   <input
                   type="text"
                   className="no-input campaign-input-field"
-                  onChange={this.changeUsername}
+                  onChange={this.changeEmail}
                   value={this.user.email}
                   placeholder="you@yourdomain.com" />
                 </div>
@@ -99,7 +103,7 @@ const ProfileForm = React.createClass({
                 <div className="input campaign-input">
                 <textarea
                   className="no-input required textarea campaign-input-field textarea-big"
-                  onChange={this.changeUsername}
+                  onChange={this.changeAbout}
                   placeholder="Description"
                   value={this.user.biography} />
                 </div>

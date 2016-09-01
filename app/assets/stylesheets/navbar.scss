@@ -20,6 +20,7 @@
 }
 .nav-bar{
   height: 65px;
+  z-index: 1001
 }
 
 
@@ -40,4 +41,10 @@
 
 .hidden-overflow{
   overflow: hidden;
+}
+
+.hidden-nav{
+  position: fixed;
+  top: 0;
+  z-index: 10000
 }

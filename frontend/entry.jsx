@@ -25,11 +25,17 @@ const ProfileForm = require("./components/user_components/ProfileForm");
 
 const App = React.createClass({
 
-  render() {
+  componentDidMount(){
+    jQuery(window).resize(function() {
+      jQuery('.hidden-nav').css({ width: window.innerWidth });
+    });
+  },
 
+  render() {
     return (
         <div>
           <header><NavBar /></header>
+          <div className = "hidden-nav hidden animated" style={{"width":window.innerWidth}}><NavBar /></div>
           { this.props.children }
           <Footer />
         </div>
@@ -69,5 +75,15 @@ document.addEventListener("DOMContentLoaded", function () {
     SessionActions.receiveCurrentUser({});
   }
   ReactDOM.render(appRouter, document.querySelector("#content"));
+  window.onscroll = function() {
+      if (window.pageYOffset > 40){
+        jQuery(".hidden-nav").addClass("flipInX");
+        jQuery(".hidden-nav").removeClass("hidden");
+      } else if (window.pageYOffset <= 60) {
+        jQuery(".hidden-nav").removeClass("flipInX");
+        jQuery(".hidden-nav").addClass("hidden");
+
+      }
+  };
 
 });

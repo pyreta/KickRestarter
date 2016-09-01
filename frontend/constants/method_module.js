@@ -100,8 +100,6 @@ strings!`;
 
 module.exports = {
   parseDollarAmount(amount) {
-    // if (!amount) return "$0";
-    // return "$" + amount.formatMoney(0);
     return "$" + this.parseAmount(amount);
   },
 

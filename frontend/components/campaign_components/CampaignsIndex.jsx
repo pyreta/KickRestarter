@@ -41,7 +41,6 @@ const CampaignsIndex = React.createClass({
 
   onChange() {
     if (CampaignStore.all().length === 0){
-      console.log("Empty braa");
       jQuery(".category-modal").removeClass('hidden');
       this.emptyCategory = this.state.categoryId;
       this.setState({categoryId: this.lastCategory});

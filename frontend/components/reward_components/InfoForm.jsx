@@ -25,11 +25,6 @@ const InfoForm = React.createClass({
     return categorySelections;
   },
 
-  componentDidMount(){
-    console.log(this.props.query.category);
-  },
-
-
   render() {
     let previewImage;
     if (this.props.imageUrl) {
@@ -100,7 +95,7 @@ const InfoForm = React.createClass({
                   className="no-input campaign-input-field"
                   onChange={this.props.changeTitle}
                   value={this.props.titleState}
-                  placeholder={JSON.stringify(this.props.location)} />
+                  placeholder="Title" />
                 </div>
                 <div className="reg-12 input-field-description">
                   Your project title and blurb should be simple, specific, and memorable. Our search tools run through these sections of your project, so be sure to incorporate any key words here!                </div>

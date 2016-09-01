@@ -73,14 +73,23 @@
 	
 	var App = React.createClass({
 	  displayName: 'App',
+	  componentDidMount: function componentDidMount() {
+	    jQuery(window).resize(function () {
+	      jQuery('.hidden-nav').css({ width: window.innerWidth });
+	    });
+	  },
 	  render: function render() {
-	
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(
 	        'header',
 	        null,
+	        React.createElement(NavBar, null)
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'hidden-nav hidden animated', style: { "width": window.innerWidth } },
 	        React.createElement(NavBar, null)
 	      ),
 	      this.props.children,
@@ -123,6 +132,15 @@
 	    SessionActions.receiveCurrentUser({});
 	  }
 	  ReactDOM.render(appRouter, document.querySelector("#content"));
+	  window.onscroll = function () {
+	    if (window.pageYOffset > 40) {
+	      jQuery(".hidden-nav").addClass("flipInX");
+	      jQuery(".hidden-nav").removeClass("hidden");
+	    } else if (window.pageYOffset <= 60) {
+	      jQuery(".hidden-nav").removeClass("flipInX");
+	      jQuery(".hidden-nav").addClass("hidden");
+	    }
+	  };
 	});
 
 /***/ },
@@ -34559,7 +34577,6 @@
 	  },
 	  onChange: function onChange() {
 	    if (CampaignStore.all().length === 0) {
-	      console.log("Empty braa");
 	      jQuery(".category-modal").removeClass('hidden');
 	      this.emptyCategory = this.state.categoryId;
 	      this.setState({ categoryId: this.lastCategory });
@@ -35106,8 +35123,6 @@
 	
 	module.exports = {
 	  parseDollarAmount: function parseDollarAmount(amount) {
-	    // if (!amount) return "$0";
-	    // return "$" + amount.formatMoney(0);
 	    return "$" + this.parseAmount(amount);
 	  },
 	  parseAmount: function parseAmount(amount) {
@@ -36752,9 +36767,6 @@
 	    });
 	    return categorySelections;
 	  },
-	  componentDidMount: function componentDidMount() {
-	    console.log(this.props.query.category);
-	  },
 	  render: function render() {
 	    var previewImage = void 0;
 	    if (this.props.imageUrl) {
@@ -36844,7 +36856,7 @@
 	                className: 'no-input campaign-input-field',
 	                onChange: this.props.changeTitle,
 	                value: this.props.titleState,
-	                placeholder: JSON.stringify(this.props.location) })
+	                placeholder: 'Title' })
 	            ),
 	            React.createElement(
 	              'div',
@@ -37097,7 +37109,6 @@
 	      url: this.campaign.video_url,
 	      goal: this.campaign.goal,
 	      description: this.campaign.description,
-	      // days: this.campaign.days_to_go,
 	      end_date: this.campaign.end_date,
 	      imageUrl: this.campaign.image_url
 	    });
@@ -37140,7 +37151,6 @@
 	    formData.append("campaign[video_url]", this.state.url);
 	    formData.append("campaign[goal]", this.state.goal);
 	    formData.append("campaign[description]", this.state.description);
-	    // formData.append("campaign[days]", this.state.days);
 	    formData.append("campaign[end_date]", this.state.end_date);
 	
 	    e.preventDefault();
@@ -37439,7 +37449,7 @@
 	    hashHistory.push("/login");
 	  },
 	  toggleSearch: function toggleSearch() {
-	    if (this.state.search === false) {
+	    if (this.state.search === false && document.getElementById("search")) {
 	      jQuery(".search-toggle").removeClass('hidden');
 	      document.getElementById("search").focus();
 	      this.setState({ search: true });
@@ -37993,14 +38003,12 @@
 	  },
 	  changeUsername: function changeUsername() {},
 	  changeUrl: function changeUrl() {},
+	  changeAbout: function changeAbout() {},
+	  changeEmail: function changeEmail() {},
 	  render: function render() {
 	    var pledges = this.user.pledges.map(function (pledge, i) {
 	      return React.createElement(UserPledgeIndexItem, { key: i, pledge: pledge });
 	    });
-	
-	    // let pledges = this.user.pledges.map((pledge, i)=>{
-	    //   return (<Link key={i} to={`/campaigns/${pledge.campaign_id}`}><UserPledgeIndexItem key={i} pledge={pledge}/></Link>);
-	    // });
 	
 	    return React.createElement(
 	      'div',
@@ -38051,7 +38059,7 @@
 	                React.createElement('input', {
 	                  type: 'text',
 	                  className: 'no-input campaign-input-field',
-	                  onChange: this.changeUsername,
+	                  onChange: this.changeUrl,
 	                  value: this.user.url,
 	                  placeholder: 'www.yourwebsite.com' })
 	              )
@@ -38074,7 +38082,7 @@
 	                React.createElement('input', {
 	                  type: 'text',
 	                  className: 'no-input campaign-input-field',
-	                  onChange: this.changeUsername,
+	                  onChange: this.changeEmail,
 	                  value: this.user.email,
 	                  placeholder: 'you@yourdomain.com' })
 	              )
@@ -38096,7 +38104,7 @@
 	                { className: 'input campaign-input' },
 	                React.createElement('textarea', {
 	                  className: 'no-input required textarea campaign-input-field textarea-big',
-	                  onChange: this.changeUsername,
+	                  onChange: this.changeAbout,
 	                  placeholder: 'Description',
 	                  value: this.user.biography })
 	              )
@@ -38140,7 +38148,7 @@
 	var UserPledgeIndexItem = React.createClass({
 	  displayName: 'UserPledgeIndexItem',
 	  deletePledge: function deletePledge() {
-	    console.log("Delete Pledge");
+	    // console.log("Delete Pledge");
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -38155,11 +38163,6 @@
 	        'div',
 	        null,
 	        MethodModule.parseDollarAmount(this.props.pledge.amount)
-	      ),
-	      React.createElement(
-	        'div',
-	        { onClick: this.deletePledge },
-	        'Delete'
 	      )
 	    );
 	  }

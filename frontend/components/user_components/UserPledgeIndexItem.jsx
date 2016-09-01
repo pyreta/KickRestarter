@@ -11,7 +11,7 @@ const MethodModule = require('../../constants/method_module');
 
 const UserPledgeIndexItem = React.createClass({
   deletePledge(){
-    console.log("Delete Pledge");
+    // console.log("Delete Pledge");
   },
 
   render(){
@@ -19,7 +19,9 @@ const UserPledgeIndexItem = React.createClass({
         <div className="user-pledge">
           <div>{this.props.pledge.campaign}</div>
           <div>{MethodModule.parseDollarAmount(this.props.pledge.amount)}</div>
-          <div onClick={this.deletePledge}>Delete</div>
+          {
+            // <div onClick={this.deletePledge}>Delete</div>
+          }
         </div>
       );
   }
